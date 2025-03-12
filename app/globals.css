@@ -1,26 +1,221 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #FAF9FA;
+    --foreground: #280D5F;
+    --card: #FFFFFF;
+    --card-foreground: #280D5F;
+    --primary: #1FC7D4;
+    --primary-foreground: #FFFFFF;
+    --secondary: #7645D9;
+    --secondary-foreground: #FFFFFF;
+    --accent: #ED4B9E;
+    --accent-foreground: #FFFFFF;
+    --muted: #7A6EAA;
+    --muted-foreground: #B8ADD2;
+    --destructive: #ED4B9E;
+    --destructive-foreground: #FFFFFF;
+    --border-color: rgba(118, 69, 217, 0.1);
+    --input: rgba(118, 69, 217, 0.1);
+    --ring: #7645D9;
+    --radius: 1.5rem;
+  }
+
+  .dark {
+    --background: #08060B;
+    --foreground: #F4EEFF;
+    --card: #27262C;
+    --card-foreground: #F4EEFF;
+    --primary: #1FC7D4;
+    --primary-foreground: #FFFFFF;
+    --secondary: #7645D9;
+    --secondary-foreground: #FFFFFF;
+    --accent: #ED4B9E;
+    --accent-foreground: #FFFFFF;
+    --muted: #7A6EAA;
+    --muted-foreground: #B8ADD2;
+    --destructive: #ED4B9E;
+    --destructive-foreground: #FFFFFF;
+    --border-color: rgba(118, 69, 217, 0.2);
+    --input: rgba(118, 69, 217, 0.2);
+    --ring: #7645D9;
+  }
+
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)] antialiased;
+    background-image: radial-gradient(at 50% 0%, rgba(118, 69, 217, 0.05) 0%, transparent 70%),
+                     radial-gradient(at 0% 100%, rgba(237, 75, 158, 0.05) 0%, transparent 70%);
+    background-attachment: fixed;
+  }
+
+  * {
+    @apply border-current;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+.pulsing {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* PancakeSwap-style gradients and effects */
+.gradient-bg {
+  background: linear-gradient(139.73deg, rgb(49, 61, 92) 0%, rgb(61, 42, 84) 100%);
+}
+
+.card-gradient {
+  background: linear-gradient(166.77deg, rgb(61, 42, 84) 0%, rgb(49, 61, 92) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-gradient::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at top left, rgba(118, 69, 217, 0.15), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(237, 75, 158, 0.15), transparent 40%),
+    radial-gradient(circle at center, rgba(31, 199, 212, 0.1), transparent 50%);
+  pointer-events: none;
+}
+
+.card {
+  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  background: var(--card);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+              0 0 0 2px rgba(118, 69, 217, 0.05);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(118, 69, 217, 0.03), transparent 70%);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.card:hover {
+  border-color: var(--primary);
+  box-shadow: 
+    0 8px 16px rgba(31, 199, 212, 0.1),
+    0 4px 8px rgba(31, 199, 212, 0.05),
+    0 0 0 2px rgba(31, 199, 212, 0.2);
+  transform: translateY(-4px);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card-header {
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+  padding: 1.5rem;
+  background: linear-gradient(166.77deg, rgba(118, 69, 217, 0.1), rgba(237, 75, 158, 0.1));
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.card-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at top left, rgba(118, 69, 217, 0.15), transparent 50%),
+    radial-gradient(circle at bottom right, rgba(31, 199, 212, 0.1), transparent 50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.card:hover .card-header::before {
+  opacity: 1;
+}
+
+.title-gradient {
+  background: linear-gradient(to right, var(--secondary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(118, 69, 217, 0.1);
+}
+
+/* PancakeSwap-style buttons and interactive elements */
+.pancake-button {
+  @apply px-6 py-3 rounded-full font-bold transition-all duration-300 relative overflow-hidden;
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+  color: var(--primary-foreground);
+  box-shadow: 
+    0 4px 8px rgba(31, 199, 212, 0.2),
+    0 0 0 2px rgba(31, 199, 212, 0.1);
+}
+
+.pancake-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 6px 12px rgba(31, 199, 212, 0.3),
+    0 0 0 2px rgba(31, 199, 212, 0.2);
+}
+
+.pancake-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, 
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.2));
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.pancake-button:hover::before {
+  transform: translateX(100%);
+}
+
+/* Decorative elements */
+.pancake-dots {
+  background-image: radial-gradient(var(--primary) 1px, transparent 1px);
+  background-size: 16px 16px;
+  opacity: 0.1;
+}
+
+.pancake-grid {
+  background-image: 
+    linear-gradient(to right, var(--border-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-color) 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.05;
 }

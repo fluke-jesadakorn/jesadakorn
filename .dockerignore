@@ -1,0 +1,38 @@
+# Next.js build output
+.next
+
+# Dependencies
+node_modules
+
+# Version control
+.git
+.gitignore
+
+# Environment files
+.env*
+!.env.example
+
+# Development files
+README.md
+*.log
+.vscode
+.idea
+
+# Cache
+.cache
+.npm
+.eslintcache
+
+# Misc
+.DS_Store
+*.pem
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test files
+__tests__
+*.test.*
+*.spec.*

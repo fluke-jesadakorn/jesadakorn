@@ -1,5 +1,5 @@
 # Build stage
-FROM oven/bun:1.0.29 AS builder
+FROM oven/bun:1.2.3 AS builder
 WORKDIR /app
 
 # Copy package files
@@ -7,11 +7,13 @@ COPY package.json bun.lock ./
 COPY . .
 
 # Install dependencies and build
-RUN bun install
+ENV NODE_ENV=production
+RUN bun install --frozen-lockfile
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN bun run build
 
 # Production stage
-FROM oven/bun:1.0.29-slim
+FROM oven/bun:1.2.3-alpine AS runner
 WORKDIR /app
 
 # Copy necessary files from builder
@@ -20,9 +22,10 @@ COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 
 # Set environment variables
-ENV NODE_ENV production
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
+ENV NODE_ENV=production
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+ENV NEXT_TELEMETRY_DISABLED=1
 
 EXPOSE 3000
 

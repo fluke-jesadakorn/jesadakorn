@@ -1,4 +1,3 @@
-import ContactForm from "../components/ContactForm";
 import { EmailSection } from "../components/EmailSection";
 
 export default function Contact() {

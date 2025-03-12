@@ -1,5 +1,5 @@
 import Portfolio from "./components/Portfolio";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
 
 export default function Home() {
   const websites = [
@@ -75,9 +75,11 @@ export default function Home() {
           <div className="relative group">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-primary via-secondary to-accent rounded-full blur opacity-50 group-hover:opacity-100 transition duration-1000"></div>
             <div className="relative w-48 h-60 rounded-3xl overflow-hidden shadow-2xl bg-card">
-              <img
+              <Image
                 src="/Portrait.jpg"
                 alt="Jesadakorn Portrait"
+                width={192}
+                height={240}
                 className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
               />
             </div>
@@ -116,9 +118,11 @@ export default function Home() {
               <div className="p-6">
                 <div className="rounded-2xl overflow-hidden mb-6 shadow-lg relative group">
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <img
+                  <Image
                     src={site.image}
                     alt={site.title}
+                    width={800}
+                    height={192}
                     className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
                   />
                 </div>

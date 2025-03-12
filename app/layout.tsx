@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
+import Link from "next/link";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,10 +32,10 @@ export default function RootLayout({
         <nav className="fixed top-0 left-0 w-full z-50 bg-black/20 backdrop-blur-lg border-b border-white/10">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between h-16">
-              <a href="/" className="text-white font-bold text-xl hover:text-primary transition-colors">Jesadakorn</a>
+              <Link href="/" className="text-white font-bold text-xl hover:text-primary transition-colors">Jesadakorn</Link>
               <div className="flex gap-6">
-                <a href="/" className="text-white/90 hover:text-primary transition-colors">Home</a>
-                <a href="/contact" className="text-white/90 hover:text-primary transition-colors">Contact</a>
+                <Link href="/" className="text-white/90 hover:text-primary transition-colors">Home</Link>
+                <Link href="/contact" className="text-white/90 hover:text-primary transition-colors">Contact</Link>
               </div>
             </div>
           </div>

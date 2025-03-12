@@ -7,7 +7,7 @@ COPY package.json bun.lock ./
 COPY . .
 
 # Install dependencies and build
-RUN bun install --frozen-lockfile
+RUN bun install
 RUN bun run build
 
 # Production stage

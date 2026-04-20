@@ -1,22 +1,15 @@
+import type { Metadata } from "next";
 import Portfolio from "./components/Portfolio";
+import FeaturedWorkSection from "./components/FeaturedWorkSection";
 import Image from "next/image";
 
-export default function Home() {
-  const websites = [
-    {
-      url: "http://epsx.jesadakorn.com",
-      title: "Portfolio Website",
-      description: "My professional portfolio showcase",
-      image: "/epsx.png",
-    },
-    {
-      url: "http://www.jesadakorn.com",
-      title: "Main Website",
-      description: "Personal domain and projects",
-      image: "/web-portfolio.png",
-    },
-  ];
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
 
+export default function Home() {
   return (
     <main className="min-h-screen relative">
       {/* Decorative Background Elements */}
@@ -92,72 +85,7 @@ export default function Home() {
         <Portfolio />
       </div>
 
-      {/* Website Cards */}
-      <section className="container mx-auto p-4 mb-16">
-        <h2 className="text-4xl text-center title-gradient mb-12 relative">
-          My Portfolio Websites
-          <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-full"></div>
-        </h2>
-        <div className="grid md:grid-cols-2 gap-8">
-          {websites.map((site, index) => (
-            <div key={index} className="card group">
-              <div className="card-header">
-                <h3 className="text-2xl font-bold flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-primary group-hover:w-4 transition-all duration-300"></span>
-                  <a
-                    href={site.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="hover:text-primary transition-colors"
-                    style={{ color: "var(--secondary)" }}
-                  >
-                    {site.title}
-                  </a>
-                </h3>
-              </div>
-              <div className="p-6">
-                <div className="rounded-2xl overflow-hidden mb-6 shadow-lg relative group">
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                  <Image
-                    src={site.image}
-                    alt={site.title}
-                    width={800}
-                    height={192}
-                    className="w-full h-48 object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                </div>
-                <p
-                  style={{ color: "var(--muted-foreground)" }}
-                  className="mb-4 text-lg"
-                >
-                  {site.description}
-                </p>
-                <a
-                  href={site.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="pancake-button inline-flex items-center gap-2"
-                >
-                  Visit Site
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M7 17l9.2-9.2M17 17V7H7" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <FeaturedWorkSection />
     </main>
   );
 }

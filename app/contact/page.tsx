@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { EmailSection } from "../components/EmailSection";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/contact",
+  },
+};
 
 export default function Contact() {
   return (

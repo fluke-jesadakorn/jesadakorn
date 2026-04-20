@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Jesadakorn - Portfolio & Contact",
   description: "Personal portfolio and contact information of Jesadakorn, a Full Stack Developer specializing in web development and blockchain technology.",
+  metadataBase: new URL("https://jesadakorn.com"),
 };
 
 export default function RootLayout({

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 700" width="100%" height="100%">
+  <!-- Background -->
+  <rect width="400" height="700" fill="#0b0e11" rx="20" />
+  
+  <!-- LINE Styled Header -->
+  <rect width="400" height="60" fill="#06c755" rx="0" />
+  <text x="20" y="38" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="16">HR AI Chatbot (LINE OA)</text>
+  <circle cx="370" cy="30" r="3" fill="#ffffff" />
+  <circle cx="370" cy="22" r="3" fill="#ffffff" />
+  <circle cx="370" cy="38" r="3" fill="#ffffff" />
+  
+  <!-- Date stamp -->
+  <rect x="150" y="80" width="100" height="24" rx="12" fill="#1b242c" />
+  <text x="200" y="96" fill="#8899a6" font-family="sans-serif" font-size="11" text-anchor="middle">Today</text>
+
+  <!-- User Message -->
+  <path d="M 230 130 H 370 A 10 10 0 0 1 380 140 V 170 A 10 10 0 0 1 370 180 H 240 A 10 10 0 0 1 230 170 Z" fill="#06c755" opacity="0.9" />
+  <text x="365" y="152" fill="#ffffff" font-family="sans-serif" font-size="13" text-anchor="end">ขอลากิจวันที่ 5 กรกฎาคมครับ</text>
+  <text x="365" y="170" fill="#ffffff" font-family="sans-serif" font-size="11" opacity="0.8" text-anchor="end">ธุระสำคัญทางครอบครัว</text>
+  <text x="225" y="178" fill="#8899a6" font-family="sans-serif" font-size="9" text-anchor="end">12:34 PM</text>
+
+  <!-- Bot Avatar and Name -->
+  <circle cx="35" cy="220" r="15" fill="#f0b487" />
+  <text x="35" y="225" fill="#0b0e11" font-family="sans-serif" font-weight="bold" font-size="12" text-anchor="middle">AI</text>
+  <text x="60" y="215" fill="#8899a6" font-family="sans-serif" font-size="11">HR Copilot</text>
+
+  <!-- Bot Response Message -->
+  <path d="M 60 225 H 320 A 10 10 0 0 1 330 235 V 360 A 10 10 0 0 1 320 370 H 70 A 10 10 0 0 1 60 360 Z" fill="#1b242c" />
+  <text x="75" y="250" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="13">กำลังประมวลผลคำขอลา...</text>
+  
+  <line x1="75" y1="265" x2="315" y2="265" stroke="#2c3a47" stroke-width="1" />
+  
+  <text x="75" y="285" fill="#f0b487" font-family="sans-serif" font-size="12">ประเภท: ลากิจ (Personal Leave)</text>
+  <text x="75" y="305" fill="#8899a6" font-family="sans-serif" font-size="12">วันที่: 5 กรกฎาคม (1 วัน)</text>
+  <text x="75" y="325" fill="#8899a6" font-family="sans-serif" font-size="12">เหตุผล: ธุระสำคัญทางครอบครัว</text>
+  
+  <rect x="75" y="340" width="100" height="20" rx="4" fill="#ca7d4d" fill-opacity="0.2" />
+  <text x="85" y="354" fill="#f0b487" font-family="sans-serif" font-weight="bold" font-size="11">สถานะ: รออนุมัติ</text>
+  <text x="335" y="368" fill="#8899a6" font-family="sans-serif" font-size="9">12:34 PM</text>
+
+  <!-- Bot Rich Menu Mockup at Bottom -->
+  <rect x="0" y="520" width="400" height="180" fill="#141a21" rx="0" />
+  <line x1="0" y1="520" x2="400" y2="520" stroke="#2c3a47" stroke-width="1" />
+  <line x1="200" y1="520" x2="200" y2="700" stroke="#2c3a47" stroke-width="1" />
+  <line x1="0" y1="610" x2="400" y2="610" stroke="#2c3a47" stroke-width="1" />
+
+  <!-- Menu item 1 -->
+  <text x="100" y="560" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="14" text-anchor="middle">ขอลางาน</text>
+  <text x="100" y="580" fill="#8899a6" font-family="sans-serif" font-size="11" text-anchor="middle">Request Leave</text>
+
+  <!-- Menu item 2 -->
+  <text x="300" y="560" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="14" text-anchor="middle">เช็กสิทธิ์วันลาคงเหลือ</text>
+  <text x="300" y="580" fill="#8899a6" font-family="sans-serif" font-size="11" text-anchor="middle">Check Leave Quota</text>
+
+  <!-- Menu item 3 -->
+  <text x="100" y="650" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="14" text-anchor="middle">ประวัติการลา</text>
+  <text x="100" y="670" fill="#8899a6" font-family="sans-serif" font-size="11" text-anchor="middle">Leave History</text>
+
+  <!-- Menu item 4 -->
+  <text x="300" y="650" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="14" text-anchor="middle">ติดต่อฝ่ายบุคคล</text>
+  <text x="300" y="670" fill="#8899a6" font-family="sans-serif" font-size="11" text-anchor="middle">Contact HR</text>
+</svg>

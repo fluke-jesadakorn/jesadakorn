@@ -5,11 +5,38 @@ import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import FeaturedWorkSection from "./components/FeaturedWorkSection";
 import Portfolio from "./components/Portfolio";
+import { ProfessionalProfileSection } from "./components/ProfessionalProfileSection";
+import { VideoDemoSection } from "./components/VideoDemoSection";
 import { featuredProjects } from "./components/featured-work-data";
 
 export const metadata: Metadata = {
+  title: "Hybrid IT Manager & AI Systems Architect",
+  description:
+    "Portfolio of Jesadakorn Kirtnu, a hybrid IT Manager and AI Systems Architect building enterprise infrastructure automation, local agentic AI systems, and Folio ERP.",
   alternates: {
     canonical: "/",
+  },
+  openGraph: {
+    title: "Jesadakorn Kirtnu | Hybrid IT Manager & AI Systems Architect",
+    description:
+      "Enterprise infrastructure automation, local agentic AI systems, and Folio ERP workflow orchestration.",
+    url: "/",
+    type: "website",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Jesadakorn Kirtnu — Hybrid IT Manager and AI Systems Architect",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jesadakorn Kirtnu | Hybrid IT Manager & AI Systems Architect",
+    description:
+      "Enterprise infrastructure automation, local agentic AI systems, and Folio ERP workflow orchestration.",
+    images: ["/og.png"],
   },
 };
 
@@ -178,6 +205,8 @@ export default function Home() {
         </div>
       </section>
 
+      <ProfessionalProfileSection />
+      <VideoDemoSection />
       <FeaturedWorkSection />
       <Portfolio />
 

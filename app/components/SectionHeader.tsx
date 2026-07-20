@@ -7,6 +7,7 @@ interface SectionHeaderProps {
   align?: "left" | "center";
   tone?: "default" | "inverse";
   className?: string;
+  titleId?: string;
 }
 
 export default function SectionHeader({
@@ -16,6 +17,7 @@ export default function SectionHeader({
   align = "left",
   tone = "default",
   className,
+  titleId,
 }: SectionHeaderProps) {
   return (
     <div
@@ -37,6 +39,7 @@ export default function SectionHeader({
       </p>
       <div className="space-y-3">
         <h2
+          id={titleId}
           className={cn(
             "font-display text-3xl leading-tight md:text-5xl",
             tone === "inverse"

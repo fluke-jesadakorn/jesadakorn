@@ -1,0 +1,110 @@
+{
+  "identity": {
+    "name": "Jesadakorn Kirtnu",
+    "headline": "Hybrid IT Manager & AI Systems Architect",
+    "location": "Phuket, Thailand",
+    "portrait": "/resume-portrait.jpg"
+  },
+  "summary": "Hybrid IT Manager and AI Systems Architect combining enterprise infrastructure automation, local-first agentic AI, and full-stack software delivery. Leads dependable macOS operations across Thailand and Germany while designing private workflow systems that keep consequential decisions in human hands.",
+  "links": [
+    {
+      "label": "Portfolio",
+      "display": "jesadakorn.com",
+      "url": "https://jesadakorn.com"
+    },
+    {
+      "label": "LinkedIn",
+      "display": "linkedin.com/in/jesadakorn-kirtnu-81b9601b9",
+      "url": "https://www.linkedin.com/in/jesadakorn-kirtnu-81b9601b9/"
+    },
+    {
+      "label": "GitHub",
+      "display": "github.com/fluke-jesadakorn",
+      "url": "https://github.com/fluke-jesadakorn"
+    }
+  ],
+  "languages": ["Thai", "English"],
+  "expertise": [
+    "Enterprise IT Leadership",
+    "Agentic AI & RAG",
+    "Infrastructure Automation",
+    "ERP Workflow Architecture",
+    "Full-Stack Engineering",
+    "Security & Compliance"
+  ],
+  "leadership": [
+    "Certified Workplace Safety Committee Officer",
+    "Cross-border operations across Thailand and Germany"
+  ],
+  "technologies": [
+    "Ansible",
+    "Munki",
+    "Tailscale",
+    "Obsidian",
+    "Apple MLX",
+    "Hermes",
+    "Gemma 4",
+    "Qwen 3.5",
+    "RAG",
+    "SQL Analytics",
+    "Next.js",
+    "Node.js",
+    "Golang",
+    "Rust",
+    "n8n"
+  ],
+  "experience": [
+    {
+      "role": "IT Infrastructure Manager",
+      "organization": "VIGNOLD, Thailand",
+      "period": "2024 - Present",
+      "bullets": [
+        "Automate and manage 50+ macOS workstations with Ansible, Munki, and custom packages, maintaining stable daily operations with minimal manual oversight.",
+        "Coordinate IT operations between Thailand and Germany, including secure Tailscale networking, rapid onboarding, Obsidian-based knowledge systems, and workplace compliance."
+      ]
+    },
+    {
+      "role": "Founder / Product Builder",
+      "organization": "EPSX and Folio ERP",
+      "period": "2024 - Present",
+      "bullets": [
+        "Designed Folio ERP around 84+ workflow states, seven organizational roles, granular RBAC, and Claim Task concurrency protection for distributed accounting teams.",
+        "Built local AI and RAG workflows for financial extraction, policy cross-reference, GL recommendations, account matching, 7% VAT validation, and human veto control."
+      ]
+    },
+    {
+      "role": "Senior Full-Stack Developer",
+      "organization": "Finstable",
+      "period": "2024",
+      "bullets": [
+        "Delivered ERP and cloud infrastructure solutions spanning role-based approvals, backend services, user-facing interfaces, and business workflow integration."
+      ]
+    },
+    {
+      "role": "Head Engineer / Industrial Project Manager",
+      "organization": "Token Miner",
+      "period": "2022 - 2024",
+      "bullets": [
+        "Led mining operations across budgets, hardware, thermal design, power distribution, maintenance, and software-level kernel optimization."
+      ]
+    },
+    {
+      "role": "Freelance Full-Stack Developer",
+      "organization": "Independent",
+      "period": "2021 - 2022",
+      "bullets": [
+        "Built POS, inventory, administration, and workflow-based web applications for business clients."
+      ]
+    }
+  ],
+  "selectedSystems": [
+    "Folio ERP: 84+ states | 7 roles | concurrency-safe approvals",
+    "HR AI Agent: LINE | n8n | private local LLM processing",
+    "AI Contract Analyzer: private RAG | policy cross-reference | risk flags"
+  ],
+  "education": {
+    "degree": "Bachelor of Computer Engineering",
+    "institution": "Prince of Songkla University, Phuket Campus",
+    "period": "2017 - 2021"
+  }
+}

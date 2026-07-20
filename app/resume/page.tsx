@@ -1,447 +1,201 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
-import {
-  ArrowUpRight,
-  BriefcaseBusiness,
-  Github,
-  Globe,
-  GraduationCap,
-  Linkedin,
-  Mail,
-  MapPin,
-  Sparkles,
-} from "lucide-react";
+import { ArrowUpRight, MapPin } from "lucide-react";
 
-import ResumeActions from "../components/ResumeActions";
-import { featuredProjects } from "../components/featured-work-data";
+import { ResumeActions } from "../components/ResumeActions";
+import { publicResume } from "./resume-data";
 
 export const metadata: Metadata = {
-  title: "Resume",
+  title: "Public Resume",
   description:
-    "Resume and CV page for Jesadakorn Kirtnu, focused on current IT Manager work at VIGNOLD in Phuket, collaboration with the German branch, and EPSX & AI Automation systems presented separately.",
+    "One-page public resume for Jesadakorn Kirtnu, a Hybrid IT Manager and AI Systems Architect focused on infrastructure automation, local AI, and enterprise workflow systems.",
   alternates: {
     canonical: "/resume",
   },
 };
 
-const profileFacts = [
-  {
-    label: "Location",
-    value: "Phuket, Thailand",
-  },
-  {
-    label: "Current role",
-    value: "IT Manager at VIGNOLD, Phuket",
-  },
-  {
-    label: "Cross-branch work",
-    value: "Thailand and German branches",
-  },
-  {
-    label: "Side & AI work",
-    value: "EPSX & AI Automation systems",
-  },
-] as const;
-
-const contactLinks = [
-  {
-    label: "Email",
-    value: "jesadakorn.kirtnu@gmail.com",
-    href: "mailto:jesadakorn.kirtnu@gmail.com",
-    icon: Mail,
-  },
-  {
-    label: "LinkedIn",
-    value: "jesadakorn-kirtnu-81b9601b9",
-    href: "https://www.linkedin.com/in/jesadakorn-kirtnu-81b9601b9/",
-    icon: Linkedin,
-  },
-  {
-    label: "GitHub",
-    value: "fluke-jesadakorn",
-    href: "https://github.com/fluke-jesadakorn",
-    icon: Github,
-  },
-  {
-    label: "Portfolio",
-    value: "jesadakorn.com",
-    href: "https://www.jesadakorn.com",
-    icon: Globe,
-  },
-] as const;
-
-const experienceEntries = [
-  {
-    title: "IT Manager",
-    organization: "VIGNOLD, Phuket",
-    period: "Current",
-    bullets: [
-      "Support day-to-day IT operations, process improvement, and dependable business continuity in the Phuket branch.",
-      "Work closely between the Thailand and German branches to keep communication, coordination, and expectations aligned.",
-      "Help teams stay organized and supported through practical problem-solving, stable systems, and people-focused follow-through.",
-    ],
-  },
-  {
-    title: "Side & AI Projects",
-    organization: "@improve-the-world (YouTube & GitHub)",
-    period: "Ongoing",
-    bullets: [
-      "HR AI Agent: Engineered a Modern Workplace system linking a LINE Chatbot (Messaging API) to n8n workflows and a Next.js admin dashboard, using local Ollama Qwen 2.5 LLM for secure, on-premise leave processing.",
-      "AI Contract Analyzer: Built a document intelligence web application utilizing custom RAG (Retrieval-Augmented Generation), PDF text parsers, and semantic search to analyze obligations and flag clause risks.",
-      "EPSX: Designed and developed a public analytics platform (epsx.io) and internal admin console (admin.epsx.io) with gated states and high-density tracking.",
-    ],
-  },
-] as const;
-
-const skillGroups = [
-  {
-    title: "Leadership and coordination",
-    items: [
-      "IT management",
-      "Cross-branch communication",
-      "Process improvement",
-      "Business support",
-      "Team collaboration",
-      "Problem-solving",
-      "AI process optimization",
-    ],
-  },
-  {
-    title: "Frontend and product UI",
-    items: ["Next.js", "React", "Tailwind CSS", "Radix UI", "React Query", "Flutter", "LINE Messaging API"],
-  },
-  {
-    title: "Backend and platform",
-    items: ["Node.js", "NestJS", "Golang", "Rust", "System administration", "Cloud computing", "n8n Workflows"],
-  },
-  {
-    title: "AI and Business systems",
-    items: [
-      "Ollama & Qwen (Local LLMs)",
-      "LangChain",
-      "Vector Databases (RAG)",
-      "Document Intelligence",
-      "ERP-oriented flows",
-      "Role-based approvals",
-    ],
-  },
-  {
-    title: "Domain range",
-    items: [
-      "Financial analytics",
-      "Blockchain technology",
-      "Developer tooling",
-      "Workflow automation",
-      "Cross-functional delivery",
-      "Technical support",
-    ],
-  },
-] as const;
-
-const applicationTargets = [
-  "IT management or IT consulting roles where coordination, responsibility, and day-to-day execution all matter.",
-  "Teams that need someone comfortable working between business needs, local operations, and international collaboration.",
-  "Opportunities where leadership, process improvement, and people-focused communication are central to the role.",
-] as const;
-
-const totalMappedStates = featuredProjects.reduce(
-  (sum, project) =>
-    sum +
-    project.surfaces.reduce((sSum, surface) => sSum + surface.stateCount, 0),
-  0,
-);
-
-const totalSurfaces = featuredProjects.reduce(
-  (sum, project) => sum + project.surfaces.length,
-  0,
-);
-
-const highlights = [
-  {
-    value: `${totalMappedStates}+`,
-    label: "mapped product states",
-    detail: "Across my personal side work and AI automation project surfaces.",
-  },
-  {
-    value: `${totalSurfaces}`,
-    label: "live product surfaces",
-    detail: "Connected interfaces for customer-facing systems, chatbots, and admin consoles.",
-  },
-  {
-    value: "People + systems",
-    label: "working style",
-    detail: "Leadership, coordination, and practical digital product delivery.",
-  },
-] as const;
-
 export default function ResumePage() {
   return (
-    <main className="page-frame">
-      <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8 print:max-w-none print:px-0 print:py-0">
-        <article className="overflow-hidden rounded-[2rem] border border-white/10 bg-[rgba(10,14,18,0.82)] shadow-[0_36px_90px_rgba(0,0,0,0.34)] backdrop-blur-xl print:rounded-none print:border-none print:bg-white print:shadow-none">
-          <section className="border-b border-white/10 px-6 py-8 sm:px-8 sm:py-10 print:border-zinc-200 print:px-0">
-            <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
-              <div className="max-w-3xl space-y-5">
-                <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/12 bg-white/6 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.3em] text-[#f0b487] print:border-zinc-300 print:bg-white print:text-zinc-600">
-                  Resume / CV
-                </div>
+    <main className="resume-page">
+      <section className="resume-toolbar print:hidden" aria-label="Resume actions">
+        <div>
+          <p className="font-mono-ui text-[11px] uppercase tracking-[0.28em] text-[color:var(--accent-strong)]">
+            Public one-page resume
+          </p>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-[color:var(--muted)]">
+            A privacy-conscious professional summary with personal contact details intentionally
+            omitted.
+          </p>
+        </div>
+        <ResumeActions />
+      </section>
 
-                <div className="space-y-4">
-                  <h1 className="font-display text-4xl leading-[0.94] text-zinc-50 sm:text-5xl print:text-zinc-950">
-                    Jesadakorn Kirtnu
-                  </h1>
-                  <p className="text-lg font-semibold text-[#f0b487] print:text-zinc-700">
-                    IT Manager | Cross-Branch Collaboration | Side Project: EPSX
-                  </p>
-                  <p className="max-w-2xl text-base leading-8 text-zinc-300 print:text-zinc-700">
-                    Phuket-based IT Manager currently working at VIGNOLD, with close collaboration
-                    between the Thailand and German branches. EPSX is presented separately as a
-                    side project. Strongest in roles where coordination, responsibility, and
-                    practical problem-solving all need to stay aligned.
-                  </p>
-                </div>
+      <article className="resume-sheet" aria-labelledby="resume-name">
+        <aside className="resume-sidebar">
+          <div className="resume-sidebar-header">
+            <div className="resume-portrait-frame">
+              <Image
+                src={publicResume.identity.portrait}
+                alt={`${publicResume.identity.name} portrait`}
+                width={320}
+                height={320}
+                priority
+                className="h-full w-full object-cover object-center"
+              />
+            </div>
+          </div>
 
-                <ResumeActions />
+          <div className="resume-sidebar-content">
+            <section aria-labelledby="resume-profile-label">
+              <h2 id="resume-profile-label" className="resume-section-bar">
+                Public Profile
+              </h2>
+              <div className="resume-sidebar-block">
+                <p className="resume-small-label">Location</p>
+                <p className="resume-sidebar-value inline-flex items-center gap-2">
+                  <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                  {publicResume.identity.location}
+                </p>
               </div>
+            </section>
 
-              <div className="grid gap-3 sm:grid-cols-3 lg:w-[22rem] lg:grid-cols-1">
-                {profileFacts.map((item) => (
-                  <div
-                    key={item.label}
-                    className="rounded-[1.5rem] border border-white/10 bg-white/5 px-4 py-4 print:border-zinc-200 print:bg-white"
+            <section aria-labelledby="resume-links-label">
+              <h2 id="resume-links-label" className="resume-section-bar">
+                Professional Links
+              </h2>
+              <div className="resume-sidebar-list">
+                {publicResume.links.map((link) => (
+                  <a
+                    key={link.label}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="resume-professional-link"
                   >
-                    <p className="text-[11px] uppercase tracking-[0.28em] text-zinc-400 print:text-zinc-500">
-                      {item.label}
-                    </p>
-                    <p className="mt-3 text-sm font-semibold leading-6 text-zinc-100 print:text-zinc-900">
-                      {item.value}
-                    </p>
-                  </div>
+                    <span className="resume-small-label">{link.label}</span>
+                    <span className="break-words">{link.display}</span>
+                  </a>
                 ))}
               </div>
-            </div>
-          </section>
+            </section>
 
-          <section className="grid gap-10 px-6 py-8 sm:px-8 sm:py-10 lg:grid-cols-[1.2fr_0.8fr] print:gap-8 print:px-0">
-            <div className="space-y-8">
-              <section className="space-y-5">
-                <div className="flex items-center gap-3">
-                  <BriefcaseBusiness className="h-5 w-5 text-[#f0b487] print:text-zinc-700" />
-                  <h2 className="font-display text-2xl text-zinc-50 print:text-zinc-950">
-                    Professional Summary
-                  </h2>
-                </div>
-                <div className="rounded-[1.5rem] border border-white/10 bg-white/4 p-5 print:border-zinc-200 print:bg-white">
-                  <p className="text-base leading-8 text-zinc-300 print:text-zinc-700">
-                    I currently work as an IT Manager at VIGNOLD in Phuket, where an important
-                    part of my role is working closely between the Thailand and German branches.
-                    That experience has strengthened my leadership, communication, and coordination
-                    in an international working environment. Separately, I develop EPSX as a side
-                    project, which reflects my interest in practical digital products and clear,
-                    useful solutions.
-                  </p>
-                </div>
-              </section>
+            <section aria-labelledby="resume-languages-label">
+              <h2 id="resume-languages-label" className="resume-section-bar">
+                Languages
+              </h2>
+              <p className="resume-sidebar-value">{publicResume.languages.join(" / ")}</p>
+            </section>
 
-              <section className="space-y-5">
-                <div className="flex items-center gap-3">
-                  <Sparkles className="h-5 w-5 text-[#f0b487] print:text-zinc-700" />
-                  <h2 className="font-display text-2xl text-zinc-50 print:text-zinc-950">
-                    Experience
-                  </h2>
-                </div>
-                <div className="space-y-4">
-                  {experienceEntries.map((entry) => (
-                    <article
-                      key={entry.title}
-                      className="rounded-[1.5rem] border border-white/10 bg-white/4 p-5 print:border-zinc-200 print:bg-white"
-                    >
-                      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-                        <div>
-                          <h3 className="font-display text-2xl text-zinc-50 print:text-zinc-950">
-                            {entry.title}
-                          </h3>
-                          <p className="mt-2 text-sm font-semibold text-[#f0b487] print:text-zinc-700">
-                            {entry.organization}
-                          </p>
-                        </div>
-                        <p className="text-sm uppercase tracking-[0.22em] text-zinc-500 print:text-zinc-500">
-                          {entry.period}
-                        </p>
-                      </div>
+            <section aria-labelledby="resume-expertise-label">
+              <h2 id="resume-expertise-label" className="resume-section-bar">
+                Core Expertise
+              </h2>
+              <ul className="resume-sidebar-bullets">
+                {publicResume.expertise.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
 
-                      <div className="mt-5 space-y-3">
-                        {entry.bullets.map((bullet) => (
-                          <div
-                            key={bullet}
-                            className="flex gap-3 rounded-[1.15rem] border border-white/8 bg-black/20 px-4 py-3 print:border-zinc-200 print:bg-zinc-50"
-                          >
-                            <div className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#f0b487] print:bg-zinc-700" />
-                            <p className="text-sm leading-7 text-zinc-300 print:text-zinc-700">
-                              {bullet}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </section>
+            <section aria-labelledby="resume-leadership-label">
+              <h2 id="resume-leadership-label" className="resume-section-bar">
+                Leadership &amp; Compliance
+              </h2>
+              <ul className="resume-sidebar-bullets">
+                {publicResume.leadership.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
 
-              <section className="space-y-5">
-                <div className="flex items-center gap-3">
-                  <GraduationCap className="h-5 w-5 text-[#f0b487] print:text-zinc-700" />
-                  <h2 className="font-display text-2xl text-zinc-50 print:text-zinc-950">
-                    Education
-                  </h2>
-                </div>
-                <div className="rounded-[1.5rem] border border-white/10 bg-white/4 p-5 print:border-zinc-200 print:bg-white">
-                  <h3 className="font-display text-xl text-zinc-50 print:text-zinc-950">
-                    Computer Engineering
-                  </h3>
-                  <p className="mt-2 text-sm font-semibold text-[#f0b487] print:text-zinc-700">
-                    Prince of Songkla University, Phuket Campus
-                  </p>
-                  <p className="mt-4 text-sm leading-7 text-zinc-300 print:text-zinc-700">
-                    Formal engineering study combined with practical experience across application
-                    development, system operations, and business-facing technical problem solving.
-                  </p>
-                </div>
-              </section>
-            </div>
+            <section aria-labelledby="resume-education-label">
+              <h2 id="resume-education-label" className="resume-section-bar">
+                Education
+              </h2>
+              <div className="resume-sidebar-block space-y-1">
+                <p className="font-bold text-[color:var(--resume-ink)]">
+                  {publicResume.education.degree}
+                </p>
+                <p>{publicResume.education.institution}</p>
+                <p className="resume-small-label">{publicResume.education.period}</p>
+              </div>
+            </section>
+          </div>
+        </aside>
 
-            <div className="space-y-8">
-              <section className="space-y-5">
-                <h2 className="font-display text-2xl text-zinc-50 print:text-zinc-950">
-                  Contact
-                </h2>
-                <div className="space-y-3">
-                  {contactLinks.map((item) => {
-                    const Icon = item.icon;
+        <div className="resume-main-column">
+          <header className="resume-header">
+            <h1 id="resume-name" className="resume-name">
+              {publicResume.identity.name}
+            </h1>
+            <p className="resume-headline">{publicResume.identity.headline}</p>
+            <div className="resume-rule" />
+            <p className="resume-summary">{publicResume.summary}</p>
+          </header>
 
-                    return (
-                      <a
-                        key={item.label}
-                        href={item.href}
-                        target={item.href.startsWith("http") ? "_blank" : undefined}
-                        rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className="flex items-start gap-4 rounded-[1.5rem] border border-white/10 bg-white/4 p-4 transition-colors hover:border-[#f0b487]/40 hover:bg-white/8 print:border-zinc-200 print:bg-white"
-                      >
-                        <div className="rounded-2xl bg-[#ca7d4d]/12 p-3 text-[#f0b487] print:bg-zinc-100 print:text-zinc-700">
-                          <Icon className="h-5 w-5" />
-                        </div>
-                        <div className="min-w-0">
-                          <p className="text-[11px] uppercase tracking-[0.28em] text-zinc-500 print:text-zinc-500">
-                            {item.label}
-                          </p>
-                          <p className="mt-2 break-all text-sm font-semibold leading-6 text-zinc-100 print:text-zinc-900">
-                            {item.value}
-                          </p>
-                        </div>
-                      </a>
-                    );
-                  })}
-                </div>
-              </section>
-
-              <section className="space-y-5">
-                <h2 className="font-display text-2xl text-zinc-50 print:text-zinc-950">
-                  Selected Highlights
-                </h2>
-                <div className="grid gap-3">
-                  {highlights.map((item) => (
-                    <article
-                      key={item.label}
-                      className="rounded-[1.5rem] border border-white/10 bg-white/4 p-5 print:border-zinc-200 print:bg-white"
-                    >
-                      <p className="font-display text-3xl text-zinc-50 print:text-zinc-950">
-                        {item.value}
-                      </p>
-                      <p className="mt-3 text-[11px] uppercase tracking-[0.28em] text-[#f0b487] print:text-zinc-600">
-                        {item.label}
-                      </p>
-                      <p className="mt-4 text-sm leading-7 text-zinc-300 print:text-zinc-700">
-                        {item.detail}
-                      </p>
-                    </article>
-                  ))}
-                </div>
-              </section>
-
-              <section className="space-y-5">
-                <h2 className="font-display text-2xl text-zinc-50 print:text-zinc-950">
-                  Skills
-                </h2>
-                <div className="space-y-4">
-                  {skillGroups.map((group) => (
-                    <article
-                      key={group.title}
-                      className="rounded-[1.5rem] border border-white/10 bg-white/4 p-5 print:border-zinc-200 print:bg-white"
-                    >
-                      <h3 className="text-base font-semibold text-zinc-100 print:text-zinc-900">
-                        {group.title}
-                      </h3>
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {group.items.map((item) => (
-                          <span
-                            key={item}
-                            className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-zinc-200 print:border-zinc-300 print:bg-zinc-50 print:text-zinc-700"
-                          >
-                            {item}
-                          </span>
-                        ))}
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </section>
-
-              <section className="space-y-5">
-                <h2 className="font-display text-2xl text-zinc-50 print:text-zinc-950">
-                  Open To
-                </h2>
-                <div className="rounded-[1.5rem] border border-white/10 bg-white/4 p-5 print:border-zinc-200 print:bg-white">
-                  <div className="space-y-3">
-                    {applicationTargets.map((item) => (
-                      <div
-                        key={item}
-                        className="flex gap-3 rounded-[1.15rem] border border-white/8 bg-black/20 px-4 py-3 print:border-zinc-200 print:bg-zinc-50"
-                      >
-                        <div className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#f0b487] print:bg-zinc-700" />
-                        <p className="text-sm leading-7 text-zinc-300 print:text-zinc-700">
-                          {item}
-                        </p>
-                      </div>
-                    ))}
+          <section aria-labelledby="resume-experience-label">
+            <h2 id="resume-experience-label" className="resume-section-bar">
+              Experience
+            </h2>
+            <div className="resume-experience-list">
+              {publicResume.experience.map((experience) => (
+                <article key={`${experience.organization}-${experience.period}`} className="resume-experience-item">
+                  <div className="resume-experience-heading">
+                    <div>
+                      <h3>{experience.role}</h3>
+                      <p>{experience.organization}</p>
+                    </div>
+                    <p className="resume-period">{experience.period}</p>
                   </div>
-                </div>
-              </section>
+                  <ul>
+                    {experience.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
             </div>
           </section>
 
-          <section className="border-t border-white/10 px-6 py-6 sm:px-8 print:border-zinc-200 print:px-0">
-            <div className="flex flex-col gap-4 text-sm text-zinc-400 sm:flex-row sm:items-center sm:justify-between print:text-zinc-600">
-              <div className="flex flex-wrap items-center gap-4">
-                <span className="inline-flex items-center gap-2">
-                  <MapPin className="h-4 w-4" />
-                  Phuket, Thailand
-                </span>
-                <span>Formatted to print cleanly for job applications.</span>
-              </div>
+          <section aria-labelledby="resume-systems-label">
+            <h2 id="resume-systems-label" className="resume-section-bar">
+              Selected Systems
+            </h2>
+            <ul className="resume-main-bullets">
+              {publicResume.selectedSystems.map((system) => (
+                <li key={system}>{system}</li>
+              ))}
+            </ul>
+          </section>
 
-              <div className="flex flex-wrap gap-4 print:hidden">
-                <Link href="/" className="inline-flex items-center gap-2 hover:text-zinc-200">
-                  Portfolio
-                  <ArrowUpRight className="h-4 w-4" />
-                </Link>
-                <Link href="/contact" className="inline-flex items-center gap-2 hover:text-zinc-200">
-                  Contact
-                  <ArrowUpRight className="h-4 w-4" />
-                </Link>
-              </div>
+          <section aria-labelledby="resume-technology-label">
+            <h2 id="resume-technology-label" className="resume-section-bar">
+              Technology
+            </h2>
+            <div className="resume-technology-list">
+              {publicResume.technologies.map((technology) => (
+                <span key={technology}>{technology}</span>
+              ))}
             </div>
           </section>
-        </article>
+
+          <footer className="resume-sheet-footer">
+            <span>Public professional resume</span>
+            <span>Personal contact details intentionally omitted</span>
+          </footer>
+        </div>
+      </article>
+
+      <div className="resume-page-footer print:hidden">
+        <Link href="/" className="resume-footer-link">
+          Return to portfolio
+          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
+        <Link href="/contact" className="resume-footer-link">
+          Contact through the portfolio
+          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+        </Link>
       </div>
     </main>
   );

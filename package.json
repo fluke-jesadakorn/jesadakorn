@@ -10,7 +10,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "resume:pdf": "uv run --with reportlab==4.4.9 --with pillow python scripts/generate_resume.py"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

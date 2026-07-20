@@ -39,6 +39,7 @@ Open [http://localhost:3000](http://localhost:3000).
 ```bash
 bun dev       # Start the local development server
 bun run build # Create a production build
+bun run resume:pdf # Regenerate the one-page public resume PDF
 bun start     # Serve the production build
 bun run lint  # Run the configured Next.js lint command
 ```
@@ -56,7 +57,18 @@ app/
   contact/page.tsx                 Contact page
 public/
   og.png                           Social preview image
+  Jesadakorn-Kirtnu-Resume.pdf     Generated public one-page resume
 ```
+
+## Updating the Resume
+
+The web resume and downloadable PDF share the same public content source:
+
+1. Edit `content/resume.public.json`.
+2. Run `bun run resume:pdf` to refresh the metadata-stripped portrait and PDF.
+3. Run `bun run build` to validate the website.
+
+The generator uses `uv` to run Python with ReportLab and Pillow. The public resume intentionally excludes age, birth date, nationality, street address, phone number, and personal email.
 
 ## Related Links
 

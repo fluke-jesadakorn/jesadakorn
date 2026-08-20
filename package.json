@@ -10,10 +10,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "resume:pdf": "uv run --with python-docx==1.2.0 --with pillow python scripts/generate_resume.py"
+    "lint": "eslint .",
+    "resume:pdf": "uv run --with python-docx==1.2.0 python scripts/generate_resume.py"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.479.0",

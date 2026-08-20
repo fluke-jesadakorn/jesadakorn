@@ -1,74 +1,48 @@
-# Jesadakorn Kirtnu — Portfolio Website
+# Jesadakorn Kirtnu — Portfolio
 
-Personal portfolio website for Jesadakorn Kirtnu, a technology professional based in Phuket, Thailand.
+Personal portfolio for Jesadakorn Kirtnu, a technical generalist based in Phuket, Thailand. The site connects three areas of work: technology operations, software, and workflow improvement.
 
-The site presents experience across IT operations, software development, workflow automation, business systems, technical projects, and applied AI prototypes.
+## Structure
 
-## Website Content
+- Homepage: concise positioning, capabilities, selected work, experience, and contact path
+- Static case studies:
+  - `/work/epsx` — live side project
+  - `/work/folio-erp` — working prototype
+  - `/work/hr-ai-agent` — applied AI experiment
+  - `/work/ai-contract-analyzer` — applied AI experiment
+- `/resume` — single-column HTML resume with the one-page tagged PDF at the existing public URL
+- `/contact` — separate paths for role opportunities and project collaboration
 
-- Professional profile covering IT Operations & Infrastructure, Software & Business Systems, Workflow Automation & Applied AI, Project & Process Coordination, and Data & Technical Engineering.
-- Folio ERP working prototype covering role-based financial workflows, task review, local AI assistance, and human approval steps.
-- Interactive case studies with explicit status labels for the live EPSX side project and the HR AI Agent and AI Contract Analyzer prototypes.
-- Responsive YouTube demo gallery with privacy-enhanced embedded players:
-  - [Folio ERP](https://youtu.be/pdDgCdmcYdA)
-  - [HR AI Agent](https://youtu.be/jhZXK7BY-kY)
-  - [AI Contract Analyzer](https://youtu.be/HYIIDeUxzis)
-- Resume/CV and direct contact pages.
+Project status and available outputs are explicit. EPSX links to its repository, public site, and admin site. Folio ERP includes a click-to-load YouTube demo. Experiments without public output URLs do not show repository, live-product, or demo links.
 
 ## Technology
 
-- Next.js App Router with React and TypeScript
-- Tailwind CSS 4 and custom design tokens
-- Lucide icons and `next/font`
-- Bun package manager
-- Static portfolio content with responsive, accessible layouts
+- Next.js App Router, React, and TypeScript
+- Tailwind CSS 4 with custom design tokens
+- `next/image` and `next/font`
+- Vercel Web Analytics with project, resume, and contact conversion events
+- Metadata routes for `robots.txt` and `sitemap.xml`
+- Person and project JSON-LD
 
-## Getting Started
-
-Install dependencies and start the development server:
+## Development
 
 ```bash
 bun install
-bun dev
+bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-## Available Scripts
+Validation commands:
 
 ```bash
-bun dev       # Start the local development server
-bun run build # Create a production build
-bun run resume:pdf # Regenerate the one-page public resume PDF
-bun start     # Serve the production build
-bun run lint  # Run the configured Next.js lint command
+bun run lint
+bun run build
+bun run resume:pdf
+git diff --check
 ```
 
-## Project Structure
+## Resume
 
-```text
-app/
-  page.tsx                         Homepage and metadata
-  components/ProfessionalProfileSection.tsx
-  components/VideoDemoSection.tsx
-  components/FeaturedWorkSection.tsx
-  components/Portfolio.tsx
-  resume/page.tsx                  Resume/CV page
-  contact/page.tsx                 Contact page
-public/
-  og.png                           Social preview image
-  Jesadakorn-Kirtnu-Resume.pdf     Generated public one-page resume
-```
-
-## Updating the Resume
-
-The web resume and downloadable PDF share the same public content source:
-
-1. Edit `content/resume.public.json`.
-2. Run `bun run resume:pdf` to refresh the metadata-stripped portrait and PDF.
-3. Run `bun run build` to validate the website.
-
-The generator uses `uv` with `python-docx==1.2.0` and Pillow to build a temporary semantic DOCX, then exports a tagged PDF/UA file through LibreOffice. Install LibreOffice and make `soffice` (or `libreoffice`) available on `PATH` before running `bun run resume:pdf`. The public resume intentionally excludes age, birth date, nationality, street address, phone number, and personal email.
+The HTML resume and downloadable PDF share content from `content/resume.public.json`. The PDF generator creates an ATS-first, tagged, one-page PDF through LibreOffice and keeps the public filename `Jesadakorn-Kirtnu-Resume.pdf`.
 
 ## Related Links
 

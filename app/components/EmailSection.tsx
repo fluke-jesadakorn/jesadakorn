@@ -21,39 +21,21 @@ export function EmailSection() {
   };
 
   return (
-    <article className="contact-card">
-      <div className="flex items-start justify-between gap-4">
-        <div className="space-y-4">
-          <div className="rounded-2xl bg-[color:var(--accent-soft)] p-3 text-[color:var(--accent-strong)] w-fit">
-            <Mail className="h-5 w-5" />
-          </div>
-          <div>
-            <p className="font-mono-ui text-[11px] uppercase tracking-[0.28em] text-[color:var(--accent-strong)]">
-              Email
-            </p>
-            <a
-              href={`mailto:${emailAddress}`}
-              className="mt-3 block font-display text-2xl text-[color:var(--foreground)] break-all"
-            >
-              {emailAddress}
-            </a>
-            <p className="mt-3 max-w-md text-sm leading-7 text-[color:var(--muted)]">
-              The fastest route for roles involving technology operations, software, automation,
-              or technical project work.
-            </p>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={copyEmail}
-          className="button-secondary shrink-0 px-4 py-3 text-sm"
-          aria-label="Copy email address"
-        >
-          {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-          {copied ? "Copied" : "Copy"}
-        </button>
+    <section aria-labelledby="direct-email-heading" className="direct-email">
+      <div>
+        <p className="eyebrow">Direct email</p>
+        <h2 id="direct-email-heading" className="mt-3 font-display text-2xl text-[color:var(--foreground)]">
+          {emailAddress}
+        </h2>
+        <p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">
+          Prefer to write your own subject? Copy the address and use any email client.
+        </p>
       </div>
-    </article>
+      <button type="button" onClick={copyEmail} className="button-secondary shrink-0" aria-label="Copy email address">
+        {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+        {copied ? "Copied" : "Copy email"}
+      </button>
+      <Mail className="sr-only" aria-hidden="true" />
+    </section>
   );
 }

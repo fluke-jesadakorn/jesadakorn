@@ -1,130 +1,96 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, BriefcaseBusiness, Globe, Linkedin, MapPin } from "lucide-react";
+import { ArrowUpRight, BriefcaseBusiness, Linkedin, MapPin, Wrench } from "lucide-react";
 
 import { EmailSection } from "../components/EmailSection";
 import SectionHeader from "../components/SectionHeader";
+import { TrackedAnchor } from "../components/TrackedLink";
 
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact Jesadakorn Kirtnu about roles in technology operations, software, automation, business systems, and technical project delivery.",
-  alternates: {
-    canonical: "/contact",
+    "Contact Jesadakorn Kirtnu about a role opportunity or project collaboration in operations, software, automation, and technical delivery.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Contact Jesadakorn Kirtnu",
+    description: "Start a conversation about a role opportunity or project collaboration.",
+    url: "/contact",
   },
 };
 
-const contactActions = [
-  {
-    label: "LinkedIn",
-    href: "https://www.linkedin.com/in/jesadakorn-kirtnu-81b9601b9/",
-    value: "linkedin.com/in/jesadakorn-kirtnu-81b9601b9",
-    note: "Professional background, experience, and direct hiring conversations.",
-    icon: Linkedin,
-  },
-  {
-    label: "Website",
-    href: "https://www.jesadakorn.com",
-    value: "jesadakorn.com",
-    note: "Portfolio overview and selected product work.",
-    icon: Globe,
-  },
-] as const;
+const emailAddress = "jesadakorn.kirtnu@gmail.com";
+const roleMailto = `mailto:${emailAddress}?subject=${encodeURIComponent("Role opportunity — Jesadakorn Kirtnu")}`;
+const projectMailto = `mailto:${emailAddress}?subject=${encodeURIComponent("Project collaboration — Jesadakorn Kirtnu")}`;
 
-const conversationPoints = [
-  "IT operations and infrastructure roles involving devices, networks, documentation, and user support.",
-  "Software and business-system roles spanning frontend, backend, integrations, and workflow-based applications.",
-  "Automation, applied AI, and technical project roles where process understanding and cross-team coordination matter.",
-] as const;
-
-function ContactLinkCard({
-  label,
-  href,
-  value,
-  note,
-  icon: Icon,
-}: (typeof contactActions)[number]) {
+export default function ContactPage() {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="contact-card block">
-      <div className="flex items-start justify-between gap-4">
-        <div className="space-y-4">
-          <div className="rounded-2xl bg-[color:var(--accent-soft)] p-3 text-[color:var(--accent-strong)] w-fit">
-            <Icon className="h-5 w-5" />
-          </div>
-          <div>
-            <p className="font-mono-ui text-[11px] uppercase tracking-[0.28em] text-[color:var(--accent-strong)]">
-              {label}
-            </p>
-            <p className="mt-3 font-display text-2xl text-[color:var(--foreground)] break-all">
-              {value}
-            </p>
-            <p className="mt-3 max-w-md text-sm leading-7 text-[color:var(--muted)]">
-              {note}
-            </p>
-          </div>
-        </div>
-
-        <div className="button-secondary shrink-0 px-4 py-3 text-sm">
-          Open
-          <ArrowUpRight className="h-4 w-4" />
-        </div>
-      </div>
-    </a>
-  );
-}
-
-export default function Contact() {
-  return (
-    <main className="page-frame">
-      <section className="mx-auto w-full max-w-6xl px-4 pb-10 pt-10 sm:px-6 lg:px-8">
+    <main id="main-content" tabIndex={-1} className="page-frame outline-none">
+      <section className="section-block pb-10 pt-12 sm:pt-16">
         <SectionHeader
           as="h1"
           eyebrow="Contact"
-          title="Let's talk about where my experience could support your team."
-          description="For roles across technology operations, software, automation, or technical project delivery, email is the most direct way to reach me."
+          title="Choose the conversation you want to start."
+          description="I’m based in Phuket and open to roles or project work where operations, software, automation, and practical delivery overlap."
         />
+        <p className="mt-6 inline-flex items-center gap-2 text-sm text-[color:var(--muted)]">
+          <MapPin className="h-4 w-4 text-[color:var(--accent-strong)]" aria-hidden="true" />
+          Phuket, Thailand
+        </p>
       </section>
 
-      <section className="mx-auto grid w-full max-w-6xl gap-6 px-4 pb-24 sm:px-6 lg:grid-cols-[0.92fr_1.08fr] lg:px-8">
-        <div className="section-shell px-6 py-7 md:px-8 md:py-8">
-          <div className="space-y-8">
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] bg-[color:var(--background-strong)] px-4 py-2 text-sm text-[color:var(--foreground)]">
-                <MapPin className="h-4 w-4 text-[color:var(--accent-strong)]" />
-                Phuket, Thailand
-              </div>
-              <h2 className="font-display text-3xl text-[color:var(--foreground)]">
-                Practical across systems, software, workflows, and coordination.
-              </h2>
-              <p className="text-base leading-8 text-[color:var(--muted)]">
-                I&apos;m open to conversations with teams that value hands-on problem-solving,
-                clear communication, and technology that supports day-to-day work.
-              </p>
-            </div>
+      <section aria-label="Contact options" className="section-block pt-4">
+        <div className="grid gap-5 lg:grid-cols-2">
+          <article className="contact-option">
+            <BriefcaseBusiness className="h-7 w-7 text-[color:var(--accent-strong)]" aria-hidden="true" />
+            <p className="mt-6 eyebrow">For hiring teams</p>
+            <h2 className="mt-3 font-display text-3xl text-[color:var(--foreground)]">Role opportunity</h2>
+            <p className="mt-4 flex-1 text-base leading-8 text-[color:var(--muted)]">
+              For full-time or contract roles across IT operations, software, automation, business systems, or technical project delivery.
+            </p>
+            <TrackedAnchor
+              href={roleMailto}
+              eventName="contact_role_click"
+              eventData={{ source: "contact_page" }}
+              className="button-primary mt-7 w-fit"
+            >
+              Email about a role
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </TrackedAnchor>
+          </article>
 
-            <div className="metric-panel">
-              <div className="flex items-center gap-3 text-[color:var(--foreground)]">
-                <BriefcaseBusiness className="h-5 w-5 text-[color:var(--accent-strong)]" />
-                <p className="font-display text-2xl">Open to conversations around</p>
-              </div>
-              <div className="mt-5 space-y-4">
-                {conversationPoints.map((item) => (
-                  <div
-                    key={item}
-                    className="rounded-2xl border border-[color:var(--line)] bg-[color:var(--background-strong)] px-4 py-4"
-                  >
-                    <p className="text-sm leading-7 text-[color:var(--foreground)]">{item}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <article className="contact-option">
+            <Wrench className="h-7 w-7 text-[color:var(--accent-strong)]" aria-hidden="true" />
+            <p className="mt-6 eyebrow">For project clients</p>
+            <h2 className="mt-3 font-display text-3xl text-[color:var(--foreground)]">Project collaboration</h2>
+            <p className="mt-4 flex-1 text-base leading-8 text-[color:var(--muted)]">
+              For scoped systems, workflow automation, prototypes, integrations, or technical coordination around an existing process.
+            </p>
+            <TrackedAnchor
+              href={projectMailto}
+              eventName="contact_project_click"
+              eventData={{ source: "contact_page" }}
+              className="button-primary mt-7 w-fit"
+            >
+              Email about a project
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </TrackedAnchor>
+          </article>
         </div>
 
-        <div className="grid gap-4">
+        <div className="mt-5 grid gap-5 lg:grid-cols-[1.35fr_0.65fr]">
           <EmailSection />
-          {contactActions.map((item) => (
-            <ContactLinkCard key={item.label} {...item} />
-          ))}
+          <a
+            href="https://www.linkedin.com/in/jesadakorn-kirtnu-81b9601b9/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="linkedin-card"
+          >
+            <Linkedin className="h-6 w-6 text-[color:var(--accent-strong)]" aria-hidden="true" />
+            <span>
+              <span className="eyebrow">LinkedIn</span>
+              <span className="mt-2 block font-display text-xl text-[color:var(--foreground)]">Jesadakorn Kirtnu</span>
+            </span>
+            <ArrowUpRight className="ml-auto h-5 w-5" aria-hidden="true" />
+          </a>
         </div>
       </section>
     </main>

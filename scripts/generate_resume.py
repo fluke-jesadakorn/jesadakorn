@@ -11,7 +11,6 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-from PIL import Image
 from docx import Document
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
@@ -21,8 +20,6 @@ from docx.shared import Inches, Mm, Pt, RGBColor
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = ROOT / "content" / "resume.public.json"
-SOURCE_PORTRAIT_PATH = ROOT / "public" / "Portrait.jpg"
-PUBLIC_PORTRAIT_PATH = ROOT / "public" / "resume-portrait.jpg"
 OUTPUT_PATH = ROOT / "public" / "Jesadakorn-Kirtnu-Resume.pdf"
 
 FONT_NAME = "Arial"
@@ -45,17 +42,6 @@ PDF_EXPORT_FILTER = (
 def load_data() -> dict:
     with DATA_PATH.open("r", encoding="utf-8") as handle:
         return json.load(handle)
-
-
-def prepare_public_portrait() -> None:
-    """Re-encode the web portrait without EXIF or other source metadata."""
-    with Image.open(SOURCE_PORTRAIT_PATH) as source:
-        source.convert("RGB").save(
-            PUBLIC_PORTRAIT_PATH,
-            "JPEG",
-            quality=91,
-            optimize=True,
-        )
 
 
 def set_ooxml_font_size(run_properties, size: float) -> None:
@@ -357,8 +343,6 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     data = load_data()
-    prepare_public_portrait()
-
     with tempfile.TemporaryDirectory(prefix="jesadakorn-resume-") as temporary_directory:
         work_dir = Path(temporary_directory)
         docx_path = work_dir / "Jesadakorn-Kirtnu-Resume.docx"
@@ -373,7 +357,6 @@ def main() -> None:
         export_pdf(docx_path, OUTPUT_PATH, work_dir)
 
     print(f"Generated {OUTPUT_PATH.relative_to(ROOT)}")
-    print(f"Generated {PUBLIC_PORTRAIT_PATH.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

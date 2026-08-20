@@ -46,7 +46,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SiteNav />
         <div className="pt-[4.5rem] print:pt-0">{children}</div>
         <Toaster position="top-right" richColors theme="dark" />
-        {process.env.VERCEL === "1" ? <Analytics /> : null}
+        <Analytics />
       </body>
     </html>
   );

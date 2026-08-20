@@ -68,7 +68,7 @@ The web resume and downloadable PDF share the same public content source:
 2. Run `bun run resume:pdf` to refresh the metadata-stripped portrait and PDF.
 3. Run `bun run build` to validate the website.
 
-The generator uses `uv` to run Python with ReportLab and Pillow. The public resume intentionally excludes age, birth date, nationality, street address, phone number, and personal email.
+The generator uses `uv` with `python-docx==1.2.0` and Pillow to build a temporary semantic DOCX, then exports a tagged PDF/UA file through LibreOffice. Install LibreOffice and make `soffice` (or `libreoffice`) available on `PATH` before running `bun run resume:pdf`. The public resume intentionally excludes age, birth date, nationality, street address, phone number, and personal email.
 
 ## Related Links
 

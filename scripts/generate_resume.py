@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
-"""Generate the public one-page resume from content/resume.public.json."""
+"""Generate the public one-page, tagged resume PDF from shared JSON content."""
 
 from __future__ import annotations
 
+import argparse
 import json
+import os
+import shutil
+import subprocess
+import tempfile
 from pathlib import Path
-from xml.sax.saxutils import escape
 
 from PIL import Image
-from reportlab.lib.colors import HexColor
-from reportlab.lib.enums import TA_LEFT
-from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.lib.utils import ImageReader
-from reportlab.pdfbase.pdfmetrics import stringWidth
-from reportlab.pdfgen import canvas
-from reportlab.platypus import Paragraph
+from docx import Document
+from docx.oxml import OxmlElement
+from docx.oxml.ns import qn
+from docx.opc.constants import RELATIONSHIP_TYPE as RT
+from docx.shared import Inches, Mm, Pt, RGBColor
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -24,14 +25,21 @@ SOURCE_PORTRAIT_PATH = ROOT / "public" / "Portrait.jpg"
 PUBLIC_PORTRAIT_PATH = ROOT / "public" / "resume-portrait.jpg"
 OUTPUT_PATH = ROOT / "public" / "Jesadakorn-Kirtnu-Resume.pdf"
 
-NAVY = HexColor("#273B51")
-NAVY_DEEP = HexColor("#17283A")
-INK = HexColor("#18212B")
-MUTED = HexColor("#596572")
-PAPER = HexColor("#FFFFFF")
-SIDEBAR = HexColor("#EFF3F6")
-ACCENT = HexColor("#B86F43")
-LINE = HexColor("#D5DCE2")
+FONT_NAME = "Arial"
+NAVY = RGBColor.from_string("273B51")
+INK = RGBColor.from_string("18212B")
+ACCENT = RGBColor.from_string("B86F43")
+
+PDF_EXPORT_OPTIONS = {
+    "PDFUACompliance": {"type": "boolean", "value": "true"},
+    "UseTaggedPDF": {"type": "boolean", "value": "true"},
+    "ExportBookmarks": {"type": "boolean", "value": "true"},
+    "DisplayPDFDocumentTitle": {"type": "boolean", "value": "true"},
+    "EnableTextAccessForAccessibilityTools": {"type": "boolean", "value": "true"},
+}
+PDF_EXPORT_FILTER = (
+    "pdf:writer_pdf_Export:" + json.dumps(PDF_EXPORT_OPTIONS, separators=(",", ":"))
+)
 
 
 def load_data() -> dict:
@@ -40,7 +48,7 @@ def load_data() -> dict:
 
 
 def prepare_public_portrait() -> None:
-    """Re-encode the portrait without EXIF or other source metadata."""
+    """Re-encode the web portrait without EXIF or other source metadata."""
     with Image.open(SOURCE_PORTRAIT_PATH) as source:
         source.convert("RGB").save(
             PUBLIC_PORTRAIT_PATH,
@@ -50,373 +58,320 @@ def prepare_public_portrait() -> None:
         )
 
 
-def paragraph_style(
-    name: str,
+def set_ooxml_font_size(run_properties, size: float) -> None:
+    half_points = f"{size * 2:g}"
+    for tag in ("w:sz", "w:szCs"):
+        size_element = run_properties.find(qn(tag))
+        if size_element is None:
+            size_element = OxmlElement(tag)
+            run_properties.append(size_element)
+        size_element.set(qn("w:val"), half_points)
+
+
+def set_style_font(style, *, size: float, color: RGBColor, bold: bool = False) -> None:
+    style.font.name = FONT_NAME
+    style.font.size = Pt(size)
+    style.font.color.rgb = color
+    style.font.bold = bold
+    style.font.italic = False
+    style.font.underline = False
+
+    run_properties = style.element.get_or_add_rPr()
+    run_fonts = run_properties.find(qn("w:rFonts"))
+    if run_fonts is None:
+        run_fonts = OxmlElement("w:rFonts")
+        run_properties.insert(0, run_fonts)
+    for attribute in ("ascii", "hAnsi", "eastAsia", "cs"):
+        run_fonts.set(qn(f"w:{attribute}"), FONT_NAME)
+
+    set_ooxml_font_size(run_properties, size)
+    for inherited_tag in ("w:spacing", "w:kern"):
+        inherited_element = run_properties.find(qn(inherited_tag))
+        if inherited_element is not None:
+            run_properties.remove(inherited_element)
+
+    language = run_properties.find(qn("w:lang"))
+    if language is None:
+        language = OxmlElement("w:lang")
+        run_properties.append(language)
+    language.set(qn("w:val"), "en-US")
+
+
+def format_run(
+    run,
     *,
-    font_name: str = "Helvetica",
-    font_size: float = 8,
-    leading: float = 10,
-    color=INK,
-    space_after: float = 0,
-) -> ParagraphStyle:
-    return ParagraphStyle(
-        name,
-        fontName=font_name,
-        fontSize=font_size,
-        leading=leading,
-        textColor=color,
-        alignment=TA_LEFT,
-        spaceAfter=space_after,
-        allowWidows=0,
-        allowOrphans=0,
-    )
+    size: float = 9.25,
+    color: RGBColor = INK,
+    bold: bool | None = None,
+    underline: bool | None = None,
+) -> None:
+    run.font.name = FONT_NAME
+    run.font.size = Pt(size)
+    run.font.color.rgb = color
+    if bold is not None:
+        run.bold = bold
+    if underline is not None:
+        run.underline = underline
+
+    run_properties = run._element.get_or_add_rPr()
+    run_fonts = run_properties.find(qn("w:rFonts"))
+    if run_fonts is None:
+        run_fonts = OxmlElement("w:rFonts")
+        run_properties.insert(0, run_fonts)
+    for attribute in ("ascii", "hAnsi", "eastAsia", "cs"):
+        run_fonts.set(qn(f"w:{attribute}"), FONT_NAME)
+    set_ooxml_font_size(run_properties, size)
 
 
-def draw_paragraph(
-    pdf: canvas.Canvas,
-    text: str,
-    *,
-    x: float,
-    top: float,
-    width: float,
-    style: ParagraphStyle,
-) -> float:
-    paragraph = Paragraph(escape(text), style)
-    _, height = paragraph.wrap(width, A4[1])
-    paragraph.drawOn(pdf, x, top - height)
-    return top - height
+def add_hyperlink(paragraph, text: str, url: str) -> None:
+    """Append a descriptive, externally linked run to a paragraph."""
+    relationship_id = paragraph.part.relate_to(url, RT.HYPERLINK, is_external=True)
+    hyperlink = OxmlElement("w:hyperlink")
+    hyperlink.set(qn("r:id"), relationship_id)
+
+    run = paragraph.add_run(text)
+    format_run(run, color=ACCENT, underline=True)
+    run_element = run._element
+    paragraph._element.remove(run_element)
+    hyperlink.append(run_element)
+    paragraph._element.append(hyperlink)
 
 
-def draw_section_bar(
-    pdf: canvas.Canvas,
-    title: str,
-    *,
-    x: float,
-    top: float,
-    width: float,
-) -> float:
-    height = 22
-    pdf.setFillColor(NAVY)
-    pdf.roundRect(x, top - height, width, height, 2.5, stroke=0, fill=1)
-    pdf.setFillColor(PAPER)
-    pdf.setFont("Helvetica-Bold", 8.5)
-    pdf.drawString(x + 8, top - 14.5, title.upper())
-    return top - height - 12
+def configure_document(document: Document) -> None:
+    section = document.sections[0]
+    section.page_width = Mm(210)
+    section.page_height = Mm(297)
+    section.left_margin = Inches(0.55)
+    section.right_margin = Inches(0.55)
+    section.top_margin = Inches(0.45)
+    section.bottom_margin = Inches(0.45)
+    section.header_distance = Inches(0.2)
+    section.footer_distance = Inches(0.2)
+
+    styles = document.styles
+
+    normal = styles["Normal"]
+    set_style_font(normal, size=9.25, color=INK)
+    normal.paragraph_format.space_before = Pt(0)
+    normal.paragraph_format.space_after = Pt(1)
+    normal.paragraph_format.line_spacing = Pt(10.6)
+    normal.paragraph_format.widow_control = False
+
+    title = styles["Title"]
+    set_style_font(title, size=20, color=NAVY, bold=True)
+    title.paragraph_format.space_before = Pt(0)
+    title.paragraph_format.space_after = Pt(0)
+    title.paragraph_format.line_spacing = Pt(21)
+    title.paragraph_format.keep_with_next = True
+    title_properties = title.element.get_or_add_pPr()
+    title_border = title_properties.find(qn("w:pBdr"))
+    if title_border is not None:
+        title_properties.remove(title_border)
+
+    subtitle = styles["Subtitle"]
+    set_style_font(subtitle, size=10, color=ACCENT, bold=True)
+    subtitle.paragraph_format.space_before = Pt(0)
+    subtitle.paragraph_format.space_after = Pt(2)
+    subtitle.paragraph_format.line_spacing = Pt(11.5)
+    subtitle.paragraph_format.keep_with_next = True
+    subtitle_properties = subtitle.element.get_or_add_pPr()
+    subtitle_numbering = subtitle_properties.find(qn("w:numPr"))
+    if subtitle_numbering is not None:
+        subtitle_properties.remove(subtitle_numbering)
+
+    heading_one = styles["Heading 1"]
+    set_style_font(heading_one, size=10.5, color=NAVY, bold=True)
+    heading_one.paragraph_format.space_before = Pt(4)
+    heading_one.paragraph_format.space_after = Pt(1)
+    heading_one.paragraph_format.line_spacing = Pt(11.5)
+    heading_one.paragraph_format.keep_with_next = True
+    heading_one.paragraph_format.keep_together = True
+
+    heading_two = styles["Heading 2"]
+    set_style_font(heading_two, size=9.5, color=NAVY, bold=True)
+    heading_two.paragraph_format.space_before = Pt(2)
+    heading_two.paragraph_format.space_after = Pt(0)
+    heading_two.paragraph_format.line_spacing = Pt(10.5)
+    heading_two.paragraph_format.keep_with_next = True
+    heading_two.paragraph_format.keep_together = True
+
+    list_bullet = styles["List Bullet"]
+    set_style_font(list_bullet, size=9.25, color=INK)
+    list_bullet.paragraph_format.left_indent = Inches(0.2)
+    list_bullet.paragraph_format.first_line_indent = Inches(-0.12)
+    list_bullet.paragraph_format.space_before = Pt(0)
+    list_bullet.paragraph_format.space_after = Pt(0)
+    list_bullet.paragraph_format.line_spacing = Pt(10.4)
+    list_bullet.paragraph_format.widow_control = False
 
 
-def draw_bullet(
-    pdf: canvas.Canvas,
-    text: str,
-    *,
-    x: float,
-    top: float,
-    width: float,
-    style: ParagraphStyle,
-    color=ACCENT,
-) -> float:
-    pdf.setFillColor(color)
-    pdf.circle(x + 2.1, top - 4.8, 1.5, stroke=0, fill=1)
-    bottom = draw_paragraph(pdf, text, x=x + 9, top=top, width=width - 9, style=style)
-    return bottom - 4.2
+def add_bullet(document: Document, text: str) -> None:
+    paragraph = document.add_paragraph(style="List Bullet")
+    paragraph.add_run(text)
 
 
-def draw_portrait(pdf: canvas.Canvas, center_x: float, center_y: float, radius: float) -> None:
-    image = ImageReader(str(PUBLIC_PORTRAIT_PATH))
-    image_width, image_height = image.getSize()
-    diameter = radius * 2
-    scale = max(diameter / image_width, diameter / image_height)
-    draw_width = image_width * scale
-    draw_height = image_height * scale
-
-    pdf.saveState()
-    path = pdf.beginPath()
-    path.circle(center_x, center_y, radius)
-    pdf.clipPath(path, stroke=0, fill=0)
-    pdf.drawImage(
-        image,
-        center_x - draw_width / 2,
-        center_y - draw_height / 2,
-        width=draw_width,
-        height=draw_height,
-        mask="auto",
-    )
-    pdf.restoreState()
-
-    pdf.setStrokeColor(PAPER)
-    pdf.setLineWidth(4)
-    pdf.circle(center_x, center_y, radius + 1, stroke=1, fill=0)
-    pdf.setStrokeColor(NAVY)
-    pdf.setLineWidth(1.5)
-    pdf.circle(center_x, center_y, radius + 4, stroke=1, fill=0)
+def add_section_heading(document: Document, text: str) -> None:
+    document.add_paragraph(text.upper(), style="Heading 1")
 
 
-def draw_link(
-    pdf: canvas.Canvas,
-    label: str,
-    display: str,
-    url: str,
-    *,
-    x: float,
-    top: float,
-    width: float,
-) -> float:
-    label_style = paragraph_style(
-        f"link-label-{label}", font_name="Helvetica-Bold", font_size=7.4, leading=9, color=NAVY
-    )
-    value_style = paragraph_style(
-        f"link-value-{label}", font_size=7.2, leading=9.3, color=INK
-    )
-    label_bottom = draw_paragraph(pdf, label.upper(), x=x, top=top, width=width, style=label_style)
-    value_top = label_bottom - 1
-    value_bottom = draw_paragraph(pdf, display, x=x, top=value_top, width=width, style=value_style)
-    pdf.linkURL(url, (x, value_bottom, x + width, value_top), relative=0, thickness=0)
-    return value_bottom - 7
+def build_resume_docx(data: dict, output_path: Path) -> None:
+    document = Document()
+    configure_document(document)
 
+    properties = document.core_properties
+    properties.title = f"{data['identity']['name']} - Public Resume"
+    properties.subject = "Technology operations, software, and automation professional resume"
+    properties.author = data["identity"]["name"]
+    properties.keywords = "technology operations, software, automation, resume"
+    properties.comments = "ATS-first, one-page public resume generated from shared portfolio data"
 
-def draw_resume(data: dict) -> None:
-    page_width, page_height = A4
-    pdf = canvas.Canvas(str(OUTPUT_PATH), pagesize=A4, pageCompression=1)
-    pdf.setTitle(f"{data['identity']['name']} - Public Resume")
-    pdf.setAuthor(data["identity"]["name"])
-    pdf.setSubject("Technology operations, software, and automation professional resume")
-    pdf.setCreator("Jesadakorn portfolio resume generator")
+    name = document.add_paragraph(style="Title")
+    name.add_run(data["identity"]["name"])
 
-    sidebar_width = 184
-    main_x = 208
-    main_width = page_width - main_x - 30
-    side_x = 24
-    side_width = sidebar_width - 48
+    headline = document.add_paragraph(style="Subtitle")
+    headline.add_run(data["identity"]["headline"])
 
-    pdf.setFillColor(PAPER)
-    pdf.rect(0, 0, page_width, page_height, stroke=0, fill=1)
-    pdf.setFillColor(SIDEBAR)
-    pdf.rect(0, 0, sidebar_width, page_height, stroke=0, fill=1)
-    pdf.setFillColor(NAVY)
-    pdf.rect(0, page_height - 170, sidebar_width, 170, stroke=0, fill=1)
-    pdf.setFillColor(NAVY_DEEP)
-    pdf.rect(0, 0, 7, page_height, stroke=0, fill=1)
-
-    draw_portrait(pdf, center_x=92, center_y=page_height - 92, radius=54)
-
-    pdf.setFillColor(NAVY)
-    pdf.setFont("Helvetica-Bold", 24)
-    pdf.drawString(main_x, page_height - 58, data["identity"]["name"].upper())
-    pdf.setFillColor(ACCENT)
-    pdf.setFont("Helvetica-Bold", 10.2)
-    pdf.drawString(main_x, page_height - 82, data["identity"]["headline"].upper())
-    pdf.setStrokeColor(LINE)
-    pdf.setLineWidth(1)
-    pdf.line(main_x, page_height - 95, page_width - 30, page_height - 95)
-
-    summary_style = paragraph_style(
-        "summary", font_size=9.2, leading=13, color=MUTED
-    )
-    main_top = draw_paragraph(
-        pdf,
-        data["summary"],
-        x=main_x,
-        top=page_height - 108,
-        width=main_width,
-        style=summary_style,
-    ) - 10
-
-    side_top = page_height - 183
-    side_top = draw_section_bar(pdf, "Public Profile", x=side_x, top=side_top, width=side_width)
-    side_label_style = paragraph_style(
-        "side-label", font_name="Helvetica-Bold", font_size=7.5, leading=9, color=NAVY
-    )
-    side_value_style = paragraph_style(
-        "side-value", font_size=8.2, leading=11, color=INK
-    )
-    side_top = draw_paragraph(
-        pdf,
-        "LOCATION",
-        x=side_x,
-        top=side_top,
-        width=side_width,
-        style=side_label_style,
-    ) - 1
-    side_top = draw_paragraph(
-        pdf,
-        data["identity"]["location"],
-        x=side_x,
-        top=side_top,
-        width=side_width,
-        style=side_value_style,
-    ) - 8
-
-    side_top = draw_section_bar(pdf, "Professional Links", x=side_x, top=side_top, width=side_width)
-    for link in data["links"]:
-        side_top = draw_link(
-            pdf,
-            link["label"],
-            link["display"],
-            link["url"],
-            x=side_x,
-            top=side_top,
-            width=side_width,
-        )
-
-    side_top = draw_section_bar(pdf, "Languages", x=side_x, top=side_top + 1, width=side_width)
-    language_text = " / ".join(data["languages"])
-    side_top = draw_paragraph(
-        pdf,
-        language_text,
-        x=side_x,
-        top=side_top,
-        width=side_width,
-        style=side_value_style,
-    ) - 9
-
-    side_top = draw_section_bar(pdf, "Core Capabilities", x=side_x, top=side_top, width=side_width)
-    side_bullet_style = paragraph_style(
-        "side-bullet", font_size=8, leading=11.2, color=INK
-    )
-    for item in data["expertise"]:
-        side_top = draw_bullet(
-            pdf,
-            item,
-            x=side_x,
-            top=side_top,
-            width=side_width,
-            style=side_bullet_style,
-            color=NAVY,
-        )
-
-    side_top = draw_section_bar(
-        pdf, "Additional Qualifications", x=side_x, top=side_top + 1, width=side_width
-    )
-    for item in data["additional"]:
-        side_top = draw_bullet(
-            pdf,
-            item,
-            x=side_x,
-            top=side_top,
-            width=side_width,
-            style=side_bullet_style,
-            color=NAVY,
-        )
-
-    side_top = draw_section_bar(pdf, "Education", x=side_x, top=side_top + 1, width=side_width)
-    education = data["education"]
-    education_title_style = paragraph_style(
-        "education-title", font_name="Helvetica-Bold", font_size=8.2, leading=10.8, color=INK
-    )
-    side_top = draw_paragraph(
-        pdf,
-        education["degree"],
-        x=side_x,
-        top=side_top,
-        width=side_width,
-        style=education_title_style,
-    ) - 2
-    side_top = draw_paragraph(
-        pdf,
-        education["institution"],
-        x=side_x,
-        top=side_top,
-        width=side_width,
-        style=side_value_style,
-    ) - 2
-    draw_paragraph(
-        pdf,
-        education["period"],
-        x=side_x,
-        top=side_top,
-        width=side_width,
-        style=side_value_style,
-    )
-
-    main_top = draw_section_bar(pdf, "Experience", x=main_x, top=main_top, width=main_width)
-    experience_role_style = paragraph_style(
-        "experience-role", font_name="Helvetica-Bold", font_size=10, leading=12.4, color=INK
-    )
-    experience_meta_style = paragraph_style(
-        "experience-meta", font_name="Helvetica-Bold", font_size=7.8, leading=9.8, color=ACCENT
-    )
-    experience_bullet_style = paragraph_style(
-        "experience-bullet", font_size=8.25, leading=12.3, color=MUTED
-    )
-
-    for index, experience in enumerate(data["experience"]):
+    contact = document.add_paragraph()
+    contact.paragraph_format.space_after = Pt(2)
+    contact.add_run(f"{data['identity']['location']}  |  ")
+    descriptive_link_text = {
+        "Portfolio": "Portfolio: jesadakorn.com",
+        "LinkedIn": f"LinkedIn: {data['identity']['name']}",
+        "GitHub": "GitHub: fluke-jesadakorn",
+    }
+    for index, link in enumerate(data["links"]):
         if index:
-            pdf.setStrokeColor(LINE)
-            pdf.setLineWidth(0.55)
-            pdf.line(main_x, main_top + 4.5, main_x + main_width, main_top + 4.5)
-        main_top = draw_paragraph(
-            pdf,
-            experience["role"],
-            x=main_x,
-            top=main_top,
-            width=main_width,
-            style=experience_role_style,
-        ) - 1
-        meta = f"{experience['organization']} | {experience['period']}"
-        main_top = draw_paragraph(
-            pdf,
-            meta,
-            x=main_x,
-            top=main_top,
-            width=main_width,
-            style=experience_meta_style,
-        ) - 3
-        for bullet in experience["bullets"]:
-            main_top = draw_bullet(
-                pdf,
-                bullet,
-                x=main_x,
-                top=main_top,
-                width=main_width,
-                style=experience_bullet_style,
-            )
-        main_top -= 8
-
-    main_top = draw_section_bar(
-        pdf, "Selected Systems", x=main_x, top=main_top + 2, width=main_width
-    )
-    system_style = paragraph_style(
-        "selected-system", font_size=8.2, leading=12, color=INK
-    )
-    for system in data["selectedSystems"]:
-        main_top = draw_bullet(
-            pdf,
-            system,
-            x=main_x,
-            top=main_top,
-            width=main_width,
-            style=system_style,
-            color=NAVY,
+            contact.add_run("  |  ")
+        add_hyperlink(
+            contact,
+            descriptive_link_text.get(link["label"], link["label"]),
+            link["url"],
         )
 
-    main_top = draw_section_bar(pdf, "Technology", x=main_x, top=main_top + 2, width=main_width)
-    technology_style = paragraph_style(
-        "technology", font_size=7.9, leading=11.6, color=MUTED
+    add_section_heading(document, "Professional Summary")
+    summary = document.add_paragraph(data["summary"])
+    summary.paragraph_format.space_after = Pt(1)
+
+    add_section_heading(document, "Core Capabilities")
+    for capability in data["expertise"]:
+        add_bullet(document, capability)
+
+    add_section_heading(document, "Experience")
+    for experience in data["experience"]:
+        role = document.add_paragraph(style="Heading 2")
+        role_run = role.add_run(experience["role"])
+        format_run(role_run, size=9.5, color=NAVY, bold=True)
+        organization_run = role.add_run(f" | {experience['organization']}")
+        format_run(organization_run, size=9.25, color=INK, bold=False)
+        period_run = role.add_run(f" | {experience['period']}")
+        format_run(period_run, size=9.25, color=ACCENT, bold=True)
+        for bullet in experience["bullets"]:
+            add_bullet(document, bullet)
+
+    add_section_heading(document, "Selected Systems")
+    for system in data["selectedSystems"]:
+        add_bullet(document, system)
+
+    add_section_heading(document, "Education & Qualifications")
+    education = data["education"]
+    education_paragraph = document.add_paragraph()
+    education_paragraph.paragraph_format.space_after = Pt(0)
+    degree = education_paragraph.add_run(education["degree"])
+    format_run(degree, bold=True, color=NAVY)
+    education_paragraph.add_run(
+        f" | {education['institution']} | {education['period']}"
     )
-    draw_paragraph(
-        pdf,
-        " | ".join(data["technologies"]),
-        x=main_x,
-        top=main_top,
-        width=main_width,
-        style=technology_style,
+    add_bullet(document, f"Languages: {' and '.join(data['languages'])}")
+    for qualification in data["additional"]:
+        add_bullet(document, qualification)
+
+    add_section_heading(document, "Technology")
+    technology = document.add_paragraph(", ".join(data["technologies"]))
+    technology.paragraph_format.space_after = Pt(0)
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    document.save(output_path)
+
+
+def find_libreoffice() -> str:
+    executable = shutil.which("soffice") or shutil.which("libreoffice")
+    if executable:
+        return executable
+
+    macos_path = Path("/Applications/LibreOffice.app/Contents/MacOS/soffice")
+    if macos_path.exists():
+        return str(macos_path)
+
+    raise RuntimeError(
+        "LibreOffice is required to generate the resume PDF. Install it and make "
+        "soffice or libreoffice available on PATH."
     )
 
-    pdf.setFillColor(NAVY)
-    pdf.rect(main_x, 18, main_width, 2.4, stroke=0, fill=1)
-    pdf.setFillColor(MUTED)
-    pdf.setFont("Helvetica", 5.8)
-    footer = "Public professional resume | Personal contact details intentionally omitted"
-    footer_width = stringWidth(footer, "Helvetica", 5.8)
-    pdf.drawString(main_x + main_width - footer_width, 8, footer)
 
-    pdf.showPage()
-    pdf.save()
+def export_pdf(docx_path: Path, output_path: Path, work_dir: Path) -> None:
+    libreoffice = find_libreoffice()
+    profile_dir = work_dir / "libreoffice-profile"
+    home_dir = work_dir / "libreoffice-home"
+    profile_dir.mkdir()
+    home_dir.mkdir()
+
+    environment = os.environ.copy()
+    environment["HOME"] = str(home_dir)
+    environment["TMPDIR"] = str(work_dir)
+
+    result = subprocess.run(
+        [
+            libreoffice,
+            "--headless",
+            f"-env:UserInstallation={profile_dir.as_uri()}",
+            "--convert-to",
+            PDF_EXPORT_FILTER,
+            "--outdir",
+            str(work_dir),
+            str(docx_path),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        env=environment,
+    )
+    generated_pdf = work_dir / f"{docx_path.stem}.pdf"
+    if result.returncode != 0 or not generated_pdf.exists():
+        details = "\n".join(part for part in (result.stdout, result.stderr) if part.strip())
+        raise RuntimeError(f"LibreOffice PDF export failed.\n{details}")
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(generated_pdf, output_path)
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--docx-output",
+        type=Path,
+        help="Optionally retain a copy of the semantic DOCX for accessibility auditing.",
+    )
+    return parser.parse_args()
 
 
 def main() -> None:
+    args = parse_args()
     data = load_data()
     prepare_public_portrait()
-    draw_resume(data)
+
+    with tempfile.TemporaryDirectory(prefix="jesadakorn-resume-") as temporary_directory:
+        work_dir = Path(temporary_directory)
+        docx_path = work_dir / "Jesadakorn-Kirtnu-Resume.docx"
+        build_resume_docx(data, docx_path)
+
+        if args.docx_output:
+            retained_docx = args.docx_output.resolve()
+            retained_docx.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(docx_path, retained_docx)
+            print(f"Generated accessibility-audit DOCX at {retained_docx}")
+
+        export_pdf(docx_path, OUTPUT_PATH, work_dir)
+
     print(f"Generated {OUTPUT_PATH.relative_to(ROOT)}")
     print(f"Generated {PUBLIC_PORTRAIT_PATH.relative_to(ROOT)}")
 

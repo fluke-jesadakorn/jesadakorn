@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { type KeyboardEvent, useRef, useState } from "react";
 import {
   ArrowUpRight,
   BriefcaseBusiness,
@@ -112,18 +112,20 @@ function SurfacePanel({ surface }: { surface: FeaturedSurface }) {
                   </p>
                 </div>
 
-                <a
-                  href={surface.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    "inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-semibold transition",
-                    theme.link,
-                  )}
-                >
-                  {surface.linkLabel}
-                  <ExternalLink className="h-4 w-4" />
-                </a>
+                {surface.url && surface.linkLabel ? (
+                  <a
+                    href={surface.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      "inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-sm font-semibold transition",
+                      theme.link,
+                    )}
+                  >
+                    {surface.linkLabel}
+                    <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                ) : null}
               </div>
             </div>
           </div>
@@ -173,7 +175,42 @@ function SurfacePanel({ surface }: { surface: FeaturedSurface }) {
 }
 
 export default function FeaturedWorkSection() {
-  const [activeProject, setActiveProject] = useState(featuredProjects[0]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const activeProject = featuredProjects[activeIndex];
+  const linkedSurfaces = activeProject.surfaces.filter(
+    (surface): surface is FeaturedSurface & { url: string } => Boolean(surface.url),
+  );
+  const hasProjectOutputs = Boolean(activeProject.repositoryUrl || linkedSurfaces.length);
+
+  const selectTab = (index: number) => {
+    setActiveIndex(index);
+    tabRefs.current[index]?.focus();
+  };
+
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let nextIndex: number | undefined;
+
+    switch (event.key) {
+      case "ArrowRight":
+        nextIndex = (index + 1) % featuredProjects.length;
+        break;
+      case "ArrowLeft":
+        nextIndex = (index - 1 + featuredProjects.length) % featuredProjects.length;
+        break;
+      case "Home":
+        nextIndex = 0;
+        break;
+      case "End":
+        nextIndex = featuredProjects.length - 1;
+        break;
+      default:
+        return;
+    }
+
+    event.preventDefault();
+    selectTab(nextIndex);
+  };
 
   return (
     <section id="work" className="mx-auto w-full max-w-6xl px-4 pb-24 sm:px-6 lg:px-8">
@@ -181,17 +218,34 @@ export default function FeaturedWorkSection() {
         <div className="relative z-10 space-y-12">
           {/* Project Tabs Switcher */}
           <div className="flex flex-col gap-4 border-b border-white/10 pb-6">
-            <p className="font-mono-ui text-[11px] uppercase tracking-[0.3em] text-[color:var(--feature-muted)]">
+            <p
+              id="featured-project-tabs-label"
+              className="font-mono-ui text-[11px] uppercase tracking-[0.3em] text-[color:var(--feature-muted)]"
+            >
               Select project / case study
             </p>
-            <div className="flex flex-wrap gap-2.5">
-              {featuredProjects.map((project) => (
+            <div
+              role="tablist"
+              aria-labelledby="featured-project-tabs-label"
+              className="flex flex-wrap gap-2.5"
+            >
+              {featuredProjects.map((project, index) => (
                 <button
                   key={project.project}
-                  onClick={() => setActiveProject(project)}
+                  ref={(node) => {
+                    tabRefs.current[index] = node;
+                  }}
+                  id={`featured-project-tab-${index}`}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeIndex === index}
+                  aria-controls="featured-project-panel"
+                  tabIndex={activeIndex === index ? 0 : -1}
+                  onClick={() => setActiveIndex(index)}
+                  onKeyDown={(event) => handleTabKeyDown(event, index)}
                   className={cn(
                     "rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 border cursor-pointer",
-                    activeProject.project === project.project
+                    activeIndex === index
                       ? "border-[#f0b487] bg-[rgba(240,180,135,0.14)] text-[#ffd3b4]"
                       : "border-white/10 bg-white/5 text-zinc-400 hover:border-white/20 hover:text-white"
                   )}
@@ -202,118 +256,135 @@ export default function FeaturedWorkSection() {
             </div>
           </div>
 
-          <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-            <div className="space-y-4">
-              <span className="inline-flex rounded-full border border-white/[0.12] bg-white/[0.06] px-4 py-2 font-mono-ui text-[11px] uppercase tracking-[0.28em] text-[#f0c5a3]">
-                {activeProject.status}
-              </span>
-              <SectionHeader
-                eyebrow="Selected project"
-                title={activeProject.title}
-                description={activeProject.summary}
-                tone="inverse"
-              />
+          <div
+            id="featured-project-panel"
+            role="tabpanel"
+            aria-labelledby={`featured-project-tab-${activeIndex}`}
+            tabIndex={0}
+            className="space-y-12"
+          >
+            <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+              <div className="space-y-4">
+                <span className="inline-flex rounded-full border border-white/[0.12] bg-white/[0.06] px-4 py-2 font-mono-ui text-[11px] uppercase tracking-[0.28em] text-[#f0c5a3]">
+                  {activeProject.status}
+                </span>
+                <SectionHeader
+                  eyebrow="Selected project"
+                  title={activeProject.title}
+                  description={activeProject.summary}
+                  tone="inverse"
+                />
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                <div className="metric-panel-dark">
+                  <p className="font-mono-ui text-[11px] uppercase tracking-[0.3em] text-[color:var(--feature-muted)]">
+                    My contribution
+                  </p>
+                  <p className="mt-4 text-sm leading-7 text-[color:var(--feature-foreground)]">
+                    {activeProject.role}
+                  </p>
+                </div>
+                <div className="metric-panel-dark">
+                  <p className="font-mono-ui text-[11px] uppercase tracking-[0.3em] text-[color:var(--feature-muted)]">
+                    Scope
+                  </p>
+                  <p className="mt-4 text-sm leading-7 text-[color:var(--feature-foreground)]">
+                    {activeProject.scope}
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="metric-panel-dark">
-                <p className="font-mono-ui text-[11px] uppercase tracking-[0.3em] text-[color:var(--feature-muted)]">
-                  My contribution
-                </p>
-                <p className="mt-4 text-sm leading-7 text-[color:var(--feature-foreground)]">
-                  {activeProject.role}
-                </p>
-              </div>
-              <div className="metric-panel-dark">
-                <p className="font-mono-ui text-[11px] uppercase tracking-[0.3em] text-[color:var(--feature-muted)]">
-                  Scope
-                </p>
-                <p className="mt-4 text-sm leading-7 text-[color:var(--feature-foreground)]">
-                  {activeProject.scope}
-                </p>
-              </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              {activeProject.focusAreas.map((focus) => (
+                <div key={focus.title} className="metric-panel-dark">
+                  <p className="font-display text-3xl text-[color:var(--feature-foreground)]">
+                    {focus.title}
+                  </p>
+                  <p className="mt-3 font-mono-ui text-[11px] uppercase tracking-[0.28em] text-[color:var(--feature-muted)]">
+                    {focus.label}
+                  </p>
+                  <p className="mt-4 text-sm leading-6 text-[color:var(--feature-muted)]">
+                    {focus.detail}
+                  </p>
+                </div>
+              ))}
             </div>
-          </div>
 
-          <div className="grid gap-4 md:grid-cols-3">
-            {activeProject.focusAreas.map((focus) => (
-              <div key={focus.title} className="metric-panel-dark">
-                <p className="font-display text-3xl text-[color:var(--feature-foreground)]">
-                  {focus.title}
-                </p>
-                <p className="mt-3 font-mono-ui text-[11px] uppercase tracking-[0.28em] text-[color:var(--feature-muted)]">
-                  {focus.label}
-                </p>
-                <p className="mt-4 text-sm leading-6 text-[color:var(--feature-muted)]">
-                  {focus.detail}
-                </p>
+            <div
+              className={cn(
+                "grid gap-4",
+                hasProjectOutputs && "lg:grid-cols-[0.9fr_1.1fr]",
+              )}
+            >
+              <div className="metric-panel-dark">
+                <div className="flex items-center gap-3 text-[color:var(--feature-foreground)]">
+                  <BriefcaseBusiness className="h-5 w-5 text-[#efc3a0]" />
+                  <p className="font-display text-2xl">What the work required</p>
+                </div>
+                <div className="mt-6 space-y-4">
+                  {activeProject.responsibilities.map((item) => (
+                    <div
+                      key={item}
+                      className="rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-4"
+                    >
+                      <p className="text-sm leading-7 text-[color:var(--feature-foreground)]">
+                        {item}
+                      </p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
 
-          <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="metric-panel-dark">
-              <div className="flex items-center gap-3 text-[color:var(--feature-foreground)]">
-                <BriefcaseBusiness className="h-5 w-5 text-[#efc3a0]" />
-                <p className="font-display text-2xl">What the work required</p>
-              </div>
-              <div className="mt-6 space-y-4">
-                {activeProject.responsibilities.map((item) => (
-                  <div
-                    key={item}
-                    className="rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-4"
-                  >
-                    <p className="text-sm leading-7 text-[color:var(--feature-foreground)]">
-                      {item}
+              {hasProjectOutputs ? (
+                <div className="metric-panel-dark flex flex-col justify-between gap-6">
+                  <div>
+                    <p className="font-mono-ui text-[11px] uppercase tracking-[0.3em] text-[color:var(--feature-muted)]">
+                      Project Outputs &amp; Repositories
+                    </p>
+                    <p className="mt-4 max-w-xl text-base leading-8 text-[color:var(--feature-muted)]">
+                      The links below show the current project output, repository, or interface.
+                      Live availability and prototype status are described separately so the scope
+                      remains clear.
                     </p>
                   </div>
-                ))}
-              </div>
+
+                  <div className="flex flex-wrap gap-3">
+                    {activeProject.repositoryUrl ? (
+                      <a
+                        href={activeProject.repositoryUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-[color:var(--feature-foreground)] transition hover:bg-white/[0.1]"
+                      >
+                        GitHub repo
+                        <Github className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                    ) : null}
+
+                    {linkedSurfaces.map((surface) => (
+                      <a
+                        key={surface.id}
+                        href={surface.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-[color:var(--feature-foreground)] transition hover:bg-white/[0.1]"
+                      >
+                        {surface.name}
+                        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              ) : null}
             </div>
 
-            <div className="metric-panel-dark flex flex-col justify-between gap-6">
-              <div>
-                <p className="font-mono-ui text-[11px] uppercase tracking-[0.3em] text-[color:var(--feature-muted)]">
-                  Project Outputs &amp; Repositories
-                </p>
-                <p className="mt-4 max-w-xl text-base leading-8 text-[color:var(--feature-muted)]">
-                  The links below show the current project output, repository, or interface. Live
-                  availability and prototype status are described separately so the scope remains
-                  clear.
-                </p>
-              </div>
-
-              <div className="flex flex-wrap gap-3">
-                <a
-                  href={activeProject.repositoryUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-[color:var(--feature-foreground)] transition hover:bg-white/[0.1]"
-                >
-                  GitHub repo
-                  <Github className="h-4 w-4" />
-                </a>
-                
-                {activeProject.surfaces.map((surface) => (
-                  <a
-                    key={surface.id}
-                    href={surface.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.06] px-4 py-2.5 text-sm font-semibold text-[color:var(--feature-foreground)] transition hover:bg-white/[0.1]"
-                  >
-                    {surface.name}
-                    <ArrowUpRight className="h-4 w-4" />
-                  </a>
-                ))}
-              </div>
+            <div className="space-y-8">
+              {activeProject.surfaces.map((surface) => (
+                <SurfacePanel key={surface.id} surface={surface} />
+              ))}
             </div>
-          </div>
-
-          <div className="space-y-8">
-            {activeProject.surfaces.map((surface) => (
-              <SurfacePanel key={surface.id} surface={surface} />
-            ))}
           </div>
         </div>
       </div>

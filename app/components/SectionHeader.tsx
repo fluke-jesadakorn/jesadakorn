@@ -8,6 +8,7 @@ interface SectionHeaderProps {
   tone?: "default" | "inverse";
   className?: string;
   titleId?: string;
+  as?: "h1" | "h2";
 }
 
 export default function SectionHeader({
@@ -18,6 +19,7 @@ export default function SectionHeader({
   tone = "default",
   className,
   titleId,
+  as: Title = "h2",
 }: SectionHeaderProps) {
   return (
     <div
@@ -38,7 +40,7 @@ export default function SectionHeader({
         {eyebrow}
       </p>
       <div className="space-y-3">
-        <h2
+        <Title
           id={titleId}
           className={cn(
             "font-display text-3xl leading-tight md:text-5xl",
@@ -48,7 +50,7 @@ export default function SectionHeader({
           )}
         >
           {title}
-        </h2>
+        </Title>
         {description ? (
           <p
             className={cn(

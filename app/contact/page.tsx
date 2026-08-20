@@ -77,6 +77,7 @@ export default function Contact() {
     <main className="page-frame">
       <section className="mx-auto w-full max-w-6xl px-4 pb-10 pt-10 sm:px-6 lg:px-8">
         <SectionHeader
+          as="h1"
           eyebrow="Contact"
           title="Let's talk about where my experience could support your team."
           description="For roles across technology operations, software, automation, or technical project delivery, email is the most direct way to reach me."

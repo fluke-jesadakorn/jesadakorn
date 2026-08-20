@@ -9,8 +9,8 @@ export interface FeaturedSurface {
   id: "frontend" | "admin";
   name: string;
   label: string;
-  url: string;
-  linkLabel: string;
+  url?: string;
+  linkLabel?: string;
   summary: string;
   highlights: string[];
   stack: string[];
@@ -28,7 +28,7 @@ export interface FeaturedCaseStudy {
   status: "Live side project" | "Working prototype";
   title: string;
   summary: string;
-  repositoryUrl: string;
+  repositoryUrl?: string;
   role: string;
   scope: string;
   responsibilities: string[];
@@ -177,7 +177,6 @@ export const hrChatbotCaseStudy: FeaturedCaseStudy = {
   title: "HR AI Agent: Leave requests through LINE and an admin portal.",
   summary:
     "A working prototype that connects a LINE conversation with an n8n workflow, local language-model processing, structured leave data, and a web interface for review.",
-  repositoryUrl: "https://github.com/fluke-jesadakorn/hr-ai-agent",
   role:
     "I built the prototype flow, including webhooks, intent and detail extraction, conversation state, database updates, and the review interface.",
   scope:
@@ -209,8 +208,6 @@ export const hrChatbotCaseStudy: FeaturedCaseStudy = {
       id: "frontend",
       name: "LINE chatbot",
       label: "Employee interface",
-      url: "https://github.com/fluke-jesadakorn/hr-ai-agent",
-      linkLabel: "View repository",
       summary:
         "A conversational prototype where employees can enter leave information and receive status updates through LINE.",
       highlights: [
@@ -232,8 +229,6 @@ export const hrChatbotCaseStudy: FeaturedCaseStudy = {
       id: "admin",
       name: "HR web portal",
       label: "Review interface",
-      url: "https://github.com/fluke-jesadakorn/hr-ai-agent",
-      linkLabel: "View repository",
       summary:
         "A prototype dashboard for reviewing leave information, request history, and status changes.",
       highlights: [
@@ -260,7 +255,6 @@ export const contractAnalyzerCaseStudy: FeaturedCaseStudy = {
   title: "AI Contract Analyzer: Assisted document review with local retrieval.",
   summary:
     "A working prototype that extracts contract information, retrieves related policy passages, and presents possible review points alongside the source document.",
-  repositoryUrl: "https://github.com/fluke-jesadakorn/ai-contract-analyzer",
   role:
     "I worked on document parsing, chunking, retrieval queries, and an interface that keeps the source document visible beside extracted information.",
   scope:
@@ -292,8 +286,6 @@ export const contractAnalyzerCaseStudy: FeaturedCaseStudy = {
       id: "frontend",
       name: "Analyzer console",
       label: "Reviewer workspace",
-      url: "https://github.com/fluke-jesadakorn/ai-contract-analyzer",
-      linkLabel: "View repository",
       summary:
         "An interface for uploading documents, reviewing extracted information, and comparing passages with reference material.",
       highlights: [

@@ -24,7 +24,7 @@ export interface PublicResumeData {
   links: PublicResumeLink[];
   languages: string[];
   expertise: string[];
-  leadership: string[];
+  additional: string[];
   technologies: string[];
   experience: PublicResumeExperience[];
   selectedSystems: string[];

@@ -12,107 +12,125 @@ import SectionHeader from "./SectionHeader";
 const experienceSnapshot = [
   {
     label: "Current role",
-    title: "IT Manager at VIGNOLD, Phuket",
+    title: "IT Infrastructure Manager · VIGNOLD",
     description:
-      "Leading day-to-day IT operations, coordination, and business support while working closely between the Thailand and German branches.",
+      "Supports day-to-day IT operations, macOS deployment, documentation, onboarding, networking, and coordination between teams in Thailand and Germany.",
   },
   {
-    label: "Side work",
-    title: "EPSX",
+    label: "Personal projects · 2024 - Present",
+    title: "Product & Software Development · EPSX and Folio ERP",
     description:
-      "Developed separately as a side project, with a public-facing product and internal admin environment shaped around clarity and practical use.",
+      "Builds a live analytics side project and a financial-workflow prototype, covering product interfaces, backend workflows, permissions, and automation experiments.",
   },
   {
-    label: "Foundation",
-    title: "Computer Engineering",
+    label: "2024",
+    title: "Senior Full-Stack Developer · Finstable",
     description:
-      "Prince of Songkla University, Phuket Campus, with formal study paired with practical experience across application development, system operations, and business-facing technical problem solving.",
+      "Worked on ERP and cloud-connected applications spanning backend services, user interfaces, role-based approvals, and business workflow integration.",
+  },
+  {
+    label: "2022 - 2024",
+    title: "Head Engineer / Industrial Project Manager · Token Miner",
+    description:
+      "Worked across budgets, equipment, facility layouts, thermal and power planning, maintenance, operating procedures, data analysis, and vendor coordination.",
+  },
+  {
+    label: "March 2021 - January 2022",
+    title: "IT, Web & Mobile Developer · IMT Group",
+    description:
+      "Developed internal web and mobile applications, supported IT planning, evaluated tools, and documented workflows for business teams.",
+  },
+  {
+    label: "2021 - 2022",
+    title: "Freelance Full-Stack Developer · Independent",
+    description:
+      "Built web applications for POS, inventory, administration, and other workflow-based business needs.",
   },
 ] as const;
 
 const strengths = [
   {
-    title: "Cross-branch coordination",
+    title: "Clear coordination",
     description:
-      "Works comfortably across the Thailand and German branches, keeping communication clear and expectations aligned.",
+      "Keeps requirements, responsibilities, and next steps understandable across technical and non-technical teams.",
     icon: Settings2,
   },
   {
-    title: "People and process support",
+    title: "Operational awareness",
     description:
-      "Supports teams through practical problem-solving, stable day-to-day operations, and a strong sense of responsibility.",
+      "Looks at how a system will be supported day to day, not only how it works during a demonstration.",
     icon: BriefcaseBusiness,
   },
   {
-    title: "Workflow clarity",
+    title: "Workflow thinking",
     description:
-      "Improves business processes and internal coordination so work stays organized, clear, and dependable.",
+      "Maps steps, decisions, roles, and exceptions before turning a business process into software or automation.",
     icon: ChartNoAxesCombined,
   },
   {
-    title: "Practical digital thinking",
+    title: "Hands-on delivery",
     description:
-      "Brings a side-project builder mindset that stays grounded in useful outcomes rather than abstract ideas.",
+      "Moves between planning, implementation, testing, documentation, and support as the work requires.",
     icon: Network,
   },
 ] as const;
 
 const stackGroups = [
   {
-    title: "Leadership and operations",
+    title: "IT operations & infrastructure",
     items: [
-      "IT management",
-      "Cross-branch coordination",
-      "Process improvement",
-      "Business support",
-      "Team collaboration",
-      "AI-assisted operations",
+      "macOS administration",
+      "Ansible & Munki",
+      "Networking & Tailscale",
+      "Cloud & virtualization",
+      "Hardware and user support",
+      "Backup and access practices",
     ],
   },
   {
-    title: "Application stack",
+    title: "Software & business systems",
     items: [
       "Next.js",
       "React",
       "Node.js",
       "Golang",
       "NestJS",
-      "Rust",
       "Flutter",
-      "LangChain",
+      "ERP, POS & inventory",
+      "Role-based workflows",
     ],
   },
   {
-    title: "Product and business systems",
+    title: "Automation & applied AI",
     items: [
-      "ERP systems",
-      "Role-based approvals",
-      "HR AI Chatbot",
+      "n8n workflow automation",
       "LINE Messaging API",
-      "Workflow optimization",
-      "Technical support",
+      "Ollama & local models",
+      "RAG experiments",
+      "Document extraction",
+      "SQL workflows",
     ],
   },
   {
-    title: "Data and operations",
+    title: "Project & business coordination",
     items: [
-      "Financial analytics",
-      "System administration",
-      "Networking",
-      "Cloud computing",
-      "Vector Databases (RAG)",
-      "Operational tooling",
-    ],
-  },
-  {
-    title: "Domain strengths",
-    items: [
-      "n8n Workflow Automation",
-      "Ollama & Qwen (Local LLMs)",
-      "Blockchain technology",
-      "Developer tooling",
+      "Process mapping",
+      "Cost and project planning",
+      "Vendor coordination",
       "Cross-functional delivery",
-      "Document Intelligence",
+      "Workplace safety",
+      "International collaboration",
+    ],
+  },
+  {
+    title: "Data & technical engineering",
+    items: [
+      "Excel & Power BI",
+      "Looker Studio",
+      "Feasibility analysis",
+      "IoT & Arduino",
+      "Mining infrastructure",
+      "Thermal and power planning",
     ],
   },
 ] as const;
@@ -123,8 +141,8 @@ export default function Portfolio() {
       <section id="experience" className="space-y-8 pb-24">
         <SectionHeader
           eyebrow="Experience Snapshot"
-          title="A profile shaped by product delivery, business workflows, and operating reality."
-          description="The strongest through-line across Jesadakorn's work is not a single framework. It is the ability to translate complex, cross-functional requirements into software that teams can trust and keep using."
+          title="Experience across IT, software, and technical operations."
+          description="These roles show the range of work behind the portfolio, from workplace IT and business applications to industrial systems and personal software projects."
         />
 
         <div className="section-shell px-6 py-7 md:px-8 md:py-9">
@@ -149,8 +167,8 @@ export default function Portfolio() {
       <section id="strengths" className="space-y-8 pb-24">
         <SectionHeader
           eyebrow="Core Strengths"
-          title="Strengths that fit leadership, coordination, and business-facing IT roles."
-          description="The strongest signal here is the ability to connect people, processes, and systems in a way that stays practical in day-to-day work."
+          title="A practical way of working across different technical contexts."
+          description="The emphasis is on understanding the operational need, communicating clearly, and carrying the work through to something people can use."
         />
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -180,9 +198,9 @@ export default function Portfolio() {
 
       <section className="space-y-8">
         <SectionHeader
-          eyebrow="Experience Range"
-          title="A mix of management responsibility, operations awareness, and hands-on digital work."
-          description="The tools matter, but the more important signal is how they support teams, workflows, and practical outcomes."
+          eyebrow="Capability Range"
+          title="Tools and experience grouped by the work they support."
+          description="This is a selected overview rather than a claim of equal depth in every tool. Project pages and work history provide the context behind each area."
         />
 
         <div className="section-shell px-6 py-7 md:px-8 md:py-9">

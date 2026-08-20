@@ -9,7 +9,7 @@ import { publicResume } from "./resume-data";
 export const metadata: Metadata = {
   title: "Public Resume",
   description:
-    "One-page public resume for Jesadakorn Kirtnu, a Hybrid IT Manager and AI Systems Architect focused on infrastructure automation, local AI, and enterprise workflow systems.",
+    "One-page public resume for Jesadakorn Kirtnu, covering technology operations, software development, workflow automation, and technical project work.",
   alternates: {
     canonical: "/resume",
   },
@@ -89,7 +89,7 @@ export default function ResumePage() {
 
             <section aria-labelledby="resume-expertise-label">
               <h2 id="resume-expertise-label" className="resume-section-bar">
-                Core Expertise
+                Core Capabilities
               </h2>
               <ul className="resume-sidebar-bullets">
                 {publicResume.expertise.map((item) => (
@@ -98,12 +98,12 @@ export default function ResumePage() {
               </ul>
             </section>
 
-            <section aria-labelledby="resume-leadership-label">
-              <h2 id="resume-leadership-label" className="resume-section-bar">
-                Leadership &amp; Compliance
+            <section aria-labelledby="resume-additional-label">
+              <h2 id="resume-additional-label" className="resume-section-bar">
+                Additional Qualifications
               </h2>
               <ul className="resume-sidebar-bullets">
-                {publicResume.leadership.map((item) => (
+                {publicResume.additional.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>

@@ -6,58 +6,69 @@ import {
   Check,
   Cpu,
   Network,
-  ShieldCheck,
 } from "lucide-react";
 
 import SectionHeader from "./SectionHeader";
 
 const expertiseDomains = [
   {
-    title: "Agentic AI & Data Architecture",
+    title: "IT Operations & Infrastructure",
     description:
-      "Designing autonomous, private AI systems that turn enterprise knowledge and operational data into accountable actions.",
-    icon: Bot,
-    capabilities: [
-      "Autonomous AI agents with Hermes and open-source local models",
-      "Retrieval-Augmented Generation (RAG) and advanced SQL analytics",
-      "Local LLM optimization and quantization with Apple MLX",
-      "Gemma 4 and Qwen 3.5 model workflows",
-    ],
-  },
-  {
-    title: "Infrastructure & DevOps",
-    description:
-      "Building stable, automated infrastructure for creative and production teams with security designed into daily operations.",
+      "Supporting the systems people rely on each day, from devices and networking to deployment, documentation, and access.",
     icon: Network,
     capabilities: [
-      "Configuration management with Ansible",
-      "Munki software deployment and custom macOS packages",
-      "Fleet management across 50+ workstations",
-      "Tailscale mesh networking and advanced OPSEC",
+      "macOS administration and software deployment with Ansible and Munki",
+      "Networking, Tailscale, cloud, virtualization, and backup practices",
+      "Hardware setup, onboarding, troubleshooting, and operational documentation",
+      "Security-aware access and workplace support",
     ],
   },
   {
-    title: "Enterprise Software Engineering",
+    title: "Software & Business Systems",
     description:
-      "Translating high-stakes business rules into resilient software, explicit permissions, and predictable workflow behavior.",
+      "Building web, backend, and mobile applications around real business workflows and user needs.",
     icon: Blocks,
     capabilities: [
-      "Full-stack and backend engineering",
-      "Complex state-machine design with 84+ concurrent states",
-      "Granular role-based access control (RBAC)",
-      "High-concurrency and race-condition mitigation",
+      "Full-stack development with Next.js, React, Node.js, Golang, and NestJS",
+      "ERP, POS, inventory, administration, and approval workflows",
+      "Role-based interfaces and backend service integration",
+      "Mobile development with Flutter",
     ],
   },
   {
-    title: "IT Operations & Compliance",
+    title: "Workflow Automation & Applied AI",
     description:
-      "Connecting operational knowledge, workplace governance, and international stakeholder communication into dependable systems.",
-    icon: ShieldCheck,
+      "Exploring how automation and local AI can reduce repetitive work while keeping review with the people responsible.",
+    icon: Bot,
     capabilities: [
-      "Obsidian IT Ops vault architecture and lifecycle records",
-      "Certified Workplace Safety Committee Officer (คปอ.)",
-      "Thailand labor and workplace safety compliance",
-      "Cross-border stakeholder management across Thailand and Germany",
+      "n8n workflows and LINE Messaging API integrations",
+      "Local language-model experiments with Ollama and open-source models",
+      "RAG, document extraction, structured data, and SQL workflows",
+      "Human review steps for AI-assisted outputs",
+    ],
+  },
+  {
+    title: "Project & Process Coordination",
+    description:
+      "Connecting technical work with budgets, vendors, timelines, safety, and communication across teams.",
+    icon: BriefcaseBusiness,
+    capabilities: [
+      "Process mapping, cost planning, and operational documentation",
+      "Vendor and cross-functional coordination",
+      "Collaboration between teams in Thailand and Germany",
+      "Workplace Safety Committee Officer certification (คปอ.)",
+    ],
+  },
+  {
+    title: "Data & Technical Engineering",
+    description:
+      "Using data and engineering context to support practical decisions across software, finance, facilities, and equipment.",
+    icon: Cpu,
+    capabilities: [
+      "Data analysis and visualization with Excel, Power BI, and Looker Studio",
+      "Feasibility, cost, and operational analysis",
+      "IoT experiments with Arduino, sensors, and device communication",
+      "Mining infrastructure, thermal, power, and hardware operations",
     ],
   },
 ] as const;
@@ -74,24 +85,24 @@ const folioRoles = [
 
 const folioHighlights = [
   {
-    title: "84+ State Machine & Multi-Role RBAC",
+    title: "Role-based workflow",
     description:
-      "Orchestrates complex enterprise workflows across seven organizational roles with granular permission metrics and explicit state ownership.",
+      "Maps document intake, review, approval, accounting, and settlement into a workflow with responsibilities for each role.",
   },
   {
-    title: "Claim Task Concurrency Protection",
+    title: "Task ownership and review",
     description:
-      "A purpose-built claim pattern prevents dual approvals and conflicting edits in high-volume, distributed accounting teams.",
+      "Explores task-claiming and status checks to reduce conflicting updates when several people work in the same process.",
   },
   {
-    title: "Local GenAI with Human Veto",
+    title: "Local AI assistance",
     description:
-      "An offline advisory layer reads financial documents, cross-references company policy, recommends GL debit and credit entries, matches the Chart of Accounts, and validates 7% VAT while preserving absolute human control.",
+      "Tests document extraction, policy lookup, account suggestions, and VAT checks while leaving final decisions to reviewers.",
   },
   {
-    title: "Dynamic SQL-to-HTML Architecture",
+    title: "Reporting and localization",
     description:
-      "Read-only SQL results compile into responsive, context-aware HTML views using active workflow and English or Thai localization parameters.",
+      "Presents workflow data in responsive views with support for English and Thai working contexts.",
   },
 ] as const;
 
@@ -101,19 +112,30 @@ const experienceGroups = [
     organization: "VIGNOLD · Thailand",
     icon: BriefcaseBusiness,
     achievements: [
-      "Standardized and automated more than 50 macOS nodes with Ansible and Munki, achieving a 100% stable infrastructure with zero daily manual oversight.",
-      "Engineered a centralized Obsidian IT Ops database with standardized frontmatter for asset lifecycle tracking, infrastructure logs, and onboarding automation.",
-      "Provisioned hardware clusters, user environments, and network access for rapid production-team expansion across Layout, Retouch, Video, and Admin functions.",
-      "Serves as a certified Workplace Safety Committee Officer (คปอ.), aligning local operations with Thailand labor and safety requirements.",
+      "Automates macOS configuration and software deployment with Ansible, Munki, and custom packages.",
+      "Maintains operational documentation for assets, infrastructure changes, and onboarding.",
+      "Coordinates devices, user environments, and network access for creative and administrative teams.",
+      "Works with colleagues in Thailand and Germany and serves as a Workplace Safety Committee Officer (คปอ.).",
     ],
   },
   {
-    label: "Software Developer & Crypto Systems Engineer",
-    organization: "Independent / Startup",
+    label: "Software Development",
+    organization: "Finstable · IMT Group · Independent",
+    icon: Blocks,
+    achievements: [
+      "Worked on full-stack applications, backend services, and business workflows for ERP, POS, inventory, and administration use cases.",
+      "Built interfaces and integrations around role-based approvals, operational data, and customer requirements.",
+      "Developed personal projects to explore product design, analytics, workflow automation, and local AI.",
+    ],
+  },
+  {
+    label: "Technical Projects & Operations",
+    organization: "Token Miner · Independent",
     icon: Cpu,
     achievements: [
-      "Built quantitative trading infrastructure for Spot Grid and Dollar-Cost Averaging strategies on global platforms including Binance.",
-      "Designed and maintained cryptocurrency mining environments across hardware, thermal management, power distribution, and software-level kernel optimization.",
+      "Worked across budgets, procurement, hardware, thermal planning, power distribution, maintenance, and operating procedures.",
+      "Used data analysis and visualization to support feasibility, cost, and operational decisions.",
+      "Coordinated internal teams and external vendors around technical requirements and site operations.",
     ],
   },
 ] as const;
@@ -128,8 +150,8 @@ export function ProfessionalProfileSection() {
       <div className="space-y-10">
         <SectionHeader
           eyebrow="Professional Profile"
-          title="Hybrid IT Manager & AI Systems Architect"
-          description="A highly analytical technology leader bridging enterprise infrastructure automation and agentic AI systems—from dependable macOS operations to autonomous, local-first enterprise software."
+          title="Technology operations, software, and automation"
+          description="A broad, hands-on profile covering day-to-day IT, application development, workflow improvement, applied AI prototypes, and technical project work."
           titleId="professional-profile-heading"
         />
 
@@ -137,18 +159,17 @@ export function ProfessionalProfileSection() {
           <div className="grid gap-8 border-b border-[color:var(--line)] pb-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
             <div className="space-y-4">
               <p className="font-mono-ui text-[11px] uppercase tracking-[0.3em] text-[color:var(--accent-strong)]">
-                Leadership through-line
+                Working approach
               </p>
               <h2 className="font-display text-3xl leading-tight text-[color:var(--foreground)] md:text-4xl">
-                One operating mindset across infrastructure, software, and AI.
+                Connect the operational problem to a system people can use.
               </h2>
             </div>
             <p className="max-w-3xl text-base leading-8 text-[color:var(--muted)] md:text-lg">
-              My work connects the reliability expected from enterprise IT with the systems
-              thinking required for modern AI products. I automate operational foundations,
-              design complex business workflows, and build local AI architectures that keep
-              sensitive data close to the organization while leaving consequential decisions in
-              human hands.
+              My work often starts with an operational need: a device to configure, a process to
+              clarify, a business rule to turn into software, or repetitive work to automate. I
+              combine hands-on implementation with documentation and coordination so the result is
+              understandable to both technical and non-technical teams.
             </p>
           </div>
 
@@ -194,15 +215,15 @@ export function ProfessionalProfileSection() {
             <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
               <div className="space-y-5">
                 <p className="font-mono-ui text-[11px] uppercase tracking-[0.3em] text-[#f0b487]">
-                  Flagship System · EPSX Project
+                  Personal prototype · EPSX project
                 </p>
                 <h2 className="font-display text-4xl leading-tight text-[color:var(--feature-foreground)] md:text-5xl">
                   Folio ERP
                 </h2>
                 <p className="max-w-2xl text-lg leading-8 text-[color:var(--feature-muted)]">
-                  An AI-powered, enterprise-grade workflow orchestration and resource management
-                  platform connecting intelligent document extraction, multi-stage approvals,
-                  accounting review, and financial settlement without cloud AI latency.
+                  A working prototype that explores document intake, multi-stage approvals,
+                  accounting review, and settlement in one role-based workflow. Local AI features
+                  assist with extraction and suggestions, with people reviewing the output.
                 </p>
                 <a
                   href="#demos"
@@ -213,25 +234,18 @@ export function ProfessionalProfileSection() {
                 </a>
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
-                <div className="metric-panel-dark">
-                  <p className="font-display text-4xl text-[color:var(--feature-foreground)]">84+</p>
-                  <p className="mt-3 font-mono-ui text-[11px] uppercase tracking-[0.28em] text-[color:var(--feature-muted)]">
-                    workflow states
-                  </p>
-                </div>
-                <div className="metric-panel-dark">
-                  <p className="font-display text-4xl text-[color:var(--feature-foreground)]">7</p>
-                  <p className="mt-3 font-mono-ui text-[11px] uppercase tracking-[0.28em] text-[color:var(--feature-muted)]">
-                    organizational roles
-                  </p>
-                </div>
-                <div className="metric-panel-dark">
-                  <p className="font-display text-4xl text-[color:var(--feature-foreground)]">100%</p>
-                  <p className="mt-3 font-mono-ui text-[11px] uppercase tracking-[0.28em] text-[color:var(--feature-muted)]">
-                    human veto power
-                  </p>
-                </div>
+              <div className="metric-panel-dark">
+                <p className="font-mono-ui text-[11px] uppercase tracking-[0.3em] text-[color:var(--feature-muted)]">
+                  Project context
+                </p>
+                <p className="mt-4 font-display text-3xl text-[color:var(--feature-foreground)]">
+                  Working prototype
+                </p>
+                <p className="mt-4 text-sm leading-7 text-[color:var(--feature-muted)]">
+                  Built to explore how a multi-role financial process can be represented in
+                  software, including where automation can assist and where human review remains
+                  necessary.
+                </p>
               </div>
             </div>
 
@@ -266,8 +280,8 @@ export function ProfessionalProfileSection() {
         <div className="space-y-8">
           <SectionHeader
             eyebrow="Professional Experience"
-            title="Operational leadership backed by hands-on engineering."
-            description="The work spans enterprise fleet reliability, systemic knowledge management, rapid team growth, quantitative automation, and performance-focused infrastructure."
+            title="Experience across operations, software, and technical projects."
+            description="The common thread is practical problem-solving: understanding the work, building or improving the system around it, and coordinating with the people involved."
           />
 
           <div className="grid gap-4 lg:grid-cols-2">

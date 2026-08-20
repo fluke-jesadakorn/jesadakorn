@@ -1,14 +1,14 @@
 # Jesadakorn Kirtnu — Portfolio Website
 
-Personal portfolio website for Jesadakorn Kirtnu, a Hybrid IT Manager & AI Systems Architect based in Phuket, Thailand.
+Personal portfolio website for Jesadakorn Kirtnu, a technology professional based in Phuket, Thailand.
 
-The site presents enterprise infrastructure leadership, local-first agentic AI systems, hands-on software engineering, and selected workflow automation projects.
+The site presents experience across IT operations, software development, workflow automation, business systems, technical projects, and applied AI prototypes.
 
 ## Website Content
 
-- Professional profile covering Agentic AI & Data Architecture, Infrastructure & DevOps, Enterprise Software Engineering, and IT Operations & Compliance.
-- Folio ERP flagship feature covering its 84+ state workflow, seven organizational roles, Claim Task concurrency protection, local GenAI advisory, human veto controls, GL/VAT validation, and dynamic SQL-to-HTML architecture.
-- Interactive case studies for EPSX, HR AI Agent, and AI Contract Analyzer.
+- Professional profile covering IT Operations & Infrastructure, Software & Business Systems, Workflow Automation & Applied AI, Project & Process Coordination, and Data & Technical Engineering.
+- Folio ERP working prototype covering role-based financial workflows, task review, local AI assistance, and human approval steps.
+- Interactive case studies with explicit status labels for the live EPSX side project and the HR AI Agent and AI Contract Analyzer prototypes.
 - Responsive YouTube demo gallery with privacy-enhanced embedded players:
   - [Folio ERP](https://youtu.be/pdDgCdmcYdA)
   - [HR AI Agent](https://youtu.be/jhZXK7BY-kY)

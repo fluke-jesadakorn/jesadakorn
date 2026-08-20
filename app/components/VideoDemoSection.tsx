@@ -5,26 +5,26 @@ import SectionHeader from "./SectionHeader";
 const videoDemos = [
   {
     id: "pdDgCdmcYdA",
-    label: "Flagship ERP",
-    title: "Folio ERP: Receipt-to-settlement orchestration",
+    label: "Working prototype",
+    title: "Folio ERP: A multi-stage financial workflow",
     description:
-      "One connected workflow from AI document extraction through approval, accounting review, and financial settlement.",
+      "A prototype connecting document intake, approval, accounting review, and settlement, with AI-assisted steps shown as suggestions for human review.",
     youtubeUrl: "https://youtu.be/pdDgCdmcYdA",
   },
   {
     id: "jhZXK7BY-kY",
-    label: "Modern Workplace",
-    title: "HR AI Agent: LINE leave request to one-click approval",
+    label: "Working prototype",
+    title: "HR AI Agent: Leave requests through LINE",
     description:
-      "A private, local-AI workflow that understands employee requests in LINE and routes them to a focused approval portal.",
+      "An experiment using LINE, n8n, and a local language model to collect leave details and route requests to a review portal.",
     youtubeUrl: "https://youtu.be/jhZXK7BY-kY",
   },
   {
     id: "HYIIDeUxzis",
-    label: "Document Intelligence",
-    title: "AI Contract Analyzer: Secure organizational review",
+    label: "Working prototype",
+    title: "AI Contract Analyzer: Assisted document review",
     description:
-      "A locally operated contract intelligence system that extracts obligations, cross-references policy, and flags risk for human review.",
+      "A prototype that extracts contract information, compares passages with reference policies, and presents possible review points to a person.",
     youtubeUrl: "https://youtu.be/HYIIDeUxzis",
   },
 ] as const;
@@ -39,8 +39,8 @@ export function VideoDemoSection() {
       <div className="space-y-8">
         <SectionHeader
           eyebrow="Project Demos"
-          title="See the systems move from architecture to working software."
-          description="Three end-to-end demonstrations covering enterprise ERP orchestration, conversational HR automation, and secure document intelligence."
+          title="See how the prototypes work from input to review."
+          description="These demonstrations show the current implementation and interaction flow. They are project examples, not claims of production deployment or measured business outcomes."
           titleId="video-demos-heading"
         />
 

@@ -7,7 +7,7 @@ import SectionHeader from "../components/SectionHeader";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact Jesadakorn Kirtnu for IT leadership, IT consulting, and business-facing roles focused on coordination, operations, and practical digital solutions.",
+    "Contact Jesadakorn Kirtnu about roles in technology operations, software, automation, business systems, and technical project delivery.",
   alternates: {
     canonical: "/contact",
   },
@@ -18,7 +18,7 @@ const contactActions = [
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/jesadakorn-kirtnu-81b9601b9/",
     value: "linkedin.com/in/jesadakorn-kirtnu-81b9601b9",
-    note: "Best for role context, experience review, and direct hiring outreach.",
+    note: "Professional background, experience, and direct hiring conversations.",
     icon: Linkedin,
   },
   {
@@ -31,9 +31,9 @@ const contactActions = [
 ] as const;
 
 const conversationPoints = [
-  "IT management or IT consulting roles where leadership, coordination, and dependable execution all matter.",
-  "Teams that need someone comfortable working between local operations, business needs, and international collaboration.",
-  "Opportunities where people-focused communication, process improvement, and practical digital thinking are valued.",
+  "IT operations and infrastructure roles involving devices, networks, documentation, and user support.",
+  "Software and business-system roles spanning frontend, backend, integrations, and workflow-based applications.",
+  "Automation, applied AI, and technical project roles where process understanding and cross-team coordination matter.",
 ] as const;
 
 function ContactLinkCard({
@@ -78,8 +78,8 @@ export default function Contact() {
       <section className="mx-auto w-full max-w-6xl px-4 pb-10 pt-10 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Contact"
-          title="Let's talk about IT leadership and consulting opportunities."
-          description="This page is intentionally simple: direct contact routes, clear availability context, and no unnecessary friction between a hiring conversation and a reply."
+          title="Let's talk about where my experience could support your team."
+          description="For roles across technology operations, software, automation, or technical project delivery, email is the most direct way to reach me."
         />
       </section>
 
@@ -92,12 +92,11 @@ export default function Contact() {
                 Phuket, Thailand
               </div>
               <h2 className="font-display text-3xl text-[color:var(--foreground)]">
-                Best fit for teams hiring someone who can connect people, process, and dependable
-                IT support.
+                Practical across systems, software, workflows, and coordination.
               </h2>
               <p className="text-base leading-8 text-[color:var(--muted)]">
-                If the role needs strong coordination, practical problem-solving, and experience
-                working across teams and branches, email is the fastest route.
+                I&apos;m open to conversations with teams that value hands-on problem-solving,
+                clear communication, and technology that supports day-to-day work.
               </p>
             </div>
 

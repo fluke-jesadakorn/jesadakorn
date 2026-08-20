@@ -38,8 +38,8 @@ export function EmailSection() {
               {emailAddress}
             </a>
             <p className="mt-3 max-w-md text-sm leading-7 text-[color:var(--muted)]">
-              The fastest route for hiring conversations, IT leadership opportunities, and direct
-              outreach.
+              The fastest route for roles involving technology operations, software, automation,
+              or technical project work.
             </p>
           </div>
         </div>

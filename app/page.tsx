@@ -7,19 +7,18 @@ import FeaturedWorkSection from "./components/FeaturedWorkSection";
 import Portfolio from "./components/Portfolio";
 import { ProfessionalProfileSection } from "./components/ProfessionalProfileSection";
 import { VideoDemoSection } from "./components/VideoDemoSection";
-import { featuredProjects } from "./components/featured-work-data";
 
 export const metadata: Metadata = {
-  title: "Hybrid IT Manager & AI Systems Architect",
+  title: "Technology Operations, Software & Automation",
   description:
-    "Portfolio of Jesadakorn Kirtnu, a hybrid IT Manager and AI Systems Architect building enterprise infrastructure automation, local agentic AI systems, and Folio ERP.",
+    "Jesadakorn Kirtnu works across IT operations, full-stack software, workflow automation, business systems, and technical project coordination.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Jesadakorn Kirtnu | Hybrid IT Manager & AI Systems Architect",
+    title: "Jesadakorn Kirtnu | Technology Operations, Software & Automation",
     description:
-      "Enterprise infrastructure automation, local agentic AI systems, and Folio ERP workflow orchestration.",
+      "Practical technology work across operations, software, automation, and business systems.",
     url: "/",
     type: "website",
     images: [
@@ -27,15 +26,15 @@ export const metadata: Metadata = {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Jesadakorn Kirtnu — Hybrid IT Manager and AI Systems Architect",
+        alt: "Jesadakorn Kirtnu — Technology Operations, Software and Automation",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jesadakorn Kirtnu | Hybrid IT Manager & AI Systems Architect",
+    title: "Jesadakorn Kirtnu | Technology Operations, Software & Automation",
     description:
-      "Enterprise infrastructure automation, local agentic AI systems, and Folio ERP workflow orchestration.",
+      "Practical technology work across operations, software, automation, and business systems.",
     images: ["/og.png"],
   },
 };
@@ -46,16 +45,16 @@ const profileDetails = [
     value: "Phuket, Thailand",
   },
   {
-    label: "Current role",
-    value: "IT Manager at VIGNOLD, Phuket",
+    label: "Current work",
+    value: "IT operations and cross-branch support at VIGNOLD",
   },
   {
     label: "Cross-branch work",
     value: "Thailand and German branches",
   },
   {
-    label: "Side & AI work",
-    value: "EPSX, HR AI Chatbot, and Contract AI systems",
+    label: "Projects",
+    value: "Software products, workflow automation, and applied AI prototypes",
   },
   {
     label: "Education",
@@ -63,33 +62,21 @@ const profileDetails = [
   },
 ] as const;
 
-const totalMappedStates = featuredProjects.reduce(
-  (sum, project) =>
-    sum +
-    project.surfaces.reduce((sSum, surface) => sSum + surface.stateCount, 0),
-  0,
-);
-
-const totalSurfaces = featuredProjects.reduce(
-  (sum, project) => sum + project.surfaces.length,
-  0,
-);
-
 const proofPoints = [
   {
-    value: `${totalMappedStates}+`,
-    label: "mapped product states",
-    detail: "Across my personal side work and AI automation project surfaces.",
+    value: "Operate",
+    label: "Technology operations",
+    detail: "Day-to-day systems, devices, networks, documentation, and team support.",
   },
   {
-    value: `${totalSurfaces}`,
-    label: "live product surfaces",
-    detail: "Connected interfaces for customer-facing systems, chatbots, and admin consoles.",
+    value: "Build",
+    label: "Software and automation",
+    detail: "Web applications, business workflows, integrations, and working prototypes.",
   },
   {
-    value: "People + systems",
-    label: "working style",
-    detail: "Business coordination, operational support, and practical digital product delivery.",
+    value: "Improve",
+    label: "Processes and projects",
+    detail: "Clearer workflows, practical coordination, and tools that teams can maintain.",
   },
 ] as const;
 
@@ -100,19 +87,18 @@ export default function Home() {
         <div className="grid gap-10 lg:grid-cols-[1.16fr_0.84fr] lg:items-start">
           <div className="space-y-8">
             <div className="reveal-up">
-              <span className="eyebrow-chip">IT Manager Portfolio</span>
+              <span className="eyebrow-chip">Technology Operations · Software · Automation</span>
             </div>
 
             <div className="reveal-up space-y-6" style={{ animationDelay: "80ms" }}>
               <h1 className="font-display text-5xl leading-[0.92] text-[color:var(--foreground)] sm:text-6xl lg:text-[3.6rem] xl:text-[4.1rem]">
-                IT leadership, AI automation workflows, and digital products.
+                Practical technology work across operations, software, and automation.
               </h1>
               <p className="max-w-2xl text-lg leading-8 text-[color:var(--muted)] md:text-xl">
-                I&apos;m Jesadakorn Kirtnu, a Phuket-based IT Manager at VIGNOLD. In my current
-                role, I work closely between the Thailand and German branches to support IT
-                operations. Separately, I build AI-powered solutions, including conversational
-                HR Chatbots (LINE + n8n + Ollama) and document intelligence systems, alongside
-                custom platforms like EPSX.
+                I&apos;m Jesadakorn Kirtnu, based in Phuket. My experience spans IT operations,
+                full-stack development, workflow automation, technical projects, and cross-team
+                coordination. I focus on building and improving systems that are useful,
+                understandable, and maintainable.
               </p>
             </div>
 
@@ -175,8 +161,8 @@ export default function Home() {
                     At a glance
                   </p>
                   <p className="mt-3 font-display text-2xl text-[color:var(--foreground)]">
-                    An IT Manager working between Thailand and Germany, with separate focus on AI
-                    automation and workflow system design.
+                    A technology professional connecting day-to-day operations, software delivery,
+                    automation, and practical business needs.
                   </p>
                 </div>
 
@@ -196,8 +182,8 @@ export default function Home() {
                 <div className="soft-divider" />
 
                 <p className="text-sm leading-7 text-[color:var(--muted)]">
-                  Best suited to roles where people, process, coordination, and dependable systems
-                  all need to stay aligned.
+                  I work best where people, processes, and technology need to stay aligned through
+                  clear communication and hands-on problem-solving.
                 </p>
               </div>
             </div>
@@ -218,11 +204,11 @@ export default function Home() {
                 Closing note
               </p>
               <h2 className="font-display text-3xl leading-tight text-[color:var(--foreground)] md:text-5xl">
-                Open to IT leadership and consulting roles where clear coordination matters.
+                Open to roles across technology operations, software, automation, and technical project delivery.
               </h2>
               <p className="text-base leading-8 text-[color:var(--muted)]">
-                If you&apos;re hiring for a role that combines leadership, cross-team
-                communication, and business-focused IT support, let&apos;s talk.
+                If your team needs someone who can understand operational needs, work across
+                functions, and turn requirements into practical systems, let&apos;s talk.
               </p>
             </div>
 

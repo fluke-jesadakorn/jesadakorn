@@ -90,8 +90,6 @@ function SurfacePanel({ surface }: { surface: FeaturedSurface }) {
               )}
             >
               {surface.label}
-              <span className="text-white/[0.35]">/</span>
-              {surface.stateCount} states
             </div>
 
             <div className="flex items-start gap-4">
@@ -123,7 +121,7 @@ function SurfacePanel({ surface }: { surface: FeaturedSurface }) {
                     theme.link,
                   )}
                 >
-                  Visit live surface
+                  {surface.linkLabel}
                   <ExternalLink className="h-4 w-4" />
                 </a>
               </div>
@@ -184,7 +182,7 @@ export default function FeaturedWorkSection() {
           {/* Project Tabs Switcher */}
           <div className="flex flex-col gap-4 border-b border-white/10 pb-6">
             <p className="font-mono-ui text-[11px] uppercase tracking-[0.3em] text-[color:var(--feature-muted)]">
-              Select Side Project / Case Study
+              Select project / case study
             </p>
             <div className="flex flex-wrap gap-2.5">
               {featuredProjects.map((project) => (
@@ -205,17 +203,22 @@ export default function FeaturedWorkSection() {
           </div>
 
           <div className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]">
-            <SectionHeader
-              eyebrow="Selected Project"
-              title={activeProject.title}
-              description={activeProject.summary}
-              tone="inverse"
-            />
+            <div className="space-y-4">
+              <span className="inline-flex rounded-full border border-white/[0.12] bg-white/[0.06] px-4 py-2 font-mono-ui text-[11px] uppercase tracking-[0.28em] text-[#f0c5a3]">
+                {activeProject.status}
+              </span>
+              <SectionHeader
+                eyebrow="Selected project"
+                title={activeProject.title}
+                description={activeProject.summary}
+                tone="inverse"
+              />
+            </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="metric-panel-dark">
                 <p className="font-mono-ui text-[11px] uppercase tracking-[0.3em] text-[color:var(--feature-muted)]">
-                  Role
+                  My contribution
                 </p>
                 <p className="mt-4 text-sm leading-7 text-[color:var(--feature-foreground)]">
                   {activeProject.role}
@@ -233,16 +236,16 @@ export default function FeaturedWorkSection() {
           </div>
 
           <div className="grid gap-4 md:grid-cols-3">
-            {activeProject.metrics.map((metric) => (
-              <div key={metric.label} className="metric-panel-dark">
-                <p className="font-display text-4xl text-[color:var(--feature-foreground)]">
-                  {metric.value}
+            {activeProject.focusAreas.map((focus) => (
+              <div key={focus.title} className="metric-panel-dark">
+                <p className="font-display text-3xl text-[color:var(--feature-foreground)]">
+                  {focus.title}
                 </p>
                 <p className="mt-3 font-mono-ui text-[11px] uppercase tracking-[0.28em] text-[color:var(--feature-muted)]">
-                  {metric.label}
+                  {focus.label}
                 </p>
                 <p className="mt-4 text-sm leading-6 text-[color:var(--feature-muted)]">
-                  {metric.detail}
+                  {focus.detail}
                 </p>
               </div>
             ))}
@@ -274,9 +277,9 @@ export default function FeaturedWorkSection() {
                   Project Outputs &amp; Repositories
                 </p>
                 <p className="mt-4 max-w-xl text-base leading-8 text-[color:var(--feature-muted)]">
-                  These surfaces and codebases show practical system delivery. Every component is
-                  designed around clarity of information, secure integration, and responsive
-                  interaction.
+                  The links below show the current project output, repository, or interface. Live
+                  availability and prototype status are described separately so the scope remains
+                  clear.
                 </p>
               </div>
 

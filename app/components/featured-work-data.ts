@@ -10,75 +10,78 @@ export interface FeaturedSurface {
   name: string;
   label: string;
   url: string;
+  linkLabel: string;
   summary: string;
   highlights: string[];
   stack: string[];
-  stateCount: number;
   screenshots: FeaturedScreenshot[];
 }
 
-export interface FeaturedMetric {
-  value: string;
+export interface FeaturedFocus {
+  title: string;
   label: string;
   detail: string;
 }
 
 export interface FeaturedCaseStudy {
   project: string;
+  status: "Live side project" | "Working prototype";
   title: string;
   summary: string;
   repositoryUrl: string;
   role: string;
   scope: string;
   responsibilities: string[];
-  metrics: FeaturedMetric[];
+  focusAreas: FeaturedFocus[];
   surfaces: FeaturedSurface[];
 }
 
 export const epsxCaseStudy: FeaturedCaseStudy = {
   project: "EPSX",
-  title: "EPSX side project spanning public analytics and internal operations.",
+  status: "Live side project",
+  title: "EPSX: Public analytics and internal operations interfaces.",
   summary:
-    "EPSX is a separate side project where I shaped a clear product experience for two audiences at once: people exploring market analytics on the public platform and operators managing access, payments, notifications, and developer workflows behind the scenes.",
+    "EPSX is a personal side project with a public analytics product and a separate admin environment. The work brings data-heavy views, account access, notifications, payments, and developer tools into interfaces designed for different users.",
   repositoryUrl: "https://github.com/fluke-jesadakorn/epsx",
   role:
-    "A personal side project where I handled the product-facing interface delivery across both surfaces, turning complex requirements into structured navigation, plan-aware states, and day-to-day operational tooling.",
+    "I worked across the product interfaces for both surfaces, translating requirements into navigation, access states, analytics views, and operational tools.",
   scope:
-    "The work covered epsx.io and admin.epsx.io as one connected system, with emphasis on high-density information, permission-sensitive flows, and interfaces that stay legible under real operating pressure.",
+    "The project covers epsx.io and admin.epsx.io as connected parts of the same product, with different workflows for public users and operators.",
   responsibilities: [
-    "Designed and built interface patterns shared across the public product and the internal admin console.",
-    "Mapped gated states, wallet-related flows, analytics views, and developer-facing tooling into a coherent navigation system.",
-    "Focused on clarity for heavy operational tasks rather than decorative UI, especially across admin, notifications, and access management.",
+    "Designed and built interface patterns shared across the public product and admin console.",
+    "Mapped account access, wallet-related flows, analytics, notifications, and developer tools into a consistent product structure.",
+    "Worked on the details needed for data-heavy and repetitive admin tasks, including filtering, status feedback, and access controls.",
   ],
-  metrics: [
+  focusAreas: [
     {
-      value: "38",
-      label: "Public product states",
-      detail: "Landing, pricing, analytics, portfolio, notifications, plans, and developer experiences.",
+      title: "Public product",
+      label: "User experience",
+      detail: "Landing, pricing, analytics, watchlists, portfolio views, and developer access.",
     },
     {
-      value: "46",
-      label: "Admin states",
-      detail: "Operations, wallet access, plans, payments, notifications, and audit-heavy tooling.",
+      title: "Admin console",
+      label: "Operations",
+      detail: "Wallet access, plans, payments, notifications, and developer controls.",
     },
     {
-      value: "2",
-      label: "Live product surfaces",
-      detail: "A public user-facing platform and a separate admin operating environment.",
+      title: "Connected delivery",
+      label: "Project scope",
+      detail: "A live side project spanning customer-facing and internal interfaces.",
     },
   ],
   surfaces: [
     {
       id: "frontend",
       name: "epsx.io",
-      label: "Public Platform",
+      label: "Public platform",
       url: "https://epsx.io",
+      linkLabel: "Visit project",
       summary:
-        "A public-facing analytics platform built around plan-aware access, watchlist workflows, and data-heavy product navigation without losing readability.",
+        "A public analytics product with plan-aware access, watchlists, search, filtering, and developer tools.",
       highlights: [
-        "Established a landing and pricing experience that explains the product clearly before users enter gated flows.",
-        "Structured rankings, filtering, search, and premium access states so dense information remains scannable.",
-        "Connected watchlists, portfolio tracking, and developer tooling inside a product shell that feels consistent end to end.",
+        "Introduces the product through landing, pricing, and account-entry flows.",
+        "Organizes rankings, filtering, search, and access states for data-heavy views.",
+        "Connects watchlists, portfolio tracking, and developer tools inside one product shell.",
       ],
       stack: [
         "Next.js",
@@ -89,45 +92,45 @@ export const epsxCaseStudy: FeaturedCaseStudy = {
         "Radix UI",
         "React Query",
       ],
-      stateCount: 38,
       screenshots: [
         {
           src: "/featured-work/epsx/frontend/home.jpg",
-          alt: "EPSX public homepage capture",
-          title: "Landing and framing",
-          detail: "Product positioning, supporting metrics, pricing, and entry points.",
+          alt: "EPSX public homepage",
+          title: "Landing and product framing",
+          detail: "Product overview, supporting information, pricing, and entry points.",
         },
         {
           src: "/featured-work/epsx/frontend/analytics.jpg",
-          alt: "EPSX analytics screen capture",
+          alt: "EPSX analytics interface",
           title: "Analytics workspace",
-          detail: "Filtering, ranking, gated data access, and dense table interaction.",
+          detail: "Filtering, ranking, access states, and table interaction.",
         },
         {
           src: "/featured-work/epsx/frontend/portfolio.jpg",
-          alt: "EPSX portfolio screen capture",
+          alt: "EPSX portfolio interface",
           title: "Portfolio tracking",
-          detail: "Watchlist-focused flows with clear states and monitoring cues.",
+          detail: "Watchlist-focused flows with status and monitoring cues.",
         },
         {
           src: "/featured-work/epsx/frontend/developer.jpg",
-          alt: "EPSX developer portal screen capture",
-          title: "Developer tooling",
-          detail: "API access, key lifecycle, and usage views for external consumers.",
+          alt: "EPSX developer portal",
+          title: "Developer tools",
+          detail: "API access, key lifecycle, and usage views.",
         },
       ],
     },
     {
       id: "admin",
       name: "admin.epsx.io",
-      label: "Admin Console",
+      label: "Admin console",
       url: "https://admin.epsx.io",
+      linkLabel: "Visit admin surface",
       summary:
-        "An internal operations console that supports wallet management, notifications, access control, payments, and system-level observability inside one working environment.",
+        "An operations interface for wallet management, notifications, access, payments, and system information.",
       highlights: [
-        "Built a command-center shell for operations work where multiple modules need to stay connected and quickly actionable.",
-        "Clarified wallet, subscription, access, and lifecycle controls for repetitive admin tasks with less friction.",
-        "Grouped notifications, analytics, developer controls, and audit-oriented workflows into a single operational surface.",
+        "Groups operational modules and status information inside one dashboard shell.",
+        "Supports wallet, subscription, access, and lifecycle tasks in dedicated workflows.",
+        "Brings notifications, developer controls, and audit-oriented views into the same interface.",
       ],
       stack: [
         "Next.js",
@@ -138,31 +141,30 @@ export const epsxCaseStudy: FeaturedCaseStudy = {
         "DnD Kit",
         "Jest + Playwright",
       ],
-      stateCount: 46,
       screenshots: [
         {
           src: "/featured-work/epsx/admin/dashboard.jpg",
-          alt: "EPSX admin dashboard capture",
+          alt: "EPSX admin dashboard",
           title: "Operations dashboard",
-          detail: "Module visibility, health signals, and quick access to critical tasks.",
+          detail: "Module overview, system information, and access to common tasks.",
         },
         {
           src: "/featured-work/epsx/admin/wallet-management.jpg",
-          alt: "EPSX admin wallet management capture",
+          alt: "EPSX admin wallet management",
           title: "Wallet management",
-          detail: "Subscriptions, credits, access state, and lifecycle control tools.",
+          detail: "Subscriptions, credits, access state, and lifecycle controls.",
         },
         {
           src: "/featured-work/epsx/admin/notifications.jpg",
-          alt: "EPSX admin notifications capture",
+          alt: "EPSX admin notifications",
           title: "Notification workflows",
-          detail: "Broadcast review, filters, and admin monitoring patterns.",
+          detail: "Broadcast review, filters, and monitoring views.",
         },
         {
           src: "/featured-work/epsx/admin/developer-portal.jpg",
-          alt: "EPSX admin developer portal capture",
+          alt: "EPSX admin developer portal",
           title: "Developer controls",
-          detail: "Premium capability gating, key management, and admin oversight.",
+          detail: "Capability access, key management, and admin oversight.",
         },
       ],
     },
@@ -171,93 +173,81 @@ export const epsxCaseStudy: FeaturedCaseStudy = {
 
 export const hrChatbotCaseStudy: FeaturedCaseStudy = {
   project: "HR AI Agent",
-  title: "Modern HR leave request automation via LINE Chatbot and n8n orchestration.",
+  status: "Working prototype",
+  title: "HR AI Agent: Leave requests through LINE and an admin portal.",
   summary:
-    "Built a Modern Workplace HR AI Agent system integrating a LINE Chatbot conversational interface with a Web Admin Portal. It processes employee leave requests in natural language using a local LLM and orchestrates complex approval pipelines in n8n.",
+    "A working prototype that connects a LINE conversation with an n8n workflow, local language-model processing, structured leave data, and a web interface for review.",
   repositoryUrl: "https://github.com/fluke-jesadakorn/hr-ai-agent",
   role:
-    "Sole developer creating the end-to-end integration: setting up n8n webhooks, intent classification with local LLMs, slot-filling state machine logic, and manager approval interfaces.",
+    "I built the prototype flow, including webhooks, intent and detail extraction, conversation state, database updates, and the review interface.",
   scope:
-    "The project replaces paper-based leave requests with a 1-click digital approval workflow, ensuring strict data privacy by running NLP and database operations locally.",
+    "The project explores how employees could submit leave information through a familiar chat interface while reviewers keep control of approval decisions.",
   responsibilities: [
-    "Integrated LINE Messaging API with n8n to ingest conversational messages from employees.",
-    "Engineered slot-filling logic in n8n to prompt users for missing details (leave type, dates, reason) dynamically.",
-    "Deployed local LLM (Ollama Qwen 2.5) to parse user intents and convert conversational text into structured JSON data.",
-    "Created an HR web interface where administrators review pending leaves and approve/reject them in a single click.",
+    "Connected LINE Messaging API with n8n to receive and respond to employee messages.",
+    "Implemented prompts for missing leave details and converted conversational text into structured data with a local model.",
+    "Built a web interface for reviewing requests, updating their status, and returning the result through LINE.",
   ],
-  metrics: [
+  focusAreas: [
     {
-      value: "1 Click",
-      label: "Leave Approval",
-      detail: "Managers approve leaves instantly from a secure, clean web dashboard.",
+      title: "Conversation",
+      label: "Employee flow",
+      detail: "Collects leave type, dates, and context through LINE messages.",
     },
     {
-      value: "100%",
-      label: "Privacy-focused NLP",
-      detail: "All user conversations are analyzed locally on-premise using Ollama and Qwen 2.5.",
+      title: "Orchestration",
+      label: "Automation",
+      detail: "Uses n8n to connect messaging, local model processing, and stored data.",
     },
     {
-      value: "Zero paper",
-      label: "HR Efficiency",
-      detail: "Leaves are logged directly in PostgreSQL databases, notifying employees automatically via LINE.",
+      title: "Human review",
+      label: "Admin flow",
+      detail: "Keeps the approval or rejection decision in a web review interface.",
     },
   ],
   surfaces: [
     {
       id: "frontend",
-      name: "LINE Chatbot",
-      label: "Employee Interface",
-      url: "https://line.me",
+      name: "LINE chatbot",
+      label: "Employee interface",
+      url: "https://github.com/fluke-jesadakorn/hr-ai-agent",
+      linkLabel: "View repository",
       summary:
-        "A conversational interface on LINE where employees query leave balance, check corporate holidays, and request leaves in natural language.",
+        "A conversational prototype where employees can enter leave information and receive status updates through LINE.",
       highlights: [
-        "Understands casual Thai requests (e.g., 'ขอลากิจวันพรุ่งนี้ไปทำธุระ') and extracts details.",
-        "Validates leave quotas dynamically before sending requests to the approval pipeline.",
-        "Notifies employees instantly through LINE Push Messages once their leaves are approved or rejected.",
+        "Extracts details from conversational Thai and asks follow-up questions when information is missing.",
+        "Checks stored leave information before creating a request for review.",
+        "Returns the updated request status through LINE messages.",
       ],
-      stack: [
-        "LINE Messaging API",
-        "n8n",
-        "Ollama",
-        "Qwen 2.5",
-        "PostgreSQL",
-      ],
-      stateCount: 12,
+      stack: ["LINE Messaging API", "n8n", "Ollama", "Qwen", "PostgreSQL"],
       screenshots: [
         {
           src: "/featured-work/hr-chatbot/line-interface.svg",
-          alt: "LINE Chatbot conversational leave request",
+          alt: "LINE chatbot leave-request prototype",
           title: "Conversational intake",
-          detail: "Natural language leave request being parsed by the AI bot.",
+          detail: "A leave request being converted into structured information.",
         },
       ],
     },
     {
       id: "admin",
-      name: "HR Web Portal",
-      label: "Admin Console",
+      name: "HR web portal",
+      label: "Review interface",
       url: "https://github.com/fluke-jesadakorn/hr-ai-agent",
+      linkLabel: "View repository",
       summary:
-        "A centralized dashboard for HR administrators to manage quotas, audit history, and process leave requests with real-time status updates.",
+        "A prototype dashboard for reviewing leave information, request history, and status changes.",
       highlights: [
-        "Shows active leaves in a clean queue sorted by urgency and LLM extraction confidence.",
-        "Allows HR to adjust quotas and leave policies directly without database manual edits.",
-        "Triggers n8n callback nodes to send automated feedback to employees on LINE.",
+        "Presents pending requests and extracted details in a review queue.",
+        "Provides controls for updating request status and leave information.",
+        "Connects status changes back to the n8n messaging workflow.",
       ],
-      stack: [
-        "Next.js",
-        "React",
-        "Tailwind CSS",
-        "n8n Webhook",
-        "Node.js",
-      ],
-      stateCount: 8,
+      stack: ["Next.js", "React", "Tailwind CSS", "n8n Webhook", "Node.js"],
       screenshots: [
         {
           src: "/featured-work/hr-chatbot/admin-portal.svg",
-          alt: "HR Web Portal approval interface",
-          title: "Admin approval queue",
-          detail: "One-click approval queue displaying employee status and LLM-extracted request data.",
+          alt: "HR web portal review prototype",
+          title: "Request review queue",
+          detail: "A review view showing employee status and extracted request data.",
         },
       ],
     },
@@ -266,48 +256,50 @@ export const hrChatbotCaseStudy: FeaturedCaseStudy = {
 
 export const contractAnalyzerCaseStudy: FeaturedCaseStudy = {
   project: "AI Contract Analyzer",
-  title: "Automated organizational document intelligence and risk analysis system.",
+  status: "Working prototype",
+  title: "AI Contract Analyzer: Assisted document review with local retrieval.",
   summary:
-    "An AI-powered document analysis system that audits legal contracts. It extracts key metadata, analyzes commitments, and flags high-risk clauses (like unlimited liability or non-standard notice periods) using a secure, private RAG pipeline.",
+    "A working prototype that extracts contract information, retrieves related policy passages, and presents possible review points alongside the source document.",
   repositoryUrl: "https://github.com/fluke-jesadakorn/ai-contract-analyzer",
   role:
-    "Developer shaping the document parsing pipeline, custom chunking algorithms, semantic vector search, and visual auditing interfaces.",
+    "I worked on document parsing, chunking, retrieval queries, and an interface that keeps the source document visible beside extracted information.",
   scope:
-    "Built for organizational teams to reduce manual review times of vendor agreements and contracts, keeping all sensitive files within a secure data perimeter.",
+    "The project explores document-review assistance. Its output is intended to support a person reviewing the contract, not replace legal or compliance judgment.",
   responsibilities: [
-    "Created PDF extraction routines to convert scanned documents into clean, structured markdown.",
-    "Designed semantic chunking and RAG queries to verify clauses against standard company compliance policies.",
-    "Built an interactive split-screen dashboard displaying the document on one side and AI-extracted audit flags on the other.",
+    "Created extraction routines that turn PDF content into structured text for processing.",
+    "Built chunking and retrieval steps for comparing passages with reference policies.",
+    "Developed a split-screen interface for checking extracted information against the source document.",
   ],
-  metrics: [
+  focusAreas: [
     {
-      value: "80%+",
-      label: "Review time saved",
-      detail: "Reduces manual review efforts from hours to minutes for standard commercial contracts.",
+      title: "Extraction",
+      label: "Document processing",
+      detail: "Converts document content into structured text and review fields.",
     },
     {
-      value: "Real-time",
-      label: "Risk flagging",
-      detail: "Instantly highlights liability caps, indemnification issues, and auto-renewals.",
+      title: "Reference lookup",
+      label: "Local retrieval",
+      detail: "Finds related passages from a locally indexed policy collection.",
     },
     {
-      value: "Private RAG",
-      label: "Data security",
-      detail: "Runs securely using local vector indexing to prevent organizational document leaks.",
+      title: "Source checking",
+      label: "Human review",
+      detail: "Keeps suggested review points connected to the original document.",
     },
   ],
   surfaces: [
     {
       id: "frontend",
-      name: "Analyzer Console",
-      label: "Auditor Workspace",
+      name: "Analyzer console",
+      label: "Reviewer workspace",
       url: "https://github.com/fluke-jesadakorn/ai-contract-analyzer",
+      linkLabel: "View repository",
       summary:
-        "An interactive workspace for legal and compliance teams to upload documents, review obligation summaries, and search across past contracts.",
+        "An interface for uploading documents, reviewing extracted information, and comparing passages with reference material.",
       highlights: [
-        "Interactive PDF viewer that syncs directly with AI-flagged risk clauses and key terms.",
-        "Categorized sidebar grouping extractions into Liabilities, Obligation Dates, and Compliance.",
-        "Standard policy checker comparing contract terms against standard corporate guidelines.",
+        "Places the source PDF beside extracted terms and possible review points.",
+        "Groups information into categories such as obligations, dates, and policy references.",
+        "Shows retrieved reference passages so a reviewer can check the context.",
       ],
       stack: [
         "Next.js",
@@ -317,13 +309,12 @@ export const contractAnalyzerCaseStudy: FeaturedCaseStudy = {
         "Vector Database",
         "React PDF Viewer",
       ],
-      stateCount: 15,
       screenshots: [
         {
           src: "/featured-work/contract/analyzer.svg",
-          alt: "Contract analyzer main dashboard",
-          title: "Contract overview",
-          detail: "Main view listing processed contracts, compliance percentages, and alert flags.",
+          alt: "Contract analyzer review prototype",
+          title: "Document review overview",
+          detail: "A view of processed documents, extracted information, and review flags.",
         },
       ],
     },

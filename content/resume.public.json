@@ -1,11 +1,11 @@
 {
   "identity": {
     "name": "Jesadakorn Kirtnu",
-    "headline": "Hybrid IT Manager & AI Systems Architect",
+    "headline": "Technology Operations, Software & Automation",
     "location": "Phuket, Thailand",
     "portrait": "/resume-portrait.jpg"
   },
-  "summary": "Hybrid IT Manager and AI Systems Architect combining enterprise infrastructure automation, local-first agentic AI, and full-stack software delivery. Leads dependable macOS operations across Thailand and Germany while designing private workflow systems that keep consequential decisions in human hands.",
+  "summary": "Technology professional with experience in IT operations, full-stack development, workflow automation, and technical project coordination. Supports cross-branch operations, builds business applications and personal software projects, and explores local AI through working prototypes. Brings a practical approach to connecting people, processes, and technology.",
   "links": [
     {
       "label": "Portfolio",
@@ -25,33 +25,33 @@
   ],
   "languages": ["Thai", "English"],
   "expertise": [
-    "Enterprise IT Leadership",
-    "Agentic AI & RAG",
-    "Infrastructure Automation",
-    "ERP Workflow Architecture",
-    "Full-Stack Engineering",
-    "Security & Compliance"
+    "IT Operations & Infrastructure",
+    "Full-Stack & Business Systems",
+    "Workflow Automation",
+    "Applied AI Prototyping",
+    "Project & Process Coordination",
+    "Data & Technical Engineering"
   ],
-  "leadership": [
-    "Certified Workplace Safety Committee Officer",
-    "Cross-border operations across Thailand and Germany"
+  "additional": [
+    "Workplace Safety Committee Officer certification",
+    "Cross-branch coordination between Thailand and Germany"
   ],
   "technologies": [
     "Ansible",
     "Munki",
     "Tailscale",
-    "Obsidian",
-    "Apple MLX",
-    "Hermes",
-    "Gemma 4",
-    "Qwen 3.5",
-    "RAG",
-    "SQL Analytics",
     "Next.js",
+    "React",
     "Node.js",
     "Golang",
-    "Rust",
-    "n8n"
+    "NestJS",
+    "Flutter",
+    "n8n",
+    "PostgreSQL",
+    "Ollama",
+    "RAG",
+    "Power BI",
+    "Arduino"
   ],
   "experience": [
     {
@@ -59,17 +59,17 @@
       "organization": "VIGNOLD, Thailand",
       "period": "2024 - Present",
       "bullets": [
-        "Automate and manage 50+ macOS workstations with Ansible, Munki, and custom packages, maintaining stable daily operations with minimal manual oversight.",
-        "Coordinate IT operations between Thailand and Germany, including secure Tailscale networking, rapid onboarding, Obsidian-based knowledge systems, and workplace compliance."
+        "Automate macOS configuration and software deployment with Ansible, Munki, and custom packages while supporting daily device and user needs.",
+        "Coordinate networking, onboarding, operational documentation, and IT work between teams in Thailand and Germany."
       ]
     },
     {
-      "role": "Founder / Product Builder",
-      "organization": "EPSX and Folio ERP",
+      "role": "Product & Software Development",
+      "organization": "Personal Projects - EPSX and Folio ERP",
       "period": "2024 - Present",
       "bullets": [
-        "Designed Folio ERP around 84+ workflow states, seven organizational roles, granular RBAC, and Claim Task concurrency protection for distributed accounting teams.",
-        "Built local AI and RAG workflows for financial extraction, policy cross-reference, GL recommendations, account matching, 7% VAT validation, and human veto control."
+        "Build a live analytics side project spanning public and admin interfaces, access workflows, notifications, and developer tools.",
+        "Develop a financial-workflow prototype with role-based review, document processing, local AI experiments, and human approval steps."
       ]
     },
     {
@@ -77,7 +77,7 @@
       "organization": "Finstable",
       "period": "2024",
       "bullets": [
-        "Delivered ERP and cloud infrastructure solutions spanning role-based approvals, backend services, user-facing interfaces, and business workflow integration."
+        "Worked on ERP and cloud-connected applications across backend services, user interfaces, role-based approvals, and business workflows."
       ]
     },
     {
@@ -85,7 +85,15 @@
       "organization": "Token Miner",
       "period": "2022 - 2024",
       "bullets": [
-        "Led mining operations across budgets, hardware, thermal design, power distribution, maintenance, and software-level kernel optimization."
+        "Worked across budgets, equipment, facility layouts, thermal and power planning, maintenance, operating procedures, and vendor coordination."
+      ]
+    },
+    {
+      "role": "IT, Web & Mobile Developer",
+      "organization": "IMT Group",
+      "period": "Mar 2021 - Jan 2022",
+      "bullets": [
+        "Developed internal applications, supported IT planning and tool selection, and documented workflows for business teams."
       ]
     },
     {
@@ -98,9 +106,9 @@
     }
   ],
   "selectedSystems": [
-    "Folio ERP: 84+ states | 7 roles | concurrency-safe approvals",
-    "HR AI Agent: LINE | n8n | private local LLM processing",
-    "AI Contract Analyzer: private RAG | policy cross-reference | risk flags"
+    "Folio ERP: working prototype for document intake, multi-role review, accounting workflows, and local AI assistance",
+    "HR AI Agent: working prototype connecting LINE, n8n, local language-model processing, and an admin review interface",
+    "AI Contract Analyzer: working prototype for document extraction, local policy retrieval, and human review"
   ],
   "education": {
     "degree": "Bachelor of Computer Engineering",

@@ -24,20 +24,20 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Jesadakorn Kirtnu | IT Manager",
+    default: "Jesadakorn Kirtnu | Technology Operations, Software & Automation",
     template: "%s | Jesadakorn Kirtnu",
   },
   description:
-    "Portfolio of Jesadakorn Kirtnu, a Phuket-based IT Manager working across the Thailand and German branches at VIGNOLD, with EPSX presented separately as a side project.",
+    "Portfolio of Jesadakorn Kirtnu, covering technology operations, software development, workflow automation, business systems, and technical project work.",
   metadataBase: new URL("https://jesadakorn.com"),
 };
 
 const navigation = [
-  { label: "Home", href: "/" },
-  { label: "Work", href: "/#work" },
-  { label: "Experience", href: "/#experience" },
-  { label: "Resume", href: "/resume" },
-  { label: "Contact", href: "/contact" },
+  { label: "Home", href: "/", mobile: false },
+  { label: "Work", href: "/#work", mobile: false },
+  { label: "Experience", href: "/#experience", mobile: false },
+  { label: "Resume", href: "/resume", mobile: true },
+  { label: "Contact", href: "/contact", mobile: true },
 ] as const;
 
 const githubProfileUrl = "https://github.com/fluke-jesadakorn";
@@ -61,7 +61,7 @@ export default function RootLayout({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="transition-colors hover:text-[color:var(--foreground)]"
+                  className={`${item.mobile ? "inline" : "hidden md:inline"} transition-colors hover:text-[color:var(--foreground)]`}
                 >
                   {item.label}
                 </Link>
@@ -70,7 +70,7 @@ export default function RootLayout({
                 href={githubProfileUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-[color:var(--line)] bg-[color:var(--background-strong)] px-4 py-2 text-[color:var(--foreground)] transition-colors hover:border-[color:var(--accent-strong)] hover:text-[color:var(--foreground)]"
+                className="hidden items-center gap-2 rounded-full border border-[color:var(--line)] bg-[color:var(--background-strong)] px-4 py-2 text-[color:var(--foreground)] transition-colors hover:border-[color:var(--accent-strong)] hover:text-[color:var(--foreground)] sm:inline-flex"
               >
                 GitHub
                 <ArrowUpRight className="h-4 w-4" />

@@ -178,7 +178,7 @@ def draw_resume(data: dict) -> None:
     pdf = canvas.Canvas(str(OUTPUT_PATH), pagesize=A4, pageCompression=1)
     pdf.setTitle(f"{data['identity']['name']} - Public Resume")
     pdf.setAuthor(data["identity"]["name"])
-    pdf.setSubject("Hybrid IT Manager and AI Systems Architect professional resume")
+    pdf.setSubject("Technology operations, software, and automation professional resume")
     pdf.setCreator("Jesadakorn portfolio resume generator")
 
     sidebar_width = 184
@@ -268,7 +268,7 @@ def draw_resume(data: dict) -> None:
         style=side_value_style,
     ) - 9
 
-    side_top = draw_section_bar(pdf, "Core Expertise", x=side_x, top=side_top, width=side_width)
+    side_top = draw_section_bar(pdf, "Core Capabilities", x=side_x, top=side_top, width=side_width)
     side_bullet_style = paragraph_style(
         "side-bullet", font_size=8, leading=11.2, color=INK
     )
@@ -284,9 +284,9 @@ def draw_resume(data: dict) -> None:
         )
 
     side_top = draw_section_bar(
-        pdf, "Leadership & Compliance", x=side_x, top=side_top + 1, width=side_width
+        pdf, "Additional Qualifications", x=side_x, top=side_top + 1, width=side_width
     )
-    for item in data["leadership"]:
+    for item in data["additional"]:
         side_top = draw_bullet(
             pdf,
             item,

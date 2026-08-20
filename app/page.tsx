@@ -19,6 +19,7 @@ import {
   SectionReveal,
   SpotlightSurface,
 } from "./components/CinematicMotion";
+import ClickToPlayVideo from "./components/ClickToPlayVideo";
 import SectionHeader from "./components/SectionHeader";
 import { TrackedAnchor } from "./components/TrackedLink";
 import { projects, projectTypeLabels } from "./work/project-data";
@@ -104,6 +105,47 @@ const emailAddress = "jesadakorn.kirtnu@gmail.com";
 const roleMailto = `mailto:${emailAddress}?subject=${encodeURIComponent("Role opportunity — Jesadakorn Kirtnu")}`;
 const projectMailto = `mailto:${emailAddress}?subject=${encodeURIComponent("Project collaboration — Jesadakorn Kirtnu")}`;
 
+const videos = [
+  {
+    topic: "Financial operations",
+    title: "AI finance workflow: receipt to settlement",
+    youtubeTitle:
+      "One receipt. One connected workflow—from AI extraction to approval, accounting, and settlement.",
+    description:
+      "A complete walkthrough of document intake, AI-assisted extraction, human approvals, accounting review, payment, and settlement in one connected workflow.",
+    videoId: "pdDgCdmcYdA",
+    videoUrl: "https://youtu.be/pdDgCdmcYdA",
+    poster: "https://i.ytimg.com/vi/pdDgCdmcYdA/maxresdefault.jpg",
+    projectSlug: "folio-erp",
+    theme: "amber",
+  },
+  {
+    topic: "Modern workplace",
+    title: "HR AI chatbot: LINE request to one-click approval",
+    youtubeTitle:
+      "สร้าง Modern Workplace ด้วย HR AI Chatbot: พนักงานลาง่ายผ่าน LINE ผู้บริหารอนุมัติผ่านเว็บใน 1 คลิก",
+    description:
+      "See how a familiar LINE conversation becomes structured leave data, moves through an automation workflow, and reaches a web portal for human approval.",
+    videoId: "jhZXK7BY-kY",
+    videoUrl: "https://youtu.be/jhZXK7BY-kY",
+    poster: "https://i.ytimg.com/vi/jhZXK7BY-kY/maxresdefault.jpg",
+    projectSlug: "hr-ai-agent",
+    theme: "mint",
+  },
+  {
+    topic: "Private AI",
+    title: "Contract analysis that stays inside the organization",
+    youtubeTitle: "ทำระบบ AI อ่านและวิเคราะห์สัญญาอัตโนมัติ รันในองค์กรปลอดภัย 100%",
+    description:
+      "A practical look at private document processing, contract extraction, intelligent retrieval, and a review experience designed to keep people in control.",
+    videoId: "HYIIDeUxzis",
+    videoUrl: "https://youtu.be/HYIIDeUxzis",
+    poster: "https://i.ytimg.com/vi/HYIIDeUxzis/maxresdefault.jpg",
+    projectSlug: "ai-contract-analyzer",
+    theme: "rose",
+  },
+] as const;
+
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -119,6 +161,7 @@ const personJsonLd = {
   sameAs: [
     "https://github.com/fluke-jesadakorn",
     "https://www.linkedin.com/in/jesadakorn-kirtnu-81b9601b9/",
+    "https://www.youtube.com/@improve-the-world",
   ],
 };
 
@@ -353,6 +396,85 @@ export default function Home() {
                 ))}
               </div>
             </div>
+          </div>
+        </SectionReveal>
+      </section>
+
+      <section id="videos" aria-labelledby="videos-heading" className="section-block scroll-mt-24">
+        <SectionReveal>
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <SectionHeader
+              eyebrow="From my YouTube channel"
+              title="See how the systems work."
+              description="I share hands-on walkthroughs of the products and AI workflows I build—showing the interface, process, and technical choices in context."
+              titleId="videos-heading"
+            />
+            <TrackedAnchor
+              href="https://www.youtube.com/@improve-the-world"
+              target="_blank"
+              rel="noopener noreferrer"
+              eventName="external_project_click"
+              eventData={{ project: "youtube-channel", destination: "youtube" }}
+              className="button-secondary shrink-0"
+            >
+              Visit my YouTube channel
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+            </TrackedAnchor>
+          </div>
+
+          <div className="video-gallery">
+            {videos.map((video, index) => (
+              <SpotlightSurface
+                key={video.videoId}
+                theme={video.theme}
+                className={`video-story-wrap ${index === 0 ? "video-story-wrap--feature" : ""}`}
+              >
+                <article className={`video-story ${index === 0 ? "video-story--feature" : ""}`}>
+                  <div className="video-story__media">
+                    <span className="video-story__index" aria-hidden="true">
+                      0{index + 1}
+                    </span>
+                  <ClickToPlayVideo
+                    videoId={video.videoId}
+                    videoUrl={video.videoUrl}
+                    poster={video.poster}
+                    title={video.youtubeTitle}
+                    projectSlug={video.projectSlug}
+                    className="home-video-player"
+                    playLabel="Watch the walkthrough"
+                    posterSizes={
+                      index === 0
+                        ? "(max-width: 1024px) 100vw, 640px"
+                        : "(max-width: 1024px) 100vw, 540px"
+                    }
+                    showFooter={false}
+                  />
+                  </div>
+                  <div className="video-story__copy">
+                    <p className="project-eyebrow">{video.topic}</p>
+                    <h3>{video.title}</h3>
+                    <p>{video.description}</p>
+                    <div className="video-story__links">
+                      <Link href={`/work/${video.projectSlug}`} className="text-link">
+                        Read case study
+                        <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                      </Link>
+                      <TrackedAnchor
+                        href={video.videoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        eventName="external_project_click"
+                        eventData={{ project: video.projectSlug, destination: "youtube" }}
+                        className="text-link"
+                      >
+                        Open on YouTube
+                        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                      </TrackedAnchor>
+                    </div>
+                  </div>
+                </article>
+              </SpotlightSurface>
+            ))}
           </div>
         </SectionReveal>
       </section>

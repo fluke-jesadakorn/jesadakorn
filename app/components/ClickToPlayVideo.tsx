@@ -12,6 +12,10 @@ interface ClickToPlayVideoProps {
   poster: string;
   title: string;
   projectSlug: string;
+  className?: string;
+  playLabel?: string;
+  posterSizes?: string;
+  showFooter?: boolean;
 }
 
 export default function ClickToPlayVideo({
@@ -20,11 +24,15 @@ export default function ClickToPlayVideo({
   poster,
   title,
   projectSlug,
+  className = "",
+  playLabel = "Play workflow demo",
+  posterSizes = "(max-width: 1024px) 100vw, 960px",
+  showFooter = true,
 }: ClickToPlayVideoProps) {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div className="video-demo">
+    <div className={`video-demo ${className}`.trim()}>
       <div className="relative aspect-video overflow-hidden bg-[#070b0f]">
         {loaded ? (
           <iframe
@@ -41,7 +49,7 @@ export default function ClickToPlayVideo({
               src={poster}
               alt=""
               fill
-              sizes="(max-width: 1024px) 100vw, 960px"
+              sizes={posterSizes}
               className="object-cover"
             />
             <button
@@ -53,27 +61,29 @@ export default function ClickToPlayVideo({
               <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[color:var(--accent)] text-white shadow-xl">
                 <Play className="ml-1 h-6 w-6" fill="currentColor" aria-hidden="true" />
               </span>
-              Play workflow demo
+              {playLabel}
             </button>
           </>
         )}
       </div>
-      <div className="flex flex-col gap-3 border-t border-[color:var(--line)] p-5 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm leading-6 text-[color:var(--muted)]">
-          The YouTube player loads only after you choose to play it.
-        </p>
-        <TrackedAnchor
-          href={videoUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          eventName="external_project_click"
-          eventData={{ project: projectSlug, destination: "youtube" }}
-          className="inline-flex min-h-11 shrink-0 items-center gap-2 font-semibold text-[color:var(--foreground)] hover:text-[color:var(--accent-strong)]"
-        >
-          Open on YouTube
-          <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-        </TrackedAnchor>
-      </div>
+      {showFooter ? (
+        <div className="flex flex-col gap-3 border-t border-[color:var(--line)] p-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm leading-6 text-[color:var(--muted)]">
+            The YouTube player loads only after you choose to play it.
+          </p>
+          <TrackedAnchor
+            href={videoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            eventName="external_project_click"
+            eventData={{ project: projectSlug, destination: "youtube" }}
+            className="inline-flex min-h-11 shrink-0 items-center gap-2 font-semibold text-[color:var(--foreground)] hover:text-[color:var(--accent-strong)]"
+          >
+            Open on YouTube
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </TrackedAnchor>
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import { ImageResponse } from "next/og";
+import { headers } from "next/headers";
 import { notFound } from "next/navigation";
-import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 
 import { getProject, projectTypeLabels } from "../project-data";
 
@@ -16,10 +15,15 @@ export default async function ProjectOpenGraphImage({ params }: { params: Promis
   const ogCoverPath = project.cardImage
     .replace("/featured-work/covers/", "/featured-work/covers/og/")
     .replace(/\.webp$/, ".jpg");
-  const cover = await readFile(
-    join(process.cwd(), "public", ogCoverPath.replace(/^\//, "")),
-  );
-  const coverData = `data:image/jpeg;base64,${cover.toString("base64")}`;
+  const requestHeaders = await headers();
+  const host = (requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "jesadakorn.com")
+    .split(",")[0]
+    .trim();
+  const protocol =
+    (requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https"))
+      .split(",")[0]
+      .trim();
+  const coverUrl = new URL(ogCoverPath, `${protocol}://${host}`).toString();
 
   return new ImageResponse(
     <div
@@ -36,7 +40,7 @@ export default async function ProjectOpenGraphImage({ params }: { params: Promis
       }}
     >
       <img
-        src={coverData}
+        src={coverUrl}
         alt=""
         width="1200"
         height="675"

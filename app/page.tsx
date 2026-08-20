@@ -6,11 +6,20 @@ import {
   ArrowUpRight,
   Blocks,
   BriefcaseBusiness,
+  ClipboardCheck,
   CircleDot,
+  Database,
   GitBranch,
   MapPin,
   Network,
+  PanelsTopLeft,
+  Rocket,
+  ScanSearch,
+  ServerCog,
   Settings2,
+  ShieldCheck,
+  UsersRound,
+  Workflow,
   Wrench,
 } from "lucide-react";
 
@@ -46,7 +55,11 @@ const capabilities = [
     details: "Ansible · Munki · Tailscale · macOS · Infrastructure",
     icon: Network,
     className: "capability-card--operate",
-    nodes: ["Systems", "People", "Continuity"],
+    nodes: [
+      { label: "Systems", icon: ServerCog },
+      { label: "People", icon: UsersRound },
+      { label: "Continuity", icon: ShieldCheck },
+    ],
   },
   {
     title: "Build",
@@ -56,7 +69,11 @@ const capabilities = [
     details: "Next.js · React · Node.js · Golang · PostgreSQL",
     icon: Blocks,
     className: "capability-card--build",
-    nodes: ["Model", "Interface", "Delivery"],
+    nodes: [
+      { label: "Model", icon: Database },
+      { label: "Interface", icon: PanelsTopLeft },
+      { label: "Delivery", icon: Rocket },
+    ],
   },
   {
     title: "Improve",
@@ -66,7 +83,11 @@ const capabilities = [
     details: "n8n · Ollama · RAG · Power BI · Project delivery",
     icon: Settings2,
     className: "capability-card--improve",
-    nodes: ["Observe", "Automate", "Review"],
+    nodes: [
+      { label: "Observe", icon: ScanSearch },
+      { label: "Automate", icon: Workflow },
+      { label: "Review", icon: ClipboardCheck },
+    ],
   },
 ] as const;
 
@@ -284,12 +305,20 @@ export default function Home() {
                     <p className="capability-card__description">{capability.description}</p>
                   </div>
                   <div className="capability-microvisual" aria-hidden="true">
-                    {capability.nodes.map((node, index) => (
-                      <span key={node}>
-                        <i>{index + 1}</i>
-                        {node}
-                      </span>
-                    ))}
+                    {capability.nodes.map((node, index) => {
+                      const NodeIcon = node.icon;
+                      return (
+                        <span key={node.label} className="capability-step">
+                          <i className="capability-step__marker">
+                            <NodeIcon className="h-4 w-4" aria-hidden="true" />
+                          </i>
+                          <span className="capability-step__meta">
+                            <b>0{index + 1}</b>
+                            <em>{node.label}</em>
+                          </span>
+                        </span>
+                      );
+                    })}
                   </div>
                   <p className="capability-card__details">{capability.details}</p>
                 </article>

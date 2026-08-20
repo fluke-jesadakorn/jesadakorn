@@ -114,52 +114,56 @@ export default function Home() {
       />
 
       <section className="mx-auto w-full max-w-6xl px-4 pb-24 pt-12 sm:px-6 sm:pt-16 lg:px-8 lg:pb-28">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_18rem] lg:items-end">
-          <div className="max-w-4xl space-y-7">
-            <p className="eyebrow">Technical Generalist · Phuket, Thailand</p>
-            <h1 className="font-display text-[clamp(2.55rem,7vw,5.75rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-[color:var(--foreground)]">
-              I connect operations, software, and automation to turn real workflows into practical
-              systems.
-            </h1>
-            <p className="max-w-2xl text-lg leading-8 text-[color:var(--muted)] sm:text-xl">
-              I&apos;m Jesadakorn Kirtnu. I work across day-to-day technology operations, full-stack
-              development, workflow automation, and technical project delivery—especially where
-              people, processes, and systems need to stay aligned.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <a href="#work" className="button-primary">
-                View selected work
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </a>
-              <Link href="/contact" className="button-secondary">
-                Discuss a role or project
-                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
+        <div className="space-y-8 lg:space-y-10">
+          <p className="eyebrow">Technical Generalist · Phuket, Thailand</p>
+          <h1 className="max-w-5xl font-display text-[clamp(2.55rem,6vw,4.75rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-[color:var(--foreground)]">
+            I connect operations,<br className="hidden lg:block" /> software, and automation
+            <br className="hidden lg:block" /> to turn real workflows into
+            <br className="hidden lg:block" /> practical systems.
+          </h1>
 
-          <aside className="identity-card" aria-label="Profile summary">
-            <Image
-              src="/portrait-upscaled.webp"
-              alt="Jesadakorn Kirtnu"
-              width={1180}
-              height={1333}
-              sizes="(max-width: 1024px) 96px, 112px"
-              className="h-24 w-24 rounded-2xl object-cover sm:h-28 sm:w-28"
-            />
-            <div>
-              <p className="font-display text-lg font-semibold text-[color:var(--foreground)]">
-                Jesadakorn Kirtnu
+          <div className="grid gap-10 pt-1 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start lg:gap-16">
+            <div className="max-w-2xl space-y-7">
+              <p className="max-w-2xl text-lg leading-8 text-[color:var(--muted)] sm:text-xl">
+                I&apos;m Jesadakorn Kirtnu. I work across day-to-day technology operations, full-stack
+                development, workflow automation, and technical project delivery—especially where
+                people, processes, and systems need to stay aligned.
               </p>
-              <p className="mt-2 flex items-center gap-2 text-sm text-[color:var(--muted)]">
-                <MapPin className="h-4 w-4 text-[color:var(--accent-strong)]" aria-hidden="true" />
-                Phuket, Thailand
-              </p>
-              <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">
-                Hands-on across systems, software, workflows, and coordination.
-              </p>
+              <div className="flex flex-wrap gap-3">
+                <a href="#work" className="button-primary">
+                  View selected work
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </a>
+                <Link href="/contact" className="button-secondary">
+                  Discuss a role or project
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+              </div>
             </div>
-          </aside>
+
+            <aside className="identity-card" aria-label="Profile summary">
+              <Image
+                src="/portrait-upscaled.webp"
+                alt="Jesadakorn Kirtnu"
+                width={1180}
+                height={1333}
+                sizes="(max-width: 1024px) 96px, 112px"
+                className="h-24 w-24 rounded-2xl object-cover sm:h-28 sm:w-28"
+              />
+              <div>
+                <p className="font-display text-lg font-semibold text-[color:var(--foreground)]">
+                  Jesadakorn Kirtnu
+                </p>
+                <p className="mt-2 flex items-center gap-2 text-sm text-[color:var(--muted)]">
+                  <MapPin className="h-4 w-4 text-[color:var(--accent-strong)]" aria-hidden="true" />
+                  Phuket, Thailand
+                </p>
+                <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">
+                  Hands-on across systems, software, workflows, and coordination.
+                </p>
+              </div>
+            </aside>
+          </div>
         </div>
       </section>
 

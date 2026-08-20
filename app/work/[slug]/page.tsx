@@ -237,7 +237,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                         alt={screenshot.alt}
                         fill
                         sizes={index === 0 ? "(max-width: 1024px) 100vw, 660px" : "(max-width: 1024px) 100vw, 330px"}
-                        className="object-cover"
+                        className={
+                          screenshot.src.endsWith("analytics-showcase.webp")
+                            ? "bg-[#020617] object-contain"
+                            : "object-cover"
+                        }
                       />
                     </div>
                     <figcaption className="border-t border-[color:var(--line)] p-4">

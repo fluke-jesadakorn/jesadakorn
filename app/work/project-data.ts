@@ -90,8 +90,8 @@ export const projects: ProjectCaseStudy[] = [
       },
     ],
     stack: ["Next.js", "React", "Tailwind CSS", "Wagmi", "Radix UI", "React Query"],
-    cardImage: "/featured-work/epsx/frontend/analytics.jpg",
-    cardImageAlt: "EPSX analytics interface with rankings and filters",
+    cardImage: "/featured-work/epsx/analytics-showcase.webp",
+    cardImageAlt: "EPSX analytics dashboard with filters, charts, and watchlist panels",
     links: [
       {
         label: "Repository",
@@ -123,28 +123,10 @@ export const projects: ProjectCaseStudy[] = [
         stack: ["Next.js", "React", "Tailwind CSS", "RainbowKit", "Wagmi", "React Query"],
         screenshots: [
           {
-            src: "/featured-work/epsx/frontend/home.jpg",
-            alt: "EPSX public homepage",
-            title: "Landing and product framing",
-            detail: "Product overview, pricing, and account entry points.",
-          },
-          {
-            src: "/featured-work/epsx/frontend/analytics.jpg",
-            alt: "EPSX analytics workspace",
+            src: "/featured-work/epsx/analytics-showcase.webp",
+            alt: "EPSX analytics dashboard with filters, charts, and watchlist panels",
             title: "Analytics workspace",
-            detail: "Filtering, ranking, access states, and table interaction.",
-          },
-          {
-            src: "/featured-work/epsx/frontend/portfolio.jpg",
-            alt: "EPSX portfolio tracking interface",
-            title: "Portfolio tracking",
-            detail: "Watchlist-focused flows with status and monitoring cues.",
-          },
-          {
-            src: "/featured-work/epsx/frontend/developer.jpg",
-            alt: "EPSX developer portal",
-            title: "Developer tools",
-            detail: "API access, key lifecycle, and usage views.",
+            detail: "Filtering, comparative charts, watchlist signals, and data-dense interaction.",
           },
         ],
       },

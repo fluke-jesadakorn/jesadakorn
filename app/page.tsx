@@ -216,7 +216,7 @@ export default function Home() {
                     alt={project.cardImageAlt}
                     fill
                     sizes={index === 0 ? "(max-width: 1024px) 100vw, 640px" : "(max-width: 1024px) 100vw, 540px"}
-                    className="object-cover"
+                    className={index === 0 ? "bg-[#020617] object-contain" : "object-cover"}
                   />
                 </div>
                 <div className="flex flex-col p-6 sm:p-8">

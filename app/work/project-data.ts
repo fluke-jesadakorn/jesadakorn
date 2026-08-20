@@ -1,4 +1,5 @@
 export type ProjectType = "live" | "prototype" | "experiment";
+export type ProjectVisualTheme = "violet" | "amber" | "mint" | "rose";
 
 export interface ProjectLink {
   label: string;
@@ -38,6 +39,7 @@ export interface ProjectCaseStudy {
     detail: string;
   }>;
   stack: string[];
+  visualTheme: ProjectVisualTheme;
   cardImage: string;
   cardImageAlt: string;
   links?: ProjectLink[];
@@ -90,8 +92,9 @@ export const projects: ProjectCaseStudy[] = [
       },
     ],
     stack: ["Next.js", "React", "Tailwind CSS", "Wagmi", "Radix UI", "React Query"],
-    cardImage: "/featured-work/epsx/analytics-showcase.webp",
-    cardImageAlt: "EPSX analytics dashboard with filters, charts, and watchlist panels",
+    visualTheme: "violet",
+    cardImage: "/featured-work/covers/epsx.webp",
+    cardImageAlt: "Abstract violet and cyan analytics system with layered data planes",
     links: [
       {
         label: "Repository",
@@ -206,8 +209,9 @@ export const projects: ProjectCaseStudy[] = [
       },
     ],
     stack: ["Next.js", "React", "Node.js", "PostgreSQL", "Ollama", "Document processing"],
-    cardImage: "/featured-work/folio-erp/demo-poster.svg",
-    cardImageAlt: "Neutral diagram of the Folio ERP financial workflow",
+    visualTheme: "amber",
+    cardImage: "/featured-work/covers/folio-erp.webp",
+    cardImageAlt: "Abstract amber and copper workflow moving through review gates",
     demoUrl: "https://youtu.be/pdDgCdmcYdA",
     demoId: "pdDgCdmcYdA",
     demoPoster: "/featured-work/folio-erp/demo-poster.svg",
@@ -248,8 +252,9 @@ export const projects: ProjectCaseStudy[] = [
       },
     ],
     stack: ["LINE Messaging API", "n8n", "Ollama", "Qwen", "PostgreSQL", "Next.js"],
-    cardImage: "/featured-work/hr-chatbot/admin-portal.svg",
-    cardImageAlt: "Neutral HR leave-request review interface prototype",
+    visualTheme: "mint",
+    cardImage: "/featured-work/covers/hr-ai-agent.webp",
+    cardImageAlt: "Abstract mint conversation, automation, and human review flow",
     surfaces: [
       {
         name: "Conversation and review",
@@ -315,8 +320,9 @@ export const projects: ProjectCaseStudy[] = [
       },
     ],
     stack: ["Next.js", "React", "LangChain", "Vector database", "PDF processing"],
-    cardImage: "/featured-work/contract/analyzer.svg",
-    cardImageAlt: "Neutral split-screen contract review interface prototype",
+    visualTheme: "rose",
+    cardImage: "/featured-work/covers/ai-contract-analyzer.webp",
+    cardImageAlt: "Abstract indigo and rose document intelligence flow",
     surfaces: [
       {
         name: "Reviewer workspace",

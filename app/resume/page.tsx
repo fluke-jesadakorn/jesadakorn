@@ -21,8 +21,13 @@ export const metadata: Metadata = {
 export default function ResumePage() {
   return (
     <main id="main-content" tabIndex={-1} className="resume-page outline-none">
+      <div className="resume-backdrop" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
       <section className="resume-toolbar print:hidden" aria-label="Resume actions">
-        <div>
+        <div className="resume-toolbar__intro">
           <p className="eyebrow">Public resume</p>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-[color:var(--muted)]">
             A readable HTML version and a one-page tagged PDF share the same source content.

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check, Github } from "lucide-react";
 
 import ClickToPlayVideo from "@/app/components/ClickToPlayVideo";
+import { SectionReveal, SpotlightSurface } from "@/app/components/CinematicMotion";
 import ProjectViewTracker from "@/app/components/ProjectViewTracker";
 import { TrackedAnchor } from "@/app/components/TrackedLink";
 import { getProject, projects, projectTypeLabels } from "../project-data";
@@ -79,101 +80,122 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         }}
       />
 
-      <article className="mx-auto w-full max-w-6xl px-4 pb-24 pt-10 sm:px-6 lg:px-8 lg:pb-28">
+      <article
+        data-theme={project.visualTheme}
+        className="case-study mx-auto w-full max-w-6xl px-4 pb-24 pt-10 sm:px-6 lg:px-8 lg:pb-28"
+      >
         <Link href="/#work" className="text-link">
           <ArrowLeft className="h-4 w-4" aria-hidden="true" />
           Back to selected work
         </Link>
 
-        <header className="mt-10 grid gap-9 border-b border-[color:var(--line)] pb-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-          <div>
-            <p className="eyebrow">{project.eyebrow}</p>
-            <h1 className="mt-5 font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.98] tracking-[-0.05em] text-[color:var(--foreground)]">
-              {project.name}
-            </h1>
-            <p className="mt-5 max-w-2xl text-xl font-semibold leading-8 text-[color:var(--foreground)] sm:text-2xl">
-              {project.title}
-            </p>
+        <header className="case-hero">
+          <div className="case-hero__copy">
+            <div>
+              <p className="project-eyebrow">{project.eyebrow}</p>
+              <h1>{project.name}</h1>
+              <p className="case-hero__title">{project.title}</p>
+            </div>
+            <div className="case-hero__summary">
+              <p>{project.summary}</p>
+              {project.links?.length ? (
+                <div className="mt-6 flex flex-wrap gap-3" role="group" aria-label="Project links">
+                  {project.links.map((link) => (
+                    <TrackedAnchor
+                      key={link.href}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      eventName="external_project_click"
+                      eventData={{ project: project.slug, destination: link.kind }}
+                      className={link.kind === "public-site" ? "button-primary" : "button-secondary"}
+                    >
+                      {link.kind === "repository" ? (
+                        <Github className="h-4 w-4" aria-hidden="true" />
+                      ) : null}
+                      {link.label}
+                      {link.kind !== "repository" ? (
+                        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                      ) : null}
+                    </TrackedAnchor>
+                  ))}
+                </div>
+              ) : null}
+            </div>
           </div>
-          <div>
-            <p className="text-base leading-8 text-[color:var(--muted)]">{project.summary}</p>
-            {project.links?.length ? (
-              <div className="mt-6 flex flex-wrap gap-3" aria-label="Project links">
-                {project.links.map((link) => (
-                  <TrackedAnchor
-                    key={link.href}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    eventName="external_project_click"
-                    eventData={{ project: project.slug, destination: link.kind }}
-                    className={link.kind === "public-site" ? "button-primary" : "button-secondary"}
-                  >
-                    {link.kind === "repository" ? (
-                      <Github className="h-4 w-4" aria-hidden="true" />
-                    ) : null}
-                    {link.label}
-                    {link.kind !== "repository" ? (
-                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                    ) : null}
-                  </TrackedAnchor>
-                ))}
+
+          <SpotlightSurface theme={project.visualTheme} className="case-cover-wrap">
+            <div className="case-cover">
+              <Image
+                src={project.cardImage}
+                alt={project.cardImageAlt}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 1120px"
+                className="object-cover"
+              />
+              <div className="case-cover__meta" aria-hidden="true">
+                <span>{projectTypeLabels[project.type]}</span>
+                <span>Selected work · {project.visualTheme}</span>
               </div>
-            ) : null}
-          </div>
+            </div>
+          </SpotlightSurface>
         </header>
 
         <section aria-labelledby="project-context-heading" className="case-section">
           <h2 id="project-context-heading" className="sr-only">
             Project context
           </h2>
-          <div className="grid gap-8 lg:grid-cols-2">
-            <div className="case-context">
-              <p className="eyebrow">My contribution</p>
-              <p className="mt-4 text-lg leading-8 text-[color:var(--foreground)]">{project.role}</p>
+          <SectionReveal>
+            <div className="case-context-grid">
+              <div className="case-context">
+                <p className="project-eyebrow">My contribution</p>
+                <p>{project.role}</p>
+              </div>
+              <div className="case-context">
+                <p className="project-eyebrow">Scope</p>
+                <p>{project.scope}</p>
+              </div>
             </div>
-            <div className="case-context">
-              <p className="eyebrow">Scope</p>
-              <p className="mt-4 text-lg leading-8 text-[color:var(--foreground)]">{project.scope}</p>
-            </div>
-          </div>
+          </SectionReveal>
         </section>
 
         <section aria-labelledby="focus-heading" className="case-section">
-          <div className="case-heading-row">
-            <div>
-              <p className="eyebrow">System view</p>
-              <h2 id="focus-heading" className="mt-4 font-display text-3xl text-[color:var(--foreground)] sm:text-4xl">
+          <div className="case-split">
+            <div className="case-sticky">
+              <p className="project-eyebrow">System view</p>
+              <h2 id="focus-heading">
                 What the work focused on
               </h2>
+              <span className="status-badge">{projectTypeLabels[project.type]}</span>
             </div>
-            <span className="status-badge">{projectTypeLabels[project.type]}</span>
-          </div>
-          <div className="mt-8 grid gap-px overflow-hidden rounded-3xl border border-[color:var(--line)] bg-[color:var(--line)] md:grid-cols-3">
-            {project.focusAreas.map((focus) => (
-              <article key={focus.title} className="bg-[color:var(--background-elevated)] p-6 sm:p-7">
-                <p className="eyebrow">{focus.label}</p>
-                <h3 className="mt-4 font-display text-2xl text-[color:var(--foreground)]">
-                  {focus.title}
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">{focus.detail}</p>
-              </article>
-            ))}
+            <div className="case-focus-list">
+              {project.focusAreas.map((focus, index) => (
+                <SectionReveal key={focus.title}>
+                  <article className="case-focus-card">
+                    <span aria-hidden="true">0{index + 1}</span>
+                    <p className="project-eyebrow">{focus.label}</p>
+                    <h3>{focus.title}</h3>
+                    <p>{focus.detail}</p>
+                  </article>
+                </SectionReveal>
+              ))}
+            </div>
           </div>
         </section>
 
         <section aria-labelledby="responsibilities-heading" className="case-section">
-          <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
-            <div>
-              <p className="eyebrow">Delivery</p>
-              <h2 id="responsibilities-heading" className="mt-4 font-display text-3xl text-[color:var(--foreground)] sm:text-4xl">
+          <div className="case-split">
+            <div className="case-sticky">
+              <p className="project-eyebrow">Delivery</p>
+              <h2 id="responsibilities-heading">
                 What the work required
               </h2>
             </div>
-            <ul className="divide-y divide-[color:var(--line)] border-y border-[color:var(--line)]">
+            <ul className="case-requirements">
               {project.responsibilities.map((responsibility) => (
-                <li key={responsibility} className="flex gap-4 py-5 text-base leading-8 text-[color:var(--muted)]">
-                  <Check className="mt-1.5 h-5 w-5 shrink-0 text-[color:var(--accent-strong)]" aria-hidden="true" />
+                <li key={responsibility}>
+                  <Check className="mt-1.5 h-5 w-5 shrink-0" aria-hidden="true" />
                   {responsibility}
                 </li>
               ))}
@@ -183,33 +205,34 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         {project.demoId && project.demoUrl && project.demoPoster ? (
           <section aria-labelledby="demo-heading" className="case-section">
-            <p className="eyebrow">Demo</p>
-            <h2 id="demo-heading" className="mt-4 font-display text-3xl text-[color:var(--foreground)] sm:text-4xl">
-              Watch the workflow from intake to review.
-            </h2>
-            <p className="mt-4 max-w-2xl text-base leading-8 text-[color:var(--muted)]">
-              This demonstration shows the current prototype flow. It does not claim production deployment or measured business outcomes.
-            </p>
-            <div className="mt-8">
-              <ClickToPlayVideo
-                videoId={project.demoId}
-                videoUrl={project.demoUrl}
-                poster={project.demoPoster}
-                title={project.name}
-                projectSlug={project.slug}
-              />
-            </div>
+            <SectionReveal>
+              <p className="project-eyebrow">Demo</p>
+              <h2 id="demo-heading" className="case-section-title">
+                Watch the workflow from intake to review.
+              </h2>
+              <p className="mt-4 max-w-2xl text-base leading-8 text-[color:var(--muted)]">
+                This demonstration shows the current prototype flow. It does not claim production deployment or measured business outcomes.
+              </p>
+              <div className="mt-8">
+                <ClickToPlayVideo
+                  videoId={project.demoId}
+                  videoUrl={project.demoUrl}
+                  poster={project.demoPoster}
+                  title={project.name}
+                  projectSlug={project.slug}
+                />
+              </div>
+            </SectionReveal>
           </section>
         ) : null}
 
         {project.surfaces?.map((surface) => (
           <section key={surface.name} aria-labelledby={`surface-${project.slug}-${surface.name.replaceAll(" ", "-")}`} className="case-section">
-            <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
-              <div>
-                <p className="eyebrow">{surface.label}</p>
+            <div className="case-split">
+              <div className="case-sticky">
+                <p className="project-eyebrow">{surface.label}</p>
                 <h2
                   id={`surface-${project.slug}-${surface.name.replaceAll(" ", "-")}`}
-                  className="mt-4 font-display text-3xl text-[color:var(--foreground)] sm:text-4xl"
                 >
                   {surface.name}
                 </h2>
@@ -228,7 +251,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   ))}
                 </div>
               </div>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="case-gallery">
                 {surface.screenshots.map((screenshot, index) => (
                   <figure key={screenshot.src} className={`project-shot ${index === 0 ? "sm:col-span-2" : ""}`}>
                     <div className="relative aspect-[16/10] overflow-hidden">

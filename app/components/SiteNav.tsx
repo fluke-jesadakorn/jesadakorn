@@ -112,13 +112,14 @@ export default function SiteNav() {
   return (
     <nav
       aria-label="Primary navigation"
-      className="fixed inset-x-0 top-0 z-50 border-b border-[color:var(--line)] bg-[rgba(8,12,16,0.88)] backdrop-blur-xl print:hidden"
+      className="site-nav print:hidden"
     >
-      <div className="mx-auto flex h-[4.5rem] w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="site-nav__inner">
         <Link
           href="/"
-          className="flex min-h-11 items-center rounded-md font-display text-lg text-[color:var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-strong)]"
+          className="site-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent-strong)]"
         >
+          <span className="site-brand__mark" aria-hidden="true">JK</span>
           Jesadakorn Kirtnu
         </Link>
 

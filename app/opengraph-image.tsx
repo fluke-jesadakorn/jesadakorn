@@ -8,6 +8,8 @@ export default function OpenGraphImage() {
   return new ImageResponse(
     <div
       style={{
+        position: "relative",
+        overflow: "hidden",
         width: "100%",
         height: "100%",
         display: "flex",
@@ -15,23 +17,59 @@ export default function OpenGraphImage() {
         justifyContent: "space-between",
         padding: 72,
         color: "#f5efe7",
-        background: "linear-gradient(135deg, #111820 0%, #090d11 65%, #2a1811 100%)",
+        background: "linear-gradient(145deg, #15110f 0%, #090b0e 52%, #0d1218 100%)",
       }}
     >
-      <div style={{ display: "flex", color: "#f0b487", fontSize: 24, letterSpacing: 4 }}>
-        TECHNICAL GENERALIST
+      <div
+        style={{
+          position: "absolute",
+          width: 520,
+          height: 520,
+          right: -80,
+          top: -130,
+          display: "flex",
+          border: "1px solid rgba(240,180,135,0.22)",
+          borderRadius: 520,
+          boxShadow: "0 0 140px rgba(205,116,68,0.14)",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          right: 88,
+          top: 126,
+          width: 250,
+          height: 250,
+          display: "flex",
+          border: "1px solid rgba(240,180,135,0.45)",
+          borderRadius: 250,
+        }}
+      />
+      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22 }}>
+        <span style={{ display: "flex", color: "#f0b487", letterSpacing: 4 }}>
+          PERSONAL OPERATING SYSTEM
+        </span>
+        <span style={{ display: "flex", color: "#8f8781" }}>01 — 03</span>
       </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 26 }}>
-        <div style={{ display: "flex", fontSize: 76, fontWeight: 700, lineHeight: 1.02 }}>
-          Operations. Software. Automation.
+      <div style={{ display: "flex", flexDirection: "column", gap: 24, maxWidth: 900 }}>
+        <div style={{ display: "flex", fontSize: 80, fontWeight: 700, lineHeight: 0.98 }}>
+          Operate. Build. Improve.
         </div>
-        <div style={{ display: "flex", color: "#b1a497", fontSize: 30 }}>
-          Practical systems for real workflows.
+        <div style={{ display: "flex", color: "#b8ada2", fontSize: 30, lineHeight: 1.35 }}>
+          Connecting operations, software, and automation around real workflows.
         </div>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 24 }}>
-        <span>Jesadakorn Kirtnu</span>
-        <span style={{ color: "#b1a497" }}>Phuket, Thailand</span>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          borderTop: "1px solid rgba(255,255,255,0.14)",
+          paddingTop: 26,
+          fontSize: 24,
+        }}
+      >
+        <span style={{ display: "flex" }}>Jesadakorn Kirtnu</span>
+        <span style={{ display: "flex", color: "#b8ada2" }}>Technical Generalist · Phuket</span>
       </div>
     </div>,
     size,

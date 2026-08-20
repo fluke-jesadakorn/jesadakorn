@@ -6,13 +6,13 @@ import { Toaster } from "sonner";
 import SiteNav from "./components/SiteNav";
 import "./globals.css";
 
-const sora = Sora({ variable: "--font-sora", subsets: ["latin"], display: "swap" });
-const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"], display: "swap" });
+const sora = Sora({ variable: "--font-sora", subsets: ["latin"], display: "optional" });
+const manrope = Manrope({ variable: "--font-manrope", subsets: ["latin"], display: "optional" });
 const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-ibm-plex-mono",
   subsets: ["latin"],
   weight: "500",
-  display: "swap",
+  display: "optional",
   preload: false,
 });
 
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0b0f13",
+  themeColor: "#080a0d",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -46,7 +46,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <SiteNav />
         <div className="pt-[4.5rem] print:pt-0">{children}</div>
         <Toaster position="top-right" richColors theme="dark" />
-        <Analytics />
+        {process.env.VERCEL === "1" ? <Analytics /> : null}
       </body>
     </html>
   );

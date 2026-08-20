@@ -6,12 +6,21 @@ import {
   ArrowUpRight,
   Blocks,
   BriefcaseBusiness,
+  CircleDot,
+  GitBranch,
   MapPin,
   Network,
   Settings2,
+  Wrench,
 } from "lucide-react";
 
+import {
+  HeroParallax,
+  SectionReveal,
+  SpotlightSurface,
+} from "./components/CinematicMotion";
 import SectionHeader from "./components/SectionHeader";
+import { TrackedAnchor } from "./components/TrackedLink";
 import { projects, projectTypeLabels } from "./work/project-data";
 
 export const metadata: Metadata = {
@@ -35,6 +44,8 @@ const capabilities = [
       "Workplace systems, devices, networks, deployment, documentation, onboarding, and day-to-day support.",
     details: "Ansible · Munki · Tailscale · macOS · Infrastructure",
     icon: Network,
+    className: "capability-card--operate",
+    nodes: ["Systems", "People", "Continuity"],
   },
   {
     title: "Build",
@@ -43,6 +54,8 @@ const capabilities = [
       "Full-stack applications, business systems, role-aware interfaces, integrations, and working prototypes.",
     details: "Next.js · React · Node.js · Golang · PostgreSQL",
     icon: Blocks,
+    className: "capability-card--build",
+    nodes: ["Model", "Interface", "Delivery"],
   },
   {
     title: "Improve",
@@ -51,6 +64,8 @@ const capabilities = [
       "Process mapping, automation, applied AI experiments, documentation, and cross-team coordination.",
     details: "n8n · Ollama · RAG · Power BI · Project delivery",
     icon: Settings2,
+    className: "capability-card--improve",
+    nodes: ["Observe", "Automate", "Review"],
   },
 ] as const;
 
@@ -85,6 +100,10 @@ const experience = [
   },
 ] as const;
 
+const emailAddress = "jesadakorn.kirtnu@gmail.com";
+const roleMailto = `mailto:${emailAddress}?subject=${encodeURIComponent("Role opportunity — Jesadakorn Kirtnu")}`;
+const projectMailto = `mailto:${emailAddress}?subject=${encodeURIComponent("Project collaboration — Jesadakorn Kirtnu")}`;
+
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -113,195 +132,311 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c") }}
       />
 
-      <section className="mx-auto w-full max-w-6xl px-4 pb-24 pt-12 sm:px-6 sm:pt-16 lg:px-8 lg:pb-28">
-        <div className="space-y-8 lg:space-y-10">
-          <p className="eyebrow">Technical Generalist · Phuket, Thailand</p>
-          <h1 className="max-w-5xl font-display text-[clamp(2.55rem,6vw,4.75rem)] font-semibold leading-[0.98] tracking-[-0.05em] text-[color:var(--foreground)]">
-            I connect operations,<br className="hidden lg:block" /> software, and automation
-            <br className="hidden lg:block" /> to turn real workflows into
-            <br className="hidden lg:block" /> practical systems.
-          </h1>
+      <section className="hero-section" aria-labelledby="hero-heading">
+        <div className="hero-grid">
+          <div className="hero-copy">
+            <p className="eyebrow">Technical Generalist · Phuket, Thailand</p>
+            <h1 id="hero-heading" className="hero-title">
+              I connect operations, software, and automation to turn real workflows into practical
+              systems.
+            </h1>
+            <p className="hero-intro">
+              I&apos;m Jesadakorn Kirtnu. I work across day-to-day technology operations,
+              full-stack development, workflow automation, and technical project delivery—especially
+              where people, processes, and systems need to stay aligned.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <a href="#work" className="button-primary">
+                View selected work
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+              <Link href="/contact" className="button-secondary">
+                Discuss a role or project
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+            <div className="hero-system-note">
+              <span className="hero-system-note__line" aria-hidden="true" />
+              <span>See the workflow</span>
+              <span>Connect the system</span>
+              <span>Keep the human decision visible</span>
+            </div>
+          </div>
 
-          <div className="grid gap-10 pt-1 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start lg:gap-16">
-            <div className="max-w-2xl space-y-7">
-              <p className="max-w-2xl text-lg leading-8 text-[color:var(--muted)] sm:text-xl">
-                I&apos;m Jesadakorn Kirtnu. I work across day-to-day technology operations, full-stack
-                development, workflow automation, and technical project delivery—especially where
-                people, processes, and systems need to stay aligned.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <a href="#work" className="button-primary">
-                  View selected work
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </a>
-                <Link href="/contact" className="button-secondary">
-                  Discuss a role or project
-                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-              </div>
+          <HeroParallax className="identity-system">
+            <div className="identity-ambient" aria-hidden="true" />
+            <div className="identity-ring identity-ring--outer" aria-hidden="true" />
+            <div className="identity-ring identity-ring--inner" aria-hidden="true" />
+            <span className="system-line system-line--operate" aria-hidden="true" />
+            <span className="system-line system-line--build" aria-hidden="true" />
+            <span className="system-line system-line--improve" aria-hidden="true" />
+
+            <div className="system-module system-module--operate">
+              <Network className="h-4 w-4" aria-hidden="true" />
+              <span>Operate</span>
+              <small>Dependable systems</small>
+            </div>
+            <div className="system-module system-module--build">
+              <Blocks className="h-4 w-4" aria-hidden="true" />
+              <span>Build</span>
+              <small>Useful software</small>
+            </div>
+            <div className="system-module system-module--improve">
+              <Settings2 className="h-4 w-4" aria-hidden="true" />
+              <span>Improve</span>
+              <small>Clearer workflows</small>
             </div>
 
-            <aside className="identity-card" aria-label="Profile summary">
-              <Image
-                src="/portrait-upscaled.webp"
-                alt="Jesadakorn Kirtnu"
-                width={1180}
-                height={1333}
-                sizes="(max-width: 1024px) 96px, 112px"
-                className="h-24 w-24 rounded-2xl object-cover sm:h-28 sm:w-28"
-              />
-              <div>
-                <p className="font-display text-lg font-semibold text-[color:var(--foreground)]">
-                  Jesadakorn Kirtnu
-                </p>
-                <p className="mt-2 flex items-center gap-2 text-sm text-[color:var(--muted)]">
-                  <MapPin className="h-4 w-4 text-[color:var(--accent-strong)]" aria-hidden="true" />
-                  Phuket, Thailand
-                </p>
-                <p className="mt-3 text-sm leading-6 text-[color:var(--muted)]">
-                  Hands-on across systems, software, workflows, and coordination.
-                </p>
+            <aside className="identity-core" aria-label="Profile summary">
+              <div className="identity-portrait">
+                <Image
+                  src="/portrait-upscaled.webp"
+                  alt="Jesadakorn Kirtnu"
+                  fill
+                  priority
+                  sizes="(max-width: 640px) 52vw, (max-width: 1024px) 260px, 300px"
+                  className="object-cover"
+                />
+              </div>
+              <div className="identity-core__caption">
+                <span className="identity-status" aria-hidden="true" />
+                <div>
+                  <p>Jesadakorn Kirtnu</p>
+                  <p className="mt-1 flex items-center gap-1.5 text-xs text-[color:var(--muted)]">
+                    <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                    Phuket, Thailand
+                  </p>
+                </div>
               </div>
             </aside>
-          </div>
+          </HeroParallax>
         </div>
       </section>
 
       <section aria-labelledby="capabilities-heading" className="section-block">
-        <SectionHeader
-          eyebrow="Capabilities"
-          title="Operate. Build. Improve."
-          description="Three connected ways I contribute—from keeping systems dependable to building tools and improving how work moves through a team."
-          titleId="capabilities-heading"
-        />
-        <div className="mt-9 grid border-y border-[color:var(--line)] md:grid-cols-3">
-          {capabilities.map((capability) => {
-            const Icon = capability.icon;
-            return (
-              <article key={capability.title} className="capability-column">
-                <Icon className="h-6 w-6 text-[color:var(--accent-strong)]" aria-hidden="true" />
-                <p className="mt-6 font-display text-4xl text-[color:var(--foreground)]">
-                  {capability.title}
-                </p>
-                <h3 className="mt-3 text-lg font-bold text-[color:var(--foreground)]">
-                  {capability.subtitle}
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">
-                  {capability.description}
-                </p>
-                <p className="mt-5 font-mono-ui text-xs leading-6 text-[color:var(--muted-soft)]">
-                  {capability.details}
-                </p>
-              </article>
-            );
-          })}
-        </div>
+        <SectionReveal>
+          <SectionHeader
+            eyebrow="Capabilities"
+            title="Operate. Build. Improve."
+            description="Three connected ways I contribute—from keeping systems dependable to building tools and improving how work moves through a team."
+            titleId="capabilities-heading"
+          />
+          <div className="capability-bento">
+            {capabilities.map((capability, capabilityIndex) => {
+              const Icon = capability.icon;
+              return (
+                <article
+                  key={capability.title}
+                  className={`capability-card ${capability.className}`}
+                >
+                  <div className="capability-card__topline">
+                    <Icon className="h-6 w-6" aria-hidden="true" />
+                    <span className="font-mono-ui text-[0.65rem] uppercase tracking-[0.18em] text-[color:var(--muted-soft)]">
+                      0{capabilityIndex + 1} / 03
+                    </span>
+                  </div>
+                  <div>
+                    <p className="capability-card__verb">{capability.title}</p>
+                    <h3>{capability.subtitle}</h3>
+                    <p className="capability-card__description">{capability.description}</p>
+                  </div>
+                  <div className="capability-microvisual" aria-hidden="true">
+                    {capability.nodes.map((node, index) => (
+                      <span key={node}>
+                        <i>{index + 1}</i>
+                        {node}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="capability-card__details">{capability.details}</p>
+                </article>
+              );
+            })}
+          </div>
+        </SectionReveal>
       </section>
 
       <section id="work" aria-labelledby="work-heading" className="section-block scroll-mt-24">
-        <SectionHeader
-          eyebrow="Selected Work"
-          title="Systems shaped around real workflows."
-          description="A live product, a working business-system prototype, and two applied AI experiments. Each case study separates what is live from what is exploratory."
-          titleId="work-heading"
-        />
+        <SectionReveal>
+          <SectionHeader
+            eyebrow="Selected Work"
+            title="Systems shaped around real workflows."
+            description="A live product, a working business-system prototype, and two applied AI experiments. Each case study separates what is live from what is exploratory."
+            titleId="work-heading"
+          />
 
-        <div className="mt-9 grid gap-5 lg:grid-cols-2">
-          {[epsx, folio].map((project, index) => (
-            <article key={project.slug} className={`project-card ${index === 0 ? "lg:col-span-2" : ""}`}>
-              <div className={`grid h-full ${index === 0 ? "lg:grid-cols-[1.12fr_0.88fr]" : ""}`}>
-                <div className="relative min-h-64 overflow-hidden border-b border-[color:var(--line)] lg:min-h-80 lg:border-b-0 lg:border-r">
+          <div className="work-stage">
+            <SpotlightSurface theme={epsx.visualTheme} className="work-feature-wrap">
+              <article className="work-feature">
+                <div className="project-canvas project-canvas--feature">
                   <Image
-                    src={project.cardImage}
-                    alt={project.cardImageAlt}
+                    src={epsx.cardImage}
+                    alt={epsx.cardImageAlt}
                     fill
-                    sizes={index === 0 ? "(max-width: 1024px) 100vw, 640px" : "(max-width: 1024px) 100vw, 540px"}
-                    className={index === 0 ? "bg-[#020617] object-contain" : "object-cover"}
+                    sizes="(max-width: 1024px) 100vw, 1120px"
+                    className="object-cover"
                   />
+                  <span className="project-canvas__index" aria-hidden="true">01</span>
                 </div>
-                <div className="flex flex-col p-6 sm:p-8">
-                  <p className="eyebrow">{projectTypeLabels[project.type]}</p>
-                  <h3 className="mt-4 font-display text-3xl text-[color:var(--foreground)]">
-                    {project.name}
-                  </h3>
-                  <p className="mt-3 text-lg font-semibold leading-7 text-[color:var(--foreground)]">
-                    {project.title}
-                  </p>
-                  <p className="mt-4 flex-1 text-sm leading-7 text-[color:var(--muted)]">
-                    {project.summary}
-                  </p>
-                  <Link href={`/work/${project.slug}`} className="text-link mt-6">
-                    Read case study
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
+                <div className="work-feature__copy">
+                  <div>
+                    <p className="project-eyebrow">{projectTypeLabels[epsx.type]}</p>
+                    <h3>{epsx.name}</h3>
+                    <p className="work-project-title">{epsx.title}</p>
+                  </div>
+                  <div>
+                    <p className="work-project-summary">{epsx.summary}</p>
+                    <Link href={`/work/${epsx.slug}`} className="text-link mt-6">
+                      Read case study
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
-
-          <div className="grid gap-5 lg:col-start-2">
-            {experiments.map((project) => (
-              <article key={project.slug} className="experiment-row">
-                <div>
-                  <p className="eyebrow">{projectTypeLabels[project.type]}</p>
-                  <h3 className="mt-3 font-display text-2xl text-[color:var(--foreground)]">
-                    {project.name}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">
-                    {project.summary}
-                  </p>
-                </div>
-                <Link href={`/work/${project.slug}`} className="text-link mt-5">
-                  Read case study
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
               </article>
-            ))}
+            </SpotlightSurface>
+
+            <div className="work-secondary-grid">
+              <SpotlightSurface theme={folio.visualTheme} className="work-secondary-wrap">
+                <article className="work-secondary">
+                  <div className="project-canvas">
+                    <Image
+                      src={folio.cardImage}
+                      alt={folio.cardImageAlt}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 680px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="work-secondary__copy">
+                    <p className="project-eyebrow">{projectTypeLabels[folio.type]}</p>
+                    <h3>{folio.name}</h3>
+                    <p className="work-project-title">{folio.title}</p>
+                    <p className="work-project-summary mt-4">{folio.summary}</p>
+                    <Link href={`/work/${folio.slug}`} className="text-link mt-6">
+                      Read case study
+                      <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                    </Link>
+                  </div>
+                </article>
+              </SpotlightSurface>
+
+              <div className="experiment-stack">
+                {experiments.map((project, index) => (
+                  <SpotlightSurface
+                    key={project.slug}
+                    theme={project.visualTheme}
+                    className="experiment-card-wrap"
+                  >
+                    <article className="experiment-card">
+                      <div className="experiment-card__image">
+                        <Image
+                          src={project.cardImage}
+                          alt={project.cardImageAlt}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 420px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="experiment-card__copy">
+                        <p className="project-eyebrow">
+                          0{index + 3} · {projectTypeLabels[project.type]}
+                        </p>
+                        <h3>{project.name}</h3>
+                        <p className="work-project-summary">{project.summary}</p>
+                        <Link href={`/work/${project.slug}`} className="text-link mt-4">
+                          Read case study
+                          <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                        </Link>
+                      </div>
+                    </article>
+                  </SpotlightSurface>
+                ))}
+              </div>
+            </div>
           </div>
-        </div>
+        </SectionReveal>
       </section>
 
       <section id="experience" aria-labelledby="experience-heading" className="section-block scroll-mt-24">
-        <div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr]">
-          <SectionHeader
-            eyebrow="Experience"
-            title="A career across software and operations."
-            description="The common thread is practical problem-solving across technology, processes, and the people responsible for them."
-            titleId="experience-heading"
-          />
-          <div className="experience-list">
-            {experience.map((item) => (
-              <article key={`${item.organization}-${item.period}`} className="experience-item">
-                <p className="eyebrow">{item.period}</p>
-                <h3 className="mt-3 font-display text-2xl text-[color:var(--foreground)]">
-                  {item.role}
-                </h3>
-                <p className="mt-2 font-semibold text-[color:var(--accent-strong)]">
-                  {item.organization}
-                </p>
-                <p className="mt-3 text-sm leading-7 text-[color:var(--muted)]">
-                  {item.description}
-                </p>
-              </article>
+        <div className="experience-layout">
+          <div className="experience-sticky">
+            <SectionReveal>
+              <SectionHeader
+                eyebrow="Experience"
+                title="A career across software and operations."
+                description="The common thread is practical problem-solving across technology, processes, and the people responsible for them."
+                titleId="experience-heading"
+              />
+              <div className="experience-signal" aria-hidden="true">
+                <GitBranch className="h-5 w-5" />
+                <span>One continuous operating thread</span>
+              </div>
+            </SectionReveal>
+          </div>
+          <div className="experience-timeline">
+            {experience.map((item, index) => (
+              <SectionReveal key={`${item.organization}-${item.period}`}>
+                <article className="experience-item">
+                  <span className="experience-node" aria-hidden="true">
+                    <CircleDot className="h-4 w-4" />
+                  </span>
+                  <div className="experience-index" aria-hidden="true">
+                    0{index + 1}
+                  </div>
+                  <p className="eyebrow">{item.period}</p>
+                  <h3>{item.role}</h3>
+                  <p className="experience-organization">{item.organization}</p>
+                  <p className="experience-description">{item.description}</p>
+                </article>
+              </SectionReveal>
             ))}
           </div>
         </div>
       </section>
 
       <section className="section-block pb-24 lg:pb-28">
-        <div className="contact-strip">
-          <BriefcaseBusiness className="h-7 w-7 text-[color:var(--accent-strong)]" aria-hidden="true" />
-          <div className="max-w-2xl">
-            <p className="eyebrow">Hiring or project collaboration</p>
-            <h2 className="mt-4 font-display text-3xl leading-tight text-[color:var(--foreground)] sm:text-4xl">
-              Need someone who can understand the workflow and build the system around it?
-            </h2>
+        <SectionReveal>
+          <div className="contact-stage">
+            <div className="contact-stage__intro">
+              <p className="eyebrow">Hiring or project collaboration</p>
+              <h2>
+                Need someone who can understand the workflow and build the system around it?
+              </h2>
+              <Link href="/contact" className="text-link mt-5">
+                View every contact option
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
+            </div>
+            <div className="contact-stage__paths">
+              <TrackedAnchor
+                href={roleMailto}
+                eventName="contact_role_click"
+                eventData={{ source: "home_cta" }}
+                className="contact-path"
+              >
+                <BriefcaseBusiness className="h-6 w-6" aria-hidden="true" />
+                <span>
+                  <small>For hiring teams</small>
+                  Role opportunity
+                </span>
+                <ArrowUpRight className="ml-auto h-5 w-5" aria-hidden="true" />
+              </TrackedAnchor>
+              <TrackedAnchor
+                href={projectMailto}
+                eventName="contact_project_click"
+                eventData={{ source: "home_cta" }}
+                className="contact-path"
+              >
+                <Wrench className="h-6 w-6" aria-hidden="true" />
+                <span>
+                  <small>For scoped work</small>
+                  Project collaboration
+                </span>
+                <ArrowUpRight className="ml-auto h-5 w-5" aria-hidden="true" />
+              </TrackedAnchor>
+            </div>
           </div>
-          <Link href="/contact" className="button-primary lg:ml-auto">
-            Start a conversation
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </Link>
-        </div>
+        </SectionReveal>
       </section>
     </main>
   );
